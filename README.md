@@ -1,8 +1,8 @@
 # Strongbox Browser AutoFill Extension
 Strongbox Browser AutoFill Extension official distributions can be found on the relevant browser stores here:
 
-Chrome/Chromium: https://chrome.google.com/webstore/detail/strongbox-autofill/mnilpkfepdibngheginihjpknnopchbn
-Firefox: https://addons.mozilla.org/firefox/addon/strongbox-autofill/
+- Chrome/Chromium: https://chrome.google.com/webstore/detail/strongbox-autofill/mnilpkfepdibngheginihjpknnopchbn
+- Firefox: https://addons.mozilla.org/firefox/addon/strongbox-autofill/
 
 # Localization - Help Wanted
 If you would like to see Strongbox translated into your language just get in touch (support@strongboxsafe.com) and we'll get you access to our localization platform. Localization and translation is managed through the parallel Babel project. This is managed under the MIT licence to avoid issues with the Apple's App Store and ownership:

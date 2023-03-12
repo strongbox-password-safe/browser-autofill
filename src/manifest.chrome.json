@@ -1,0 +1,79 @@
+{
+  "manifest_version": 3,
+  "name": "Strongbox AutoFill",
+  "version": "1.0.5",
+  "icons": {
+    "128": "assets/icons/app-icon-blue-128.png"
+  },
+  "content_security_policy": {
+    "extension_page": "script-src 'self' ; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/icons/app-icon-blue-19.png",
+        "assets/icons/app-icon-grey-38.png",
+        "assets/icons/app-icon-grey-19.png",
+        "assets/icons/app-icon-blue-38.png",
+        "assets/icons/app-icon-circle.png",
+        "_favicon/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "extension_ids": [
+        "*"
+      ]
+    }
+  ],
+  "commands": {
+    "autofill-first": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L"
+      },
+      "description": "AutoFill"
+    }
+  },
+  "action": {
+    "default_title": "Strongbox",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "19": "assets/icons/app-icon-blue-19.png",
+      "38": "assets/icons/app-icon-blue-38.png"
+    }
+  },
+  "description": "Strongbox Browser AutoFill Extension",
+  "short_name": "Strongbox",
+  "permissions": [
+    "tabs",
+    "nativeMessaging",
+    "webNavigation",
+    "storage",
+    "favicon"
+  ],
+  "host_permissions": [
+    "http:
+    "https:
+  ],
+  "author": "Phoebe Code Limited",
+  "minimum_chrome_version": "88",
+  "background": {
+    "service_worker": "js/background.bundle.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "matches": [
+        "http:
+        "https:
+      ],
+      "js": [
+        "js/content.bundle.js"
+      ],
+      "css": [
+        "content.css"
+      ]
+    }
+  ]
+}

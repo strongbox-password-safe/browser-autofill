@@ -1,0 +1,62 @@
+{
+  "manifest_version": 2,
+  "name": "Strongbox AutoFill",
+  "version": "1.0.5",
+  "icons": {
+    "128": "assets/icons/app-icon-blue-128.png"
+  },
+  "description": "Strongbox Browser AutoFill Extension",
+  "short_name": "Strongbox",
+  "permissions": [
+    "tabs",
+    "nativeMessaging",
+    "<all_urls>",
+    "webNavigation",
+    "storage"
+  ],
+  "author": "Phoebe Code Limited",
+  "background": {
+    "scripts": [
+      "js/background.bundle.js"
+    ]
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "strongbox@phoebecode.com"
+    }
+  },
+  "browser_action": {
+    "browser_style": true,
+    "default_icon": {
+      "128": "assets/icons/app-icon-blue-128.png"
+    },
+    "default_title": "Strongbox",
+    "default_popup": "popup.html"
+  },
+  "web_accessible_resources": [
+     "assets/icons/app-icon-circle.png"
+  ],
+  "commands": {
+    "autofill-first": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L"
+      },
+      "description": "AutoFill"
+    }
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "matches": [
+        "http:
+        "https:
+      ],
+      "js": [
+        "js/content.bundle.js"
+      ],
+      "css": [
+        "content.css"
+      ]
+    }
+  ]
+}

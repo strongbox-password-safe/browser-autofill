@@ -4,9 +4,16 @@ import { PageAnalyser } from './PageAnalyser';
 export class AutoFiller {
     async doIt(credential: AutoFillCredential,
         inlineFieldInitiator: HTMLInputElement | null = null,
-        inlineFieldInitiatorIsPassword = false, fillMultiple = false): Promise<boolean> {
-        const usernames = PageAnalyser.getAllUsernameInputs();
-        const passwords = PageAnalyser.getAllPasswordInputs();
+        inlineFieldInitiatorIsPassword = false,
+        fillMultiple = false,
+        isPageLoadFill = false): Promise<boolean> {
+
+        
+
+        const inputsMustBeInViewPort = isPageLoadFill;
+
+        const usernames = PageAnalyser.getAllUsernameInputs(true, inputsMustBeInViewPort);
+        const passwords = PageAnalyser.getAllPasswordInputs(true, inputsMustBeInViewPort);
 
         let filledSomething = false;
 

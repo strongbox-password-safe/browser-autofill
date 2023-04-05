@@ -556,7 +556,11 @@ export class ContentScriptManager {
         await this.autoFillWithCredential(credential, false, inlineFieldInitiator, inlineFieldInitiatorIsPassword);
     }
 
-    async autoFillWithCredential(credential: AutoFillCredential, isPageLoadFill = false, inlineFieldInitiator: HTMLInputElement | null = null, inlineFieldInitiatorIsPassword = false, fillMultiple = false): Promise<boolean> {
+    async autoFillWithCredential(credential: AutoFillCredential,
+        isPageLoadFill = false,
+        inlineFieldInitiator: HTMLInputElement | null = null,
+        inlineFieldInitiatorIsPassword = false,
+        fillMultiple = false): Promise<boolean> {
 
         if (isPageLoadFill) {
 
@@ -572,7 +576,7 @@ export class ContentScriptManager {
         this.removeFocusListener();
 
         const autoFiller = new AutoFiller();
-        const filled = await autoFiller.doIt(credential, inlineFieldInitiator, inlineFieldInitiatorIsPassword, fillMultiple);
+        const filled = await autoFiller.doIt(credential, inlineFieldInitiator, inlineFieldInitiatorIsPassword, fillMultiple, isPageLoadFill);
 
         setTimeout(() => { this.addFocusListener(); }, 500);
 

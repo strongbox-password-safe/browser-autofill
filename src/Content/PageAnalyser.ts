@@ -1,21 +1,21 @@
 export class PageAnalyser {
-    static getAllUsernameInputs(visible = true): HTMLInputElement[] {
-        const all = this.getAllInputs(visible);
+    static getAllUsernameInputs(visible = true, inViewPort = false): HTMLInputElement[] {
+        const all = this.getAllInputs(visible, inViewPort);
 
         const result = all.filter((input) => PageAnalyser.isUsernameInput(input));
 
         return result;
     }
 
-    static getAllPasswordInputs(visible = true): HTMLInputElement[] {
-        const all = this.getAllInputs(visible);
+    static getAllPasswordInputs(visible = true, inViewPort = false): HTMLInputElement[] {
+        const all = this.getAllInputs(visible, inViewPort);
 
         const result = all.filter((input) => PageAnalyser.isPasswordInput(input));
 
         return result;
     }
 
-    static getAllInputs(visible = true): HTMLInputElement[] {
+    static getAllInputs(visible = true, inViewPort = false): HTMLInputElement[] {
         const inputs = Array.from<HTMLInputElement>(
             document.getElementsByTagName('input')
         );
@@ -41,7 +41,9 @@ export class PageAnalyser {
             }
         }
 
-        return inputs.filter(input => !visible || PageAnalyser.isInputVisible(input));
+        return inputs.filter(input =>
+            (!visible || PageAnalyser.isInputVisible(input)) &&
+            (!inViewPort || PageAnalyser.isInputInViewport(input)));
     }
 
     static isPasswordInput(input: HTMLInputElement) {
@@ -69,7 +71,10 @@ export class PageAnalyser {
             "clientnumber",
             
             "benutzer",
-            "alias"];
+            "alias",
+            
+            "epost", 
+        ];
 
         
 
@@ -126,9 +131,15 @@ export class PageAnalyser {
 
         for (let i = 0, atts = input.attributes, n = atts.length; i < n; i++) {
             const att = atts[i];
-            
 
-            if (att.nodeValue && PageAnalyser.stringFuzzyContainsAny(att.nodeValue, matchNames)) {
+            if (att.nodeName.toLowerCase() == 'style') { 
+                continue;
+            }
+
+            if (att.nodeValue &&
+                PageAnalyser.stringFuzzyContainsAny(att.nodeValue, matchNames)) {
+                
+
                 return true;
             }
         }
@@ -178,5 +189,16 @@ export class PageAnalyser {
         }
 
         return true;
+    }
+
+    static isInputInViewport(el: HTMLInputElement) {
+        const rect = el.getBoundingClientRect();
+
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /* or $(window).height() */
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth) /* or $(window).width() */
+        );
     }
 }

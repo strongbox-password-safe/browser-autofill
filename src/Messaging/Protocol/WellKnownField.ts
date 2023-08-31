@@ -1,6 +1,5 @@
-
 export enum WellKnownField {
-    username,
-    password,
-    totp,
+  username,
+  password,
+  totp,
 }

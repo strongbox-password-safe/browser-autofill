@@ -8,9 +8,7 @@ interface DatabasesListPopupComponentProps {
   showToast: (message: string) => void;
 }
 
-function DatabasesListPopupComponent({
-  showToast
-}: DatabasesListPopupComponentProps) {
+function DatabasesListPopupComponent({ showToast }: DatabasesListPopupComponentProps) {
   const [databases, setDatabases] = useState<DatabaseSummary[]>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>();
@@ -39,48 +37,45 @@ function DatabasesListPopupComponent({
           Databases
         </ListSubheader>
       }
-      sx={{ minWidth: '400px', minHeight: '100px', mt: 0, pt: 0 }}>
+      sx={{ minWidth: '400px', minHeight: '100px', mt: 0, pt: 0 }}
+    >
       {!loading && databases != undefined ? (
         databases.length ? (
-          databases.map((database) => (
-            <DatabaseListItem
-              database={database}
-              showToast={showToast}
-              key={database.uuid}
-            />))) :
-          (
-            <Box>
-              <Box display="block">
-                <Typography
-                  variant="body1"
-                  align="center"
-                  
-                  sx={{
-                    textOverflow: 'ellipsis',
-                    padding: 0,
-                  }}
-                >
-                  No Databases
-                </Typography>
-              </Box>
-              <Box>
-                <Typography
-                  variant="body2"
-                  align="center"
-                  color="text.secondary"
-                  sx={{
-                    textOverflow: 'ellipsis',
-                    padding: '5px',
-                  }}
-                >
-                  You don't have any databases yet, why not add one to Strongbox?
-                </Typography>
-              </Box>
+          databases.map(database => <DatabaseListItem database={database} showToast={showToast} key={database.uuid} />)
+        ) : (
+          <Box>
+            <Box display="block">
+              <Typography
+                variant="body1"
+                align="center"
+                
+                sx={{
+                  textOverflow: 'ellipsis',
+                  padding: 0,
+                }}
+              >
+                No Databases
+              </Typography>
             </Box>
-          )
-      ) :
-        ('Loading...')}
-    </List >
+            <Box>
+              <Typography
+                variant="body2"
+                align="center"
+                color="text.secondary"
+                sx={{
+                  textOverflow: 'ellipsis',
+                  padding: '5px',
+                }}
+              >
+                You don't have any databases yet, why not add one to Strongbox?
+              </Typography>
+            </Box>
+          </Box>
+        )
+      ) : (
+        'Loading...'
+      )}
+    </List>
   );
 }
 

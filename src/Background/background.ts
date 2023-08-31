@@ -9,25 +9,24 @@ browser.runtime.onInstalled.addListener(async (): Promise<void> => {
 
 
 
-browser.windows.onFocusChanged.addListener((windowId) => {
+browser.windows.onFocusChanged.addListener(windowId => {
 
   if (windowId != browser.windows.WINDOW_ID_NONE) {
     BackgroundManager.getInstance().refreshCredentialsAndAutoFillIfNecessary(true);
-  }
-  else {
+  } else {
     BackgroundManager.getInstance().doSimpleStatusUpdate();
   }
 });
 
 
 
-browser.tabs.onActivated.addListener((e) => {
+browser.tabs.onActivated.addListener(e => {
   BackgroundManager.getInstance().refreshCredentialsAndAutoFillIfNecessary();
 });
 
 
 
-browser.tabs.onUpdated.addListener((e) => {
+browser.tabs.onUpdated.addListener(e => {
   BackgroundManager.getInstance().refreshCredentialsAndAutoFillIfNecessary();
 });
 
@@ -39,7 +38,7 @@ browser.runtime.onMessage.addListener((message: any, sender: any): Promise<any> 
 
 
 
-browser.commands.onCommand.addListener((command) => {
+browser.commands.onCommand.addListener(command => {
   if (command == 'autofill-first') {
     BackgroundManager.getInstance().autoFillCurrentTabWithFirstMatch();
   }
@@ -47,8 +46,9 @@ browser.commands.onCommand.addListener((command) => {
 
 
 
-browser.webNavigation.onCompleted.addListener((tab) => {
-  if (tab.frameId == 0) { 
+browser.webNavigation.onCompleted.addListener(tab => {
+  if (tab.frameId == 0) {
+    
     BackgroundManager.getInstance().refreshCredentialsAndAutoFillIfNecessary(false, true);
   }
 });

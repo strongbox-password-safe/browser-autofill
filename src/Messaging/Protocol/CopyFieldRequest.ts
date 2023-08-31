@@ -1,12 +1,12 @@
-import { WellKnownField } from "./WellKnownField";
+import { WellKnownField } from './WellKnownField';
 
 export class CopyFieldRequest {
-    databaseId = '';
-    nodeId = '';
-    field: WellKnownField;
-    explicitTotp = false;
+  databaseId = '';
+  nodeId = '';
+  field: WellKnownField;
+  explicitTotp = false;
 }
 
 export class CopyFieldResponse {
-    success: boolean;
+  success: boolean;
 }

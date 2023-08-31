@@ -12,6 +12,7 @@ import '@fontsource/roboto/700.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CurrentTabCredentialsComponent from './CurrentTabCredentials';
 
+import { Utils } from '../Utils';
 import { Snackbar, Alert, Paper, BottomNavigation, BottomNavigationAction } from '@mui/material';
 import { NativeAppApi } from '../Messaging/NativeAppApi';
 import NotRunningPopupComponent from './NotRunningPopupComponent';
@@ -39,10 +40,7 @@ export default function PopupComponent() {
     setPopupVisible(true);
   };
 
-  const handleToastClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
+  const handleToastClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
@@ -59,19 +57,16 @@ export default function PopupComponent() {
   React.useEffect(() => {
     async function getCurrentStatus() {
 
-
       const status = await NativeAppApi.getInstance().getStatus();
 
       if (status != null) {
         
 
-        const unlocked = status.databases.filter((database) => !database.locked && database.autoFillEnabled);
+        const unlocked = status.databases.filter(database => !database.locked && database.autoFillEnabled);
 
         setUnlockedCount(unlocked.length);
         setSelectedTab(unlocked.length == 0 ? 1 : 0);
-
-      }
-      else {
+      } else {
         setError(true);
       }
 
@@ -92,40 +87,55 @@ export default function PopupComponent() {
           <NotRunningPopupComponent onRefresh={onDismiss} />
         ) : selectedTab > 0 ? (
           selectedTab == 1 ? (
-            <DatabasesListPopupComponent showToast={(message) => showToast(message)} />) : (<SettingsPopupComponent />)
+            <DatabasesListPopupComponent showToast={message => showToast(message)} />
+          ) : (
+            <SettingsPopupComponent />
+          )
         ) : (
-          <CurrentTabCredentialsComponent
-            showToast={(message) => showToast(message)}
-          />
+          <CurrentTabCredentialsComponent showToast={message => showToast(message)} />
         )}
 
         <Snackbar open={popupVisible} autoHideDuration={1000} onClose={handleToastClose}>
-          <Alert
-            onClose={handleToastClose}
-            severity="success"
-            sx={{ width: '100%' }}
-          >
+          <Alert onClose={handleToastClose} severity="success" sx={{ width: '100%' }}>
             {toastMessage}
           </Alert>
         </Snackbar>
 
-        <Paper
-          elevation={1}
-          square
-        >
-          <BottomNavigation
-            showLabels
-            value={selectedTab}
-            onChange={(_event, newValue) => {
-              setSelectedTab(newValue);
-            }}
-          >
-            {unlockedCount === 0 ? '' : <BottomNavigationAction label={unlockedCount === 0 ? '' : 'Matches'} icon={<DomainVerification color={selectedTab == 0 ? 'primary' : 'disabled'} />} />}
-            <BottomNavigationAction label="Databases" icon={<Storage color={selectedTab == 1 ? 'primary' : 'disabled'} />} />
-            {error ? ('') : (<BottomNavigationAction label="Settings" icon={<Settings color={selectedTab == 2 ? 'primary' : 'disabled'} />} />)}
-          </BottomNavigation>
-        </Paper>
+        {Utils.isMacintosh() ? (
+          <Paper elevation={1} square>
+            <BottomNavigation
+              showLabels
+              value={selectedTab}
+              onChange={(_event, newValue) => {
+                setSelectedTab(newValue);
+              }}
+            >
+              {unlockedCount === 0 ? (
+                ''
+              ) : (
+                <BottomNavigationAction
+                  label={unlockedCount === 0 ? '' : 'Matches'}
+                  icon={<DomainVerification color={selectedTab == 0 ? 'primary' : 'disabled'} />}
+                />
+              )}
+              <BottomNavigationAction
+                label="Databases"
+                icon={<Storage color={selectedTab == 1 ? 'primary' : 'disabled'} />}
+              />
+              {error ? (
+                ''
+              ) : (
+                <BottomNavigationAction
+                  label="Settings"
+                  icon={<Settings color={selectedTab == 2 ? 'primary' : 'disabled'} />}
+                />
+              )}
+            </BottomNavigation>
+          </Paper>
+        ) : (
+          <></>
+        )}
       </Box>
-    </ThemeProvider >
+    </ThemeProvider>
   );
 }

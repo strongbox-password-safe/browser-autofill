@@ -1,7 +1,7 @@
-import { AutoFillCredential } from "./AutoFillCredential";
+import { AutoFillCredential } from './AutoFillCredential';
 
 export class CreateEntryResponse {
-    uuid: string | null;
-    error: string | null;
-    credential: AutoFillCredential | null;
+  uuid: string | null;
+  error: string | null;
+  credential: AutoFillCredential | null;
 }

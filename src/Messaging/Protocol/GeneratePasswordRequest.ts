@@ -1,3 +1,1 @@
-
-export class GeneratePasswordRequest {
-}
+export class GeneratePasswordRequest {}

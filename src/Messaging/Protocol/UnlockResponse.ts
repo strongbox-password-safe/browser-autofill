@@ -1,3 +1,1 @@
-export class UnlockResponse {
-
-}
+export class UnlockResponse {}

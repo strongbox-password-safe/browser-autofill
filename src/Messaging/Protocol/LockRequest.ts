@@ -1,7 +1,3 @@
-
 export class LockRequest {
-    databaseId = '';
+  databaseId = '';
 }
-
-
-

@@ -9,7 +9,7 @@ export class AutoFillCredential {
   url = '';
   totp = '';
   icon = '';
-  customFields: { [key: string]: [value: string]; } = {};
+  customFields: { [key: string]: [value: string] } = {};
   databaseName = 'Foo';
   tags: string[] = [];
   favourite = false;
@@ -24,12 +24,10 @@ export class AutoFillCredential {
           const middle = Math.floor(code.length / 2);
           if (middle > 0) {
             return code.substring(0, middle) + '-' + code.substring(middle);
-          }
-          else {
+          } else {
             return code;
           }
-        }
-        else {
+        } else {
           return code;
         }
       } catch (error) {

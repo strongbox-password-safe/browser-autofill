@@ -13,10 +13,7 @@ interface CurrentTabCredentialsComponentProps {
   showToast: (message: string) => void;
 }
 
-function CurrentTabCredentialsComponent({
-  showToast,
-}: CurrentTabCredentialsComponentProps) {
-
+function CurrentTabCredentialsComponent({ showToast }: CurrentTabCredentialsComponentProps) {
   const [grouped, setGrouped] = useState<Map<string, AutoFillCredential[]>>(new Map<string, AutoFillCredential[]>());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<unknown>();
@@ -33,7 +30,7 @@ function CurrentTabCredentialsComponent({
         const [tabId, creds] = result;
 
         const groupedBy = creds.reduce((r: Map<string, AutoFillCredential[]>, cred: AutoFillCredential) => {
-          r.set(cred.databaseName, [...r.get(cred.databaseName) || [], cred]);
+          r.set(cred.databaseName, [...(r.get(cred.databaseName) || []), cred]);
           return r;
         }, new Map<string, AutoFillCredential[]>());
 
@@ -55,50 +52,47 @@ function CurrentTabCredentialsComponent({
   return (
     <List
       subheader={
-        <ListSubheader component="div" key='parent-div-subheader' id="nested-list-subheader" sx={{ textAlign: 'center' }}>
+        <ListSubheader
+          component="div"
+          key="parent-div-subheader"
+          id="nested-list-subheader"
+          sx={{ textAlign: 'center' }}
+        >
           URL Matches
         </ListSubheader>
       }
-      sx={{ minwidth: '400px', maxWidth: '400px', overflow: 'hidden', scrollbarWidth: 'none', mt: 0, pt: 0 }}>
-      {!loading && tabId != undefined ?
-        (
-          grouped.size == 0 ? (
-            <NoResultsFoundPopupComponent />
-          ) :
-            (
-              <div key='parent-div'>
-                {[...grouped.keys()].map((databaseName) => (
-                  <div key={databaseName}>
-                    <ListSubheader key={databaseName} sx={{ lineHeight: '20px' }}>{databaseName}</ListSubheader>
-                    {(grouped.get(databaseName) || []).map((credential) =>
-                    (
-                      <ListItem sx={{ mb: '3px', mt: '3px' }}
-                        disableGutters
-                        disablePadding
-                        button
-                        key={credential.uuid}
-                        onClick={() => onItemClicked(tabId, credential)}
-                      >
-                        <CredentialsListItem
-                          key={credential.uuid}
-                          credential={credential}
-                          showToast={showToast}
-                        />
-                      </ListItem>
-                    )
-                    )}
-                  </div>
-                )
-                )}
+      sx={{ minwidth: '400px', maxWidth: '400px', overflow: 'hidden', scrollbarWidth: 'none', mt: 0, pt: 0 }}
+    >
+      {!loading && tabId != undefined ? (
+        grouped.size == 0 ? (
+          <NoResultsFoundPopupComponent />
+        ) : (
+          <div key="parent-div">
+            {[...grouped.keys()].map(databaseName => (
+              <div key={databaseName}>
+                <ListSubheader key={databaseName} sx={{ lineHeight: '20px' }}>
+                  {databaseName}
+                </ListSubheader>
+                {(grouped.get(databaseName) || []).map(credential => (
+                  <ListItem
+                    sx={{ mb: '3px', mt: '3px' }}
+                    disableGutters
+                    disablePadding
+                    button
+                    key={credential.uuid}
+                    onClick={() => onItemClicked(tabId, credential)}
+                  >
+                    <CredentialsListItem key={credential.uuid} credential={credential} showToast={showToast} />
+                  </ListItem>
+                ))}
               </div>
-            )
+            ))}
+          </div>
         )
-        :
-        (
-          'Loading...'
-        )
-      }
-    </ List >
+      ) : (
+        'Loading...'
+      )}
+    </List>
   );
 }
 
@@ -121,15 +115,15 @@ async function getCredentialsForCurrentUrl(): Promise<[number, AutoFillCredentia
   if (response != null) {
     const resultCount = response.results.length ?? 0;
 
+    
+    
+    
 
     return [tabId, response.results];
   }
 }
 
-async function onItemClicked(
-  tabId: number,
-  credential: AutoFillCredential
-): Promise<void> {
+async function onItemClicked(tabId: number, credential: AutoFillCredential): Promise<void> {
   await BackgroundManager.getInstance().fillWithCredential(tabId, credential);
 
   window.close();

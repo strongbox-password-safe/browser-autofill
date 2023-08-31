@@ -1,5 +1,4 @@
-
 export class GeneratePasswordResponse {
-    password: string;
-    alternatives: string[];
+  password: string;
+  alternatives: string[];
 }

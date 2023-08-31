@@ -1,4 +1,3 @@
-
 export class GetNewEntryDefaultsRequest {
-    databaseId: string;
+  databaseId: string;
 }

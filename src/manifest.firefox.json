@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Strongbox AutoFill",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "icons": {
     "128": "assets/icons/app-icon-blue-128.png"
   },
@@ -34,7 +34,7 @@
     "default_popup": "popup.html"
   },
   "web_accessible_resources": [
-     "assets/icons/app-icon-circle.png"
+    "assets/icons/app-icon-circle.png"
   ],
   "commands": {
     "autofill-first": {

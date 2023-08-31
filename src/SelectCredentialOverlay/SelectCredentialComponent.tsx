@@ -28,69 +28,62 @@ const emails = ['username@gmail.com', 'user02@gmail.com'];
 const darkTheme = createTheme({ palette: { mode: 'dark' } });
 
 export interface SimpleDialogProps {
-    open: boolean;
-    groupedCredentials: Map<string, AutoFillCredential[]>;
-    selectedValue: string;
-    onClose: (value: string) => void;
-    fillCredential: (credential: AutoFillCredential) => void;
+  open: boolean;
+  groupedCredentials: Map<string, AutoFillCredential[]>;
+  selectedValue: string;
+  onClose: (value: string) => void;
+  fillCredential: (credential: AutoFillCredential) => void;
 }
 
 function SimpleDialog(props: SimpleDialogProps) {
-    const { onClose, groupedCredentials, selectedValue, open, fillCredential } = props;
+  const { onClose, groupedCredentials, selectedValue, open, fillCredential } = props;
 
-    const handleClose = () => {
-        onClose(selectedValue);
-    };
+  const handleClose = () => {
+    onClose(selectedValue);
+  };
 
-    async function handleListItemClick(
-        credential: AutoFillCredential
-    ): Promise<void> {
-        fillCredential(credential);
-        onClose("email");
-    }
-    const showToast = () => { console.log('TODO'); };
+  async function handleListItemClick(credential: AutoFillCredential): Promise<void> {
+    fillCredential(credential);
+    onClose('email');
+  }
+  const showToast = () => {
+  };
 
-    return (
-        <ThemeProvider theme={darkTheme}>
-            <CssBaseline />
-            <Dialog onClose={handleClose} open={open}>
-                <DialogTitle>Select Credential</DialogTitle>
+  return (
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <Dialog onClose={handleClose} open={open}>
+        <DialogTitle>Select Credential</DialogTitle>
 
-                <List
-                    sx={{ minwidth: '400px', maxWidth: '400px', overflow: 'hidden', scrollbarWidth: 'none', mt: 0, pt: 0 }}>
-                    {groupedCredentials.size == 0 ? (
-                        <NoResultsFoundPopupComponent />
-                    ) :
-                        (
-                            <div>
-                                {[...groupedCredentials.keys()].map((databaseName) => (
-                                    <div>
-                                        <ListSubheader key={databaseName} sx={{ lineHeight: '20px' }}>{databaseName}</ListSubheader>
-                                        {(groupedCredentials.get(databaseName) || []).map((credential) =>
-                                        (
-                                            <ListItem sx={{ mb: '3px', mt: '3px' }}
-                                                disableGutters
-                                                disablePadding
-                                                button
-                                                key={credential.uuid}
-                                                onClick={() => handleListItemClick(credential)}
-                                            >
-                                                <CredentialsListItem
-                                                    credential={credential}
-                                                    showToast={showToast}
-                                                />
-                                            </ListItem>
-                                        )
-                                        )}
-                                    </div>
-                                )
-                                )}
-                            </div>
-                        )
-                    }
-                </ List >
+        <List sx={{ minwidth: '400px', maxWidth: '400px', overflow: 'hidden', scrollbarWidth: 'none', mt: 0, pt: 0 }}>
+          {groupedCredentials.size == 0 ? (
+            <NoResultsFoundPopupComponent />
+          ) : (
+            <div>
+              {[...groupedCredentials.keys()].map(databaseName => (
+                <div>
+                  <ListSubheader key={databaseName} sx={{ lineHeight: '20px' }}>
+                    {databaseName}
+                  </ListSubheader>
+                  {(groupedCredentials.get(databaseName) || []).map(credential => (
+                    <ListItem
+                      sx={{ mb: '3px', mt: '3px' }}
+                      disableGutters
+                      disablePadding
+                      button
+                      key={credential.uuid}
+                      onClick={() => handleListItemClick(credential)}
+                    >
+                      <CredentialsListItem credential={credential} showToast={showToast} />
+                    </ListItem>
+                  ))}
+                </div>
+              ))}
+            </div>
+          )}
+        </List>
 
-                {/* <List sx={{ pt: 0 }}>
+        {/* <List sx={{ pt: 0 }}>
                 {emails.map((email) => (
                     <ListItem button onClick={() => handleListItemClick(email)} key={email}>
                         <ListItemAvatar>
@@ -110,33 +103,34 @@ function SimpleDialog(props: SimpleDialogProps) {
                     <ListItemText primary="Add account" />
                 </ListItem>
             </List> */}
-            </Dialog>
-        </ThemeProvider>
-    );
+      </Dialog>
+    </ThemeProvider>
+  );
 }
 
 export interface SelectCredentialComponentProps {
-    groupedCredentials: Map<string, AutoFillCredential[]>;
-    fillCredential: (credential: AutoFillCredential) => void;
+  groupedCredentials: Map<string, AutoFillCredential[]>;
+  fillCredential: (credential: AutoFillCredential) => void;
 }
 
 export default function SelectCredentialComponent(props: SelectCredentialComponentProps) {
-    const [open, setOpen] = React.useState(true);
-    const [selectedValue, setSelectedValue] = React.useState(emails[1]);
+  const [open, setOpen] = React.useState(true);
+  const [selectedValue, setSelectedValue] = React.useState(emails[1]);
 
-    const handleClose = (value: string) => {
-        setOpen(false);
-        setSelectedValue(value);
-    };
+  const handleClose = (value: string) => {
+    setOpen(false);
+    setSelectedValue(value);
+  };
 
-    return (
-        <div>
-            <SimpleDialog
-                selectedValue={selectedValue}
-                open={open}
-                onClose={handleClose}
-                groupedCredentials={props.groupedCredentials}
-                fillCredential={props.fillCredential} />
-        </div>
-    );
+  return (
+    <div>
+      <SimpleDialog
+        selectedValue={selectedValue}
+        open={open}
+        onClose={handleClose}
+        groupedCredentials={props.groupedCredentials}
+        fillCredential={props.fillCredential}
+      />
+    </div>
+  );
 }

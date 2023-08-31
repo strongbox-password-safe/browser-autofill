@@ -13,10 +13,7 @@ interface CredentialListItemProps {
   showToast: (message: string) => void;
 }
 
-export default function CredentialsListItem({
-  credential,
-  showToast,
-}: CredentialListItemProps) {
+export default function CredentialsListItem({ credential, showToast }: CredentialListItemProps) {
   const onCopyUsername = () => {
     NativeAppApi.getInstance().copyField(credential.databaseId, credential.uuid, WellKnownField.username);
     showToast('Username Copied');
@@ -35,10 +32,7 @@ export default function CredentialsListItem({
   if (currentTotpCode.length > 0) {
     const middle = Math.floor(currentTotpCode.length / 2);
     if (middle > 0) {
-      currentTotpCode =
-        currentTotpCode.substring(0, middle) +
-        '-' +
-        currentTotpCode.substring(middle);
+      currentTotpCode = currentTotpCode.substring(0, middle) + '-' + currentTotpCode.substring(middle);
     }
   }
 
@@ -85,7 +79,7 @@ export default function CredentialsListItem({
               width: 37,
               margin: 'auto',
               paddingLeft: '5px',
-              marginRight: '12px'
+              marginRight: '12px',
             }}
             alt="Icon"
             src={credential.icon}
@@ -107,7 +101,8 @@ export default function CredentialsListItem({
                 textOverflow: 'ellipsis',
               }}
             >
-              {credential.favourite ? '⭐️ ' : ''}{credential.title}
+              {credential.favourite ? '⭐️ ' : ''}
+              {credential.title}
             </Typography>
           </Box>
           <Box>
@@ -146,11 +141,11 @@ export default function CredentialsListItem({
               alignContent: 'center',
             }}
           >
-            <Tooltip title="Copy Username">
+            <Tooltip title="Copy Username" placement="top-start">
               <span>
                 <IconButton
                   size="small"
-                  onClick={(event) => {
+                  onClick={event => {
                     event.stopPropagation();
                     onCopyUsername();
                   }}
@@ -159,11 +154,11 @@ export default function CredentialsListItem({
                 </IconButton>
               </span>
             </Tooltip>
-            <Tooltip title="Copy Password">
+            <Tooltip title="Copy Password" placement="top-start">
               <span>
                 <IconButton
                   size="small"
-                  onClick={(event) => {
+                  onClick={event => {
                     event.stopPropagation();
                     onCopyPassword();
                   }}
@@ -172,32 +167,23 @@ export default function CredentialsListItem({
                 </IconButton>
               </span>
             </Tooltip>
-            <Tooltip title="Copy TOTP">
-              <span>
-                <IconButton
-                  size="small"
-                  disabled={currentTotpCode == ''}
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    onCopyTotp();
-                  }}
-                >
-                  <AvTimer fontSize="inherit" />
-                </IconButton>
-              </span>
-            </Tooltip>
           </Box>
           {currentTotpCode == '' ? (
             ''
           ) : (
             <Box justifyContent="flex-end">
-              <Typography
-                variant="body2"
-                sx={{ fontFamily: 'monospace', paddingRight: '5px' }}
-                align="right"
-              >
-                {currentTotpCode}
-              </Typography>
+              <Tooltip title="Copy TOTP" placement="bottom-end">
+                <a
+                  onClick={event => {
+                    event.stopPropagation();
+                    onCopyTotp();
+                  }}
+                >
+                  <Typography variant="body2" sx={{ fontFamily: 'monospace', paddingRight: '5px' }} align="right">
+                    {currentTotpCode}
+                  </Typography>
+                </a>
+              </Tooltip>
             </Box>
           )}
         </Box>

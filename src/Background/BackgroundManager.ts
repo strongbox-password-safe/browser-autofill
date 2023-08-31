@@ -1,8 +1,5 @@
 import { NativeAppApi } from '../Messaging/NativeAppApi';
-import {
-  IconManager,
-  IconState,
-} from './IconManager';
+import { IconManager, IconState } from './IconManager';
 import { AutoFillCredential } from '../Messaging/Protocol/AutoFillCredential';
 import { WellKnownField } from '../Messaging/Protocol/WellKnownField';
 import browser from 'webextension-polyfill';
@@ -49,9 +46,8 @@ export class BackgroundManager {
   public async updatePopupIconBasedOnStatus(status: GetStatusResponse | null) {
     if (status === null) {
       await IconManager.setIcon(IconState.disconnected);
-    }
-    else {
-      const unlockedDatabases = status.databases.filter((database) => {
+    } else {
+      const unlockedDatabases = status.databases.filter(database => {
         return !database.locked;
       });
 
@@ -93,9 +89,11 @@ export class BackgroundManager {
       }
 
 
-      if (force
+      if (
+        force ||
         
-        || shouldAttemptAutoFill) {
+        shouldAttemptAutoFill
+      ) {
         
 
 
@@ -108,14 +106,20 @@ export class BackgroundManager {
 
           const settings = await SettingsStore.getSettings();
 
-
-          if (tabID && (settings.autoFillImmediatelyIfOnlyASingleMatch && credentials.length == 1) ||
-            (settings.autoFillImmediatelyWithFirstMatch)) {
-            setTimeout(() => { this.doOnLoadFill(tabID, credentials[0]); }, 100);
+          if (
+            (tabID && settings.autoFillImmediatelyIfOnlyASingleMatch && credentials.length == 1) ||
+            settings.autoFillImmediatelyWithFirstMatch
+          ) {
+            setTimeout(() => {
+              this.doOnLoadFill(tabID, credentials[0]);
+            }, 100);
           }
         }
       }
     } catch (error) {
+      
+      
+      
     }
   }
 
@@ -139,15 +143,12 @@ export class BackgroundManager {
       if (results != null) {
         if (results.length > 0) {
           await this.fillWithCredential(tab.id, results[0]);
+        } else {
         }
-        else {
-        }
-      }
-      else {
+      } else {
         await IconManager.setIcon(IconState.disconnected);
       }
-    }
-    else {
+    } else {
     }
   }
 
@@ -158,10 +159,20 @@ export class BackgroundManager {
 
   
 
-  private async updateBadgeAndIconBasedOnCredentialsResponse(response: CredentialsForUrlResponse, endTime: number, startTime: number) {
+  private async updateBadgeAndIconBasedOnCredentialsResponse(
+    response: CredentialsForUrlResponse,
+    endTime: number,
+    startTime: number
+  ) {
     const unlockedDatabaseCount = response.unlockedDatabaseCount;
     const resultCount = response.results.length;
 
+    
+    
+    
+    
+    
+    
 
     if (unlockedDatabaseCount == 0) {
       await IconManager.setIcon(IconState.allDatabasesLocked);
@@ -170,15 +181,9 @@ export class BackgroundManager {
         const settings = await SettingsStore.getSettings();
 
         if (settings.showMatchCountOnPopupBadge) {
-          await IconManager.setIcon(
-            IconState.good,
-            response.results.length.toString()
-          );
-        }
-        else {
-          await IconManager.setIcon(
-            IconState.good
-          );
+          await IconManager.setIcon(IconState.good, response.results.length.toString());
+        } else {
+          await IconManager.setIcon(IconState.good);
         }
       } else {
         await IconManager.setIcon(IconState.good);
@@ -221,8 +226,7 @@ export class BackgroundManager {
 
       if (!response) {
         return null;
-      }
-      else {
+      } else {
         
         await new Promise(f => setTimeout(f, 500));
       }
@@ -296,9 +300,18 @@ export class BackgroundManager {
     return response;
   }
 
-  private async copyField(credential: AutoFillCredential, field: WellKnownField, explicitTotp = false): Promise<CopyFieldResponse | null> {
+  private async copyField(
+    credential: AutoFillCredential,
+    field: WellKnownField,
+    explicitTotp = false
+  ): Promise<CopyFieldResponse | null> {
 
-    const response = await NativeAppApi.getInstance().copyField(credential.databaseId, credential.uuid, field, explicitTotp);
+    const response = await NativeAppApi.getInstance().copyField(
+      credential.databaseId,
+      credential.uuid,
+      field,
+      explicitTotp
+    );
 
 
     return response;
@@ -312,23 +325,19 @@ export class BackgroundManager {
       if (message.value == 'refresh-popup-icon') {
         this.updatePopupIconBasedOnStatus(message.status);
       }
-    }
-    else if (message.type === 'get-status') {
+    } else if (message.type === 'get-status') {
       const response = await this.getStatus();
 
 
       return response;
-    }
-    else if (message.type === 'launch-strongbox') {
+    } else if (message.type === 'launch-strongbox') {
       const response = await this.launchStrongbox();
 
 
       return response;
-    }
-    else if (message.type === 'unlock-database') {
+    } else if (message.type === 'unlock-database') {
       return await this.unlockDatabase(message.details.uuid);
-    }
-    else if (message.type === 'get-groups') {
+    } else if (message.type === 'get-groups') {
       const details = message.details;
 
       
@@ -338,8 +347,7 @@ export class BackgroundManager {
       
 
       return response;
-    }
-    else if (message.type === 'get-new-entry-defaults') {
+    } else if (message.type === 'get-new-entry-defaults') {
       const details = message.details;
 
       
@@ -349,8 +357,7 @@ export class BackgroundManager {
       
 
       return response;
-    }
-    else if (message.type === 'generate-password') {
+    } else if (message.type === 'generate-password') {
       const details = message.details;
 
       
@@ -360,8 +367,7 @@ export class BackgroundManager {
       
 
       return response;
-    }
-    else if (message.type === 'create-new-entry') {
+    } else if (message.type === 'create-new-entry') {
       const details = message.details;
 
       
@@ -371,8 +377,7 @@ export class BackgroundManager {
       
 
       return response;
-    }
-    else if (message.type === 'copy-totp-after-fill') {
+    } else if (message.type === 'copy-totp-after-fill') {
       const credential = message.details;
 
       
@@ -382,8 +387,7 @@ export class BackgroundManager {
       
 
       return response;
-    }
-    else if (message.type === 'copy-username') {
+    } else if (message.type === 'copy-username') {
       const credential = message.details;
 
       
@@ -393,8 +397,7 @@ export class BackgroundManager {
       
 
       return response;
-    }
-    else if (message.type === 'copy-password') {
+    } else if (message.type === 'copy-password') {
       const credential = message.details;
 
       
@@ -404,8 +407,7 @@ export class BackgroundManager {
       
 
       return response;
-    }
-    else if (message.type === 'copy-totp') {
+    } else if (message.type === 'copy-totp') {
       const credential = message.details;
 
       
@@ -415,13 +417,11 @@ export class BackgroundManager {
       
 
       return response;
-    }
-    else if (message.type === 'get-tab-for-this-content-script') {
+    } else if (message.type === 'get-tab-for-this-content-script') {
       
 
       return sender.tab as browser.Tabs.Tab;
-    }
-    else if (message.type === 'get-credentials') {
+    } else if (message.type === 'get-credentials') {
       
 
       const tab = sender.tab as browser.Tabs.Tab;
@@ -433,8 +433,7 @@ export class BackgroundManager {
         
 
         return credentials;
-      }
-      else {
+      } else {
         return [];
       }
     }
@@ -453,8 +452,7 @@ export class BackgroundManager {
       await this.updateBadgeAndIconBasedOnCredentialsResponse(response, endTime, startTime);
 
       return response.results;
-    }
-    else {
+    } else {
       await IconManager.setIcon(IconState.disconnected);
     }
 

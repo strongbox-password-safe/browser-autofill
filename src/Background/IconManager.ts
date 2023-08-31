@@ -6,11 +6,7 @@ export enum IconState {
   good,
 }
 export class IconManager {
-  static async setIcon(
-    state: IconState,
-    badgeText = '',
-    badgeColor = '#344d56'
-  ): Promise<void> {
+  static async setIcon(state: IconState, badgeText = '', badgeColor = '#344d56'): Promise<void> {
     const action = browser.action || browser.browserAction;
 
     if (action == undefined) {

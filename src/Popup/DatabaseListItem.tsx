@@ -11,10 +11,7 @@ interface DatabaseListItemProps {
   showToast: (message: string) => void;
 }
 
-export default function DatabaseListItem({
-  database,
-  showToast,
-}: DatabaseListItemProps) {
+export default function DatabaseListItem({ database, showToast }: DatabaseListItemProps) {
   const onUnlock = async (database: DatabaseSummary) => {
     await NativeAppApi.getInstance().unlockDatabase(database.uuid);
     window.close();
@@ -37,7 +34,6 @@ export default function DatabaseListItem({
           alignItems: 'center',
         }}
       >
-        { /* Status Lock Image */}
         <Box
           sx={{
             flexGrow: 0,
@@ -47,19 +43,21 @@ export default function DatabaseListItem({
             marginBottom: 'auto',
           }}
         >
-          <Box display="flex"
-            flexDirection="column"
-            alignContent="center">
-            {database.autoFillEnabled ?
-              (database.locked ?
-                <Lock fontSize="medium" color='error' /> :
-                <LockOpen fontSize='medium' color='success' />) : (
-                <Lock fontSize="medium" color='disabled' />)}
+          <Box display="flex" flexDirection="column" alignContent="center">
+            {database.autoFillEnabled ? (
+              database.locked ? (
+                <Lock fontSize="medium" color="error" />
+              ) : (
+                <LockOpen fontSize="medium" color="success" />
+              )
+            ) : (
+              <Lock fontSize="medium" color="disabled" />
+            )}
           </Box>
         </Box>
-        { /* Nick Name and Status Subtitle */}
         <Box
-          display='flex' flexDirection="column"
+          display="flex"
+          flexDirection="column"
           flexGrow={1}
           sx={{
             p: '0',
@@ -68,7 +66,7 @@ export default function DatabaseListItem({
         >
           <Box>
             <Typography
-              variant='body1'
+              variant="body1"
               sx={{
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
@@ -89,20 +87,36 @@ export default function DatabaseListItem({
                 textOverflow: 'ellipsis',
               }}
             >
-              {database.autoFillEnabled ? (database.locked ? 'Locked' : 'Unlocked') : ('AutoFill Not Enabled')}
+              {database.autoFillEnabled ? (database.locked ? 'Locked' : 'Unlocked') : 'AutoFill Not Enabled'}
             </Typography>
           </Box>
         </Box>
         <Box sx={{ ml: 2, mr: 1 }}>
-          {database.autoFillEnabled ?
-            (database.locked ?
-              <Button variant="outlined" size='small' onClick={() => {
-                onUnlock(database);
-              }}>Unlock</Button> :
-              <Button variant="outlined" size='small' onClick={() => {
-                onLock(database);
-              }}>Lock</Button>) :
-            ('')}
+          {database.autoFillEnabled ? (
+            database.locked ? (
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={() => {
+                  onUnlock(database);
+                }}
+              >
+                Unlock
+              </Button>
+            ) : (
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={() => {
+                  onLock(database);
+                }}
+              >
+                Lock
+              </Button>
+            )
+          ) : (
+            ''
+          )}
         </Box>
       </Box>
     </Paper>

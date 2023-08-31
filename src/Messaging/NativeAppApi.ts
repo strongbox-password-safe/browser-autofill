@@ -41,7 +41,7 @@ export class NativeAppApi {
 
   public async launchStrongbox(): Promise<boolean> {
     try {
-      const response = await NativeMessagingHelper.getInstance().ping({ 'launch': true });
+      const response = await NativeMessagingHelper.getInstance().ping({ launch: true });
 
 
       return response.success;
@@ -97,7 +97,12 @@ export class NativeAppApi {
     return await this.sendMessage<CredentialsForUrlResponse>(encrypted);
   }
 
-  public async copyField(databaseId: string, nodeId: string, field: WellKnownField, explicitTotp = false): Promise<CopyFieldResponse | null> {
+  public async copyField(
+    databaseId: string,
+    nodeId: string,
+    field: WellKnownField,
+    explicitTotp = false
+  ): Promise<CopyFieldResponse | null> {
     const request = new CopyFieldRequest();
     request.databaseId = databaseId;
     request.nodeId = nodeId;
@@ -152,12 +157,7 @@ export class NativeAppApi {
 
       const serverPk = this.base64ToByteArray(response.serverPublicKey);
 
-      const decryptedBytes = nacl.box.open(
-        messageBytes,
-        nonceBytes,
-        serverPk,
-        this.keyPair.secretKey
-      );
+      const decryptedBytes = nacl.box.open(messageBytes, nonceBytes, serverPk, this.keyPair.secretKey);
 
       if (decryptedBytes == null) {
         this.latestServerPublicKey = undefined; 
@@ -174,10 +174,7 @@ export class NativeAppApi {
     }
   }
 
-  private async encryptMessage(
-    message: string,
-    nonce: Uint8Array
-  ): Promise<string | null> {
+  private async encryptMessage(message: string, nonce: Uint8Array): Promise<string | null> {
     
 
     await this.ensureServerPublicKey();
@@ -186,12 +183,7 @@ export class NativeAppApi {
       const encoded = new TextEncoder().encode(message);
       const serverPk = this.base64ToByteArray(this.latestServerPublicKey);
 
-      const cipherText = nacl.box(
-        encoded,
-        nonce,
-        serverPk,
-        this.keyPair.secretKey
-      );
+      const cipherText = nacl.box(encoded, nonce, serverPk, this.keyPair.secretKey);
 
       
 
@@ -213,7 +205,8 @@ export class NativeAppApi {
   }
 
   private async buildEncryptedRequest<Type>(
-    innerRequest: Type, messageType: AutoFillMessageType
+    innerRequest: Type,
+    messageType: AutoFillMessageType
   ): Promise<AutoFillEncryptedRequest | null> {
     
     const json = JSON.stringify(innerRequest);

@@ -2,8 +2,8 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const TerserPlugin = require("terser-webpack-plugin");
-const webpack = require("webpack");
+const TerserPlugin = require('terser-webpack-plugin');
+const webpack = require('webpack');
 
 
 const sourcePath = path.join(__dirname, 'src');
@@ -52,9 +52,7 @@ module.exports = {
       filename: 'popup.html',
     }),
     new webpack.DefinePlugin({
-      'process.env.VERSION': JSON.stringify(
-        process.env.npm_package_version,
-      ),
+      'process.env.VERSION': JSON.stringify(process.env.npm_package_version),
     }),
     new MiniCssExtractPlugin(),
     new CopyWebpackPlugin({
@@ -74,17 +72,19 @@ module.exports = {
   ],
   optimization: {
     minimize: prod,
-    minimizer: [new TerserPlugin({
-      terserOptions: {
-        format: {
-          comments: false,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          format: {
+            comments: false,
+          },
+          compress: {
+            drop_console: true,
+          },
         },
-        compress: {
-          drop_console: true
-        }
-      },
-      extractComments: false,
-    })],
+        extractComments: false,
+      }),
+    ],
   },
   stats: {
     all: false,

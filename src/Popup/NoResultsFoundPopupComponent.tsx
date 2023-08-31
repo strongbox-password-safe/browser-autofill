@@ -4,13 +4,7 @@ import { Search } from '@mui/icons-material';
 
 function NoResultsFoundPopupComponent() {
   return (
-    <Stack
-      direction="column"
-      justifyContent="center"
-      alignItems="center"
-      minWidth='400px'
-      spacing={0}
-    >
+    <Stack direction="column" justifyContent="center" alignItems="center" minWidth="400px" spacing={0}>
       <Box display="block">
         <Search
           color="disabled"

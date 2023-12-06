@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Strongbox AutoFill",
-  "version": "1.0.8",
+  "version": "1.1.1",
   "icons": {
     "128": "assets/icons/app-icon-blue-128.png"
   },
@@ -42,6 +42,12 @@
         "default": "Ctrl+Shift+L"
       },
       "description": "AutoFill"
+    },
+    "open-inline-menu": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+O"
+      },
+      "description": "Show Inline Menu"
     }
   },
   "content_scripts": [

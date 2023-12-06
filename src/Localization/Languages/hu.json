@@ -1,0 +1,130 @@
+{
+  "autodetected-language": "Automatikus felismerés ({{language}})",
+  "general": {
+    "app-name": "Strongbox automatikus kitöltő",
+    "company-name": "Phoebe Code Limited",
+    "loading": "Betöltés...",
+    "searching": "Keresés...",
+    "cancel": "Mégse",
+    "create": "Létrehozás",
+    "add": "Hozzáad",
+    "search": "Keresés",
+    "copy": "Másolás",
+    "autofill": "Automatikus kitöltés",
+    "launch-url": "URL megnyitása",
+    "show-hide": "Megjelenítés/Elrejtés"
+  },
+  "inline-mini-field-menu": {
+    "no-matching-entries-found": "Nincsenek megfelelő bejegyzések",
+    "lock": "Zárol",
+    "unlock": "{{database}} adatbázis feloldása",
+    "create-new": "Mentés a Strongbox-ba",
+    "no-autofill-enabled-databases": "Nincs automatikus kitöltést támogató adatbázis"
+  },
+  "hide-inline-menu": {
+    "hide-for-a-while": "Ideiglenes elrejtés",
+    "hide-on-page": "Oldalon elrejtés",
+    "hide-on-domain": "Tartományon elrejtés"
+  },
+  "inline-menu-credential-item": {
+    "view-details": "Részletek megtekintése",
+    "copy-username": "Felhasználónév másolása",
+    "copy-password": "Jelszó másolása"
+  },
+  "create-new-entry-dialog": {
+    "title": "Új bejegyzés létrehozása",
+    "credential-title": "Megnevezés",
+    "username": "Felhasználónév",
+    "password": "Jelszó",
+    "url": "URL",
+    "totp": "TOTP",
+    "modified-date": "Módosítva",
+    "database": "Adatbázis",
+    "group": "Csoport",
+    "save-in": "Mentés ide",
+    "no-autoFill-databases-available": "Nincs rendelkezésre álló automatikus kitöltés adatbázis",
+    "please-unlock-your-database": "Kérjük, oldja fel az adatbázisát...",
+    "could-not-load-databases": "Nem sikerült betölteni az adatbázisokat!",
+    "could-not-load-defaults": "Nem sikerült betölteni az alapértékeket!",
+    "could-not-refresh-groups": "Nem sikerült frissíteni a csoportokat!",
+    "could-not-generate-password": "Nem sikerült jelszót generálni",
+    "could-not-unlock-database": "Nem sikerült feloldani az adatbázist",
+    "could-not-refresh-status": "Nem sikerült frissíteni az állapotot",
+    "could-not-connect-to-strongbox": "Nem sikerült csatlakozni a Strongbox-hoz",
+    "error-getting-defaults": "Hiba az alapértelmezett értékek lekérése közben",
+    "there-is-not-a-valid-new-entry": "Nincs érvényes új bejegyzés.",
+    "could-not-create-new-entry": "Nem sikerült új bejegyzést létrehozni. Hiba=({{error}})"
+  },
+  "notification-toast": {
+    "successfully-created-new-entry": "Új bejegyzés sikeresen létrehozva",
+    "username-copied": "Felhasználónév másolva",
+    "password-copied": "Jelszó másolva",
+    "totp-copied": "TOTP másolva",
+    "url-copied": "URL másolva",
+    "modified-date-copied": "Módosított dátum másolása",
+    "custom-field-copied": "Egyéni mező másolva"
+  },
+  "current-tab-credentials": {
+    "title": "Találatok",
+    "autofill": "Automatikus kitöltés",
+    "tags": "Címkék",
+    "notes": "Jegyzetek"
+  },
+  "database-list-item": {
+    "lock": "Zárol",
+    "locked": "Zárolt",
+    "unlock": "Feloldás",
+    "unlocked": "Feloldott",
+    "autofill-not-enabled": "Automatikus kitöltés nincs engedélyezve"
+  },
+  "databases-list-popup-component": {
+    "title": "Adatbázisok",
+    "no-databases": "Nincsenek adatbázisok",
+    "no-databases-message": "Még nincs adatbázisa, miért nem ad hozzá egyet a Strongbox-hoz?"
+  },
+  "no-results-found-popup-component": {
+    "title": "Nincsenek találatok",
+    "message": "Strongbox nem talált megfelelő bejegyzést ehhez a weboldalhoz"
+  },
+  "not-running-popup-component": {
+    "title": "Strongbox nem elérhető",
+    "launch-strongbox": "Strongbox indítása",
+    "troubleshooting": {
+      "title": "Hibaelhárítás",
+      "message1": "1. Győződjön meg róla, hogy a Strongbox telepítve van és fut.",
+      "message2": "2. Győződjön meg róla, hogy ön Pro felhasználó, az automatikus kiegészítés egy fizetős Pro funkció.",
+      "message3": "3. Ellenőrizze, hogy az alábbi beállítás engedélyezve van-e:",
+      "settings-path": "Beállítások > Speciális > Chrome és Firefox automatikus kitöltés kiterjesztés"
+    },
+    "message": "Sajnos a Strongbox még nem érhető el ezen a platformon."
+  },
+  "search-bar": {
+    "title": "Keresés...",
+    "place-holder": "Keresés a Strongbox-ban"
+  },
+  "settings-popup-component": {
+    "title": "Beállítások",
+    "title-tab1": "Alkalmazás",
+    "title-tab2": "Stílus",
+    "show-inline-menus": "Soron belüli menük megjelenítése",
+    "show-match-count-badge-on-popup-icon": "Show Match Count Badge",
+    "fill-on-load-if-only-single-match-found": "Fill on Load if Only Single Match",
+    "always-fill-on-load-with-first-match": "Mindig az első találattal töltse ki",
+    "do-not-fill-on-load-on-this-domain": "Ne töltse ki ezen tartomány esetén",
+    "do-not-show-inline-menus-on-this-domain": "Ne jelenítsen meg soron belüli menüket ennél a tartománynál",
+    "do-not-show-inline-menus-on-this-page": "Ne jelenítsen meg soron belüli menüket ennél az oldalnál",
+    "do-not-show-credential-details-on-popup": "Részletek elrejtése a felugró ablakban",
+    "do-not-show-credential-details-on-inline-menu": "Részletek elrejtése az Inline menüben",
+    "language": "Nyelv",
+    "appearance": "Kinézet",
+    "font-size": "Betűméret",
+    "spacing": "Térköz",
+    "appearance-dark": "Sötét",
+    "appearance-light": "Világos",
+    "appearance-system": "Rendszer",
+    "style-small": "Kicsi",
+    "style-medium": "Közepes",
+    "style-large": "Nagy",
+    "style-xl": "Extra-nagy"
+  }
+}

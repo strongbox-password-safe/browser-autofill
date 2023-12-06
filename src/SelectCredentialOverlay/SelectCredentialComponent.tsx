@@ -74,7 +74,14 @@ function SimpleDialog(props: SimpleDialogProps) {
                       key={credential.uuid}
                       onClick={() => handleListItemClick(credential)}
                     >
-                      <CredentialsListItem credential={credential} showToast={showToast} />
+                      <CredentialsListItem
+                        credential={credential}
+                        showToast={showToast}
+                        onClick={() => {
+                          return;
+                        }}
+                        selected={false}
+                      />
                     </ListItem>
                   ))}
                 </div>

@@ -1,0 +1,130 @@
+{
+  "autodetected-language": "Automatisk detektering ({{language}})",
+  "general": {
+    "app-name": "Strongbox Autofyll",
+    "company-name": "Phoebe Code Limited",
+    "loading": "Laddar...",
+    "searching": "Söker...",
+    "cancel": "Avbryt",
+    "create": "Skapa",
+    "add": "Lägg till",
+    "search": "Sök",
+    "copy": "Kopiera",
+    "autofill": "Autofyll",
+    "launch-url": "Starta URL",
+    "show-hide": "Visa/dölj"
+  },
+  "inline-mini-field-menu": {
+    "no-matching-entries-found": "Inga matchande poster hittades",
+    "lock": "Lås",
+    "unlock": "Lås upp {{database}}",
+    "create-new": "Spara i Strongbox",
+    "no-autofill-enabled-databases": "Autofyll inte aktiverad för någon databas"
+  },
+  "hide-inline-menu": {
+    "hide-for-a-while": "Dölj tillfälligt",
+    "hide-on-page": "Dölj på sidan",
+    "hide-on-domain": "Dölj på domän"
+  },
+  "inline-menu-credential-item": {
+    "view-details": "Visa detaljer",
+    "copy-username": "Kopiera användarnamn",
+    "copy-password": "Kopiera lösenord"
+  },
+  "create-new-entry-dialog": {
+    "title": "Skapa ny post",
+    "credential-title": "Rubrik",
+    "username": "Användarnamn",
+    "password": "Lösenord",
+    "url": "URL",
+    "totp": "TOTP",
+    "modified-date": "Ändrad",
+    "database": "Databas",
+    "group": "Grupp",
+    "save-in": "Spara i",
+    "no-autoFill-databases-available": "Inga Autofyll-databaser tillgängliga",
+    "please-unlock-your-database": "Lås upp din databas ...",
+    "could-not-load-databases": "Kunde inte ladda databaser!",
+    "could-not-load-defaults": "Kunde inte ladda standardvärden!",
+    "could-not-refresh-groups": "Kunde inte uppdatera grupper!",
+    "could-not-generate-password": "Kunde inte generera lösenord",
+    "could-not-unlock-database": "Kunde inte låsa upp databas",
+    "could-not-refresh-status": "Kunde inte uppdatera status",
+    "could-not-connect-to-strongbox": "Kunde inte ansluta till Strongbox",
+    "error-getting-defaults": "Fel vid hämtning av standardvärden",
+    "there-is-not-a-valid-new-entry": "Det finns ingen giltig ny post.",
+    "could-not-create-new-entry": "Kunde inte skapa ny post. error=({{error}})"
+  },
+  "notification-toast": {
+    "successfully-created-new-entry": "Nytt inlägg har skapats",
+    "username-copied": "Användarnamn kopierades",
+    "password-copied": "Lösenord kopierades",
+    "totp-copied": "TOTP kopierad",
+    "url-copied": "URL kopierades",
+    "modified-date-copied": "Ändringsdatum kopierat",
+    "custom-field-copied": "Anpassat fält kopierat"
+  },
+  "current-tab-credentials": {
+    "title": "Träffar",
+    "autofill": "Autofyll",
+    "tags": "Taggar",
+    "notes": "Anteckningar"
+  },
+  "database-list-item": {
+    "lock": "Lås",
+    "locked": "Låst",
+    "unlock": "Lås upp",
+    "unlocked": "Upplåst",
+    "autofill-not-enabled": "Autofyll inaktiverad"
+  },
+  "databases-list-popup-component": {
+    "title": "Databaser",
+    "no-databases": "Inga databaser",
+    "no-databases-message": "Du har inga databaser ännu, varför inte lägga till en i Strongbox?"
+  },
+  "no-results-found-popup-component": {
+    "title": "Inga matchningar",
+    "message": "Strongbox kunde inte hitta några matchande poster för denna webbplats"
+  },
+  "not-running-popup-component": {
+    "title": "Strongbox inte tillgängligt",
+    "launch-strongbox": "Starta Strongbox",
+    "troubleshooting": {
+      "title": "Felsökning",
+      "message1": "1. Kontrollera att Strongbox är installerat och körs.",
+      "message2": "2. Kontrollera att du är en Pro-användare, Autofyll är en betalfunktion.",
+      "message3": "3. Se till att följande inställning är aktiverad:",
+      "settings-path": "Inställningar > Avancerat > Autofyll-tillägg för Chrome och Firefox"
+    },
+    "message": "Tyvärr är Strongbox ännu inte tillgängligt på denna plattform."
+  },
+  "search-bar": {
+    "title": "Sök...",
+    "place-holder": "Sök Strongbox"
+  },
+  "settings-popup-component": {
+    "title": "Inställningar",
+    "title-tab1": "App",
+    "title-tab2": "Stil",
+    "show-inline-menus": "Visa inline-menyer",
+    "show-match-count-badge-on-popup-icon": "Visa antal träffar på ikonen",
+    "fill-on-load-if-only-single-match-found": "Fyll i vid laddning om det bara finns en träff",
+    "always-fill-on-load-with-first-match": "Fyll alltid i vid laddning med första träffen",
+    "do-not-fill-on-load-on-this-domain": "Fyll inte i vid laddning för denna domän",
+    "do-not-show-inline-menus-on-this-domain": "Visa inte inline-menyer för denna domän",
+    "do-not-show-inline-menus-on-this-page": "Visa inte inline-menyer för denna sida",
+    "do-not-show-credential-details-on-popup": "Dölj detaljer i popup-fönster",
+    "do-not-show-credential-details-on-inline-menu": "Dölj detaljer i inline-menyn",
+    "language": "Språk",
+    "appearance": "Utseende",
+    "font-size": "Textstorlek",
+    "spacing": "Mellanrum",
+    "appearance-dark": "Mörkt",
+    "appearance-light": "Ljust",
+    "appearance-system": "System",
+    "style-small": "Liten",
+    "style-medium": "Medium",
+    "style-large": "Stor",
+    "style-xl": "Extra stor"
+  }
+}

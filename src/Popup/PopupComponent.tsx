@@ -9,20 +9,31 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CurrentTabCredentialsComponent from './CurrentTabCredentials';
 
-import { Utils } from '../Utils';
 import { Snackbar, Alert, Paper, BottomNavigation, BottomNavigationAction } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { NativeAppApi } from '../Messaging/NativeAppApi';
 import NotRunningPopupComponent from './NotRunningPopupComponent';
 import { Storage, DomainVerification, Settings } from '@mui/icons-material';
 import DatabasesListPopupComponent from './DatabasesListPopupComponent';
 import SettingsPopupComponent from './SettingsPopupComponent';
+import { useCustomStyle } from '../Contexts/CustomStyleContext';
+import { useTranslation } from 'react-i18next';
+import { Utils } from '../Utils';
+import { FontSize } from '../Settings/Settings';
 
-const darkTheme = createTheme({ palette: { mode: 'dark' } });
+enum Tabs {
+  Credentials = 0,
+  Databases,
+  Settings,
+}
 
 export default function PopupComponent() {
+  const [t] = useTranslation('global');
+  const { getCustomStyle, fontSize } = useCustomStyle();
+  const theme = createTheme(getCustomStyle());
+
   const ref = React.useRef<HTMLDivElement>(null); 
 
   const [loading, setLoading] = React.useState<boolean>(true);
@@ -30,7 +41,7 @@ export default function PopupComponent() {
 
   const [error, setError] = React.useState<boolean>(false);
 
-  const [selectedTab, setSelectedTab] = React.useState(1);
+  const [selectedTab, setSelectedTab] = React.useState(Tabs.Databases);
 
   const [popupVisible, setPopupVisible] = React.useState(false);
   const [toastMessage, setToastMessage] = React.useState('');
@@ -65,7 +76,7 @@ export default function PopupComponent() {
         const unlocked = status.databases.filter(database => !database.locked && database.autoFillEnabled);
 
         setUnlockedCount(unlocked.length);
-        setSelectedTab(unlocked.length == 0 ? 1 : 0);
+        setSelectedTab(unlocked.length == 0 ? Tabs.Databases : Tabs.Credentials);
       } else {
         setError(true);
       }
@@ -78,31 +89,38 @@ export default function PopupComponent() {
   }, []);
 
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={theme}>
       <Box sx={{ overflow: 'hidden', scrollbarWidth: 'none' }} ref={ref}>
         <CssBaseline />
-        {loading ? (
-          'Loading...'
-        ) : error ? (
-          <NotRunningPopupComponent onRefresh={onDismiss} />
-        ) : selectedTab > 0 ? (
-          selectedTab == 1 ? (
-            <DatabasesListPopupComponent showToast={message => showToast(message)} />
+        <Box>
+          {loading ? (
+            t('general.loading')
+          ) : selectedTab > Tabs.Credentials ? (
+            selectedTab == Tabs.Databases ? (
+              error ? (
+                <NotRunningPopupComponent onRefresh={onDismiss} />
+              ) : (
+                <DatabasesListPopupComponent showToast={message => showToast(message)} />
+              )
+            ) : (
+              <SettingsPopupComponent />
+            )
           ) : (
-            <SettingsPopupComponent />
-          )
-        ) : (
-          <CurrentTabCredentialsComponent showToast={message => showToast(message)} />
-        )}
-
+            <CurrentTabCredentialsComponent showToast={message => showToast(message)} />
+          )}
+        </Box>
         <Snackbar open={popupVisible} autoHideDuration={1000} onClose={handleToastClose}>
           <Alert onClose={handleToastClose} severity="success" sx={{ width: '100%' }}>
             {toastMessage}
           </Alert>
         </Snackbar>
 
-        {Utils.isMacintosh() ? (
-          <Paper elevation={1} square>
+        {Utils.isMacintosh() && (
+          <Paper
+            elevation={1}
+            square
+            sx={{ boxShadow: 'none', margin: `${[FontSize.xl, FontSize.large].includes(fontSize) ? '10px' : '0px'}` }}
+          >
             <BottomNavigation
               showLabels
               value={selectedTab}
@@ -110,30 +128,25 @@ export default function PopupComponent() {
                 setSelectedTab(newValue);
               }}
             >
-              {unlockedCount === 0 ? (
+              {unlockedCount === 0 || error ? (
                 ''
               ) : (
                 <BottomNavigationAction
-                  label={unlockedCount === 0 ? '' : 'Matches'}
-                  icon={<DomainVerification color={selectedTab == 0 ? 'primary' : 'disabled'} />}
+                  label={unlockedCount === 0 ? '' : t('current-tab-credentials.title')}
+                  icon={<DomainVerification color={selectedTab == Tabs.Credentials ? 'primary' : 'disabled'} />}
                 />
               )}
               <BottomNavigationAction
-                label="Databases"
-                icon={<Storage color={selectedTab == 1 ? 'primary' : 'disabled'} />}
+                label={t('databases-list-popup-component.title')}
+                icon={<Storage color={selectedTab == Tabs.Databases ? 'primary' : 'disabled'} />}
               />
-              {error ? (
-                ''
-              ) : (
-                <BottomNavigationAction
-                  label="Settings"
-                  icon={<Settings color={selectedTab == 2 ? 'primary' : 'disabled'} />}
-                />
-              )}
+
+              <BottomNavigationAction
+                label={t('settings-popup-component.title')}
+                icon={<Settings color={selectedTab == Tabs.Settings ? 'primary' : 'disabled'} />}
+              />
             </BottomNavigation>
           </Paper>
-        ) : (
-          <></>
         )}
       </Box>
     </ThemeProvider>

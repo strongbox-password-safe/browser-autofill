@@ -1,0 +1,130 @@
+{
+  "autodetected-language": "Automatische Erkennung ({{language}})",
+  "general": {
+    "app-name": "Strongbox autom. Ausfüllen",
+    "company-name": "Phoebe Code Limited",
+    "loading": "Wird geladen …",
+    "searching": "Suche wird ausgeführt …",
+    "cancel": "Abbrechen",
+    "create": "Erstellen",
+    "add": "Hinzufügen",
+    "search": "Suchen",
+    "copy": "Kopieren",
+    "autofill": "Automatisches Ausfüllen",
+    "launch-url": "URL aufrufen",
+    "show-hide": "Anzeigen/Ausblenden"
+  },
+  "inline-mini-field-menu": {
+    "no-matching-entries-found": "Keine passenden Einträge gefunden",
+    "lock": "Sperren",
+    "unlock": "{{database}} entsperren",
+    "create-new": "In Strongbox speichern",
+    "no-autofill-enabled-databases": "Keine Datenbanken für autom. Ausfüllen aktiviert"
+  },
+  "hide-inline-menu": {
+    "hide-for-a-while": "Für eine Weile ausblenden",
+    "hide-on-page": "Auf Seite ausblenden",
+    "hide-on-domain": "Auf Domain ausblenden"
+  },
+  "inline-menu-credential-item": {
+    "view-details": "Details anzeigen",
+    "copy-username": "Benutzername kopieren",
+    "copy-password": "Passwort kopieren"
+  },
+  "create-new-entry-dialog": {
+    "title": "Neuen Eintrag erstellen",
+    "credential-title": "Titel",
+    "username": "Benutzername",
+    "password": "Passwort",
+    "url": "URL",
+    "totp": "TOTP",
+    "modified-date": "Geändert",
+    "database": "Datenbank",
+    "group": "Gruppe",
+    "save-in": "Speichern in",
+    "no-autoFill-databases-available": "Keine Datenbanken zum autom Ausfüllen verfügbar",
+    "please-unlock-your-database": "Bitte entsperren Sie Ihre Datenbank …",
+    "could-not-load-databases": "Datenbank konnte nicht geladen werden!",
+    "could-not-load-defaults": "Standardwerte konnte nicht geladen werden!",
+    "could-not-refresh-groups": "Gruppen konnte nicht aktualisiert werden!",
+    "could-not-generate-password": "Passwort konnte nicht erzeugt werden",
+    "could-not-unlock-database": "Datenbank konnte nicht entsperrt werden",
+    "could-not-refresh-status": "Status konnte nicht aktualisiert werden",
+    "could-not-connect-to-strongbox": "Verbindung zur Strongbox nicht möglich",
+    "error-getting-defaults": "Fehler beim Abrufen der Standardwerte",
+    "there-is-not-a-valid-new-entry": "Es gibt keinen gültigen neuen Eintrag.",
+    "could-not-create-new-entry": "Neuer Eintrag konnte nicht erstellt werden. Fehler=({{error}})"
+  },
+  "notification-toast": {
+    "successfully-created-new-entry": "Neuen Eintrag erfolgreich erstellt",
+    "username-copied": "Benutzername kopiert",
+    "password-copied": "Passwort kopiert",
+    "totp-copied": "TOTP kopiert",
+    "url-copied": "URL kopiert",
+    "modified-date-copied": "Änderungsdatum kopiert",
+    "custom-field-copied": "Benutzerdefiniertes Feld kopiert"
+  },
+  "current-tab-credentials": {
+    "title": "Übereinstimmungen",
+    "autofill": "Automatisches Ausfüllen",
+    "tags": "Schlagwörter",
+    "notes": "Notizen"
+  },
+  "database-list-item": {
+    "lock": "Sperren",
+    "locked": "Gesperrt",
+    "unlock": "Entsperren",
+    "unlocked": "Entsperrt",
+    "autofill-not-enabled": "Automatisches Ausfüllen nicht aktiviert"
+  },
+  "databases-list-popup-component": {
+    "title": "Datenbanken",
+    "no-databases": "Keine Datenbanken",
+    "no-databases-message": "Es wurde noch keine Datenbank erstellt. Fügen Sie jetzt eine zu Strongbox hinzu."
+  },
+  "no-results-found-popup-component": {
+    "title": "Keine Übereinstimmungen",
+    "message": "Strongbox konnte keine passenden Einträge für diese Website finden"
+  },
+  "not-running-popup-component": {
+    "title": "Strongbox nicht verfügbar",
+    "launch-strongbox": "Strongbox starten",
+    "troubleshooting": {
+      "title": "Problembehandlung",
+      "message1": "1. Stellen Sie sicher, dass Strongbox installiert ist und ausgeführt wird.",
+      "message2": "2. Stellen Sie sicher, dass Sie ein Pro-Benutzer sind, denn das automatische Ausfüllen ist eine kostenpflichtige Pro-Funktion.",
+      "message3": "3. Prüfen Sie, ob die folgende Einstellung aktiviert ist:",
+      "settings-path": "Einstellungen ➜ Erweitert ➜ Chrome und Firefox AutoFill-Erweiterung"
+    },
+    "message": "Leider ist Strongbox auf dieser Plattform noch nicht verfügbar."
+  },
+  "search-bar": {
+    "title": "Suchen …",
+    "place-holder": "Strongbox durchsuchen"
+  },
+  "settings-popup-component": {
+    "title": "Einstellungen",
+    "title-tab1": "App",
+    "title-tab2": "Stil",
+    "show-inline-menus": "Inline-Menüs anzeigen",
+    "show-match-count-badge-on-popup-icon": "Trefferanzahl anzeigen",
+    "fill-on-load-if-only-single-match-found": "Beim Laden ausfüllen, wenn nur eine Übereinstimmung vorliegt",
+    "always-fill-on-load-with-first-match": "Beim Laden immer mit der ersten Übereinstimmung ausfüllen",
+    "do-not-fill-on-load-on-this-domain": "Beim Laden dieser Domain nicht ausfüllen",
+    "do-not-show-inline-menus-on-this-domain": "Inline-Menüs für diese Domain nicht anzeigen",
+    "do-not-show-inline-menus-on-this-page": "Inline-Menüs auf dieser Seite nicht anzeigen",
+    "do-not-show-credential-details-on-popup": "Details im Popup ausblenden",
+    "do-not-show-credential-details-on-inline-menu": "Details im Inline-Menü ausblenden",
+    "language": "Sprache",
+    "appearance": "Aussehen",
+    "font-size": "Schriftgröße",
+    "spacing": "Abstände",
+    "appearance-dark": "Dunkel",
+    "appearance-light": "Hell",
+    "appearance-system": "System",
+    "style-small": "Klein",
+    "style-medium": "Mittel",
+    "style-large": "Groß",
+    "style-xl": "Extra groß"
+  }
+}

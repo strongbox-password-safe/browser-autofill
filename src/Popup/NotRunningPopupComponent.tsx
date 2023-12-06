@@ -1,14 +1,17 @@
-import { Typography, Box, Stack, Button, IconButton, ListItem, List } from '@mui/material';
+import { Typography, Box, Stack, Button, IconButton } from '@mui/material';
 import React from 'react';
-import { HorizontalRule, HorizontalRuleTwoTone, Person, RocketLaunch, SensorsOff } from '@mui/icons-material';
+import { HorizontalRuleTwoTone, RocketLaunch, SensorsOff } from '@mui/icons-material';
 import { NativeAppApi } from '../Messaging/NativeAppApi';
 import { Utils } from '../Utils';
+import { useTranslation } from 'react-i18next';
 
 interface NotRunningPopupComponentProps {
   onRefresh: () => void;
 }
 
 function NotRunningPopupComponent({ onRefresh }: NotRunningPopupComponentProps) {
+  const [t] = useTranslation('global');
+
   return (
     <Stack
       direction="column"
@@ -23,7 +26,7 @@ function NotRunningPopupComponent({ onRefresh }: NotRunningPopupComponentProps) 
       </Box>
       <Box>
         <Typography variant="h5" align="center" sx={{ textOverflow: 'ellipsis', padding: 0 }}>
-          Strongbox Unavailable
+          {t('not-running-popup-component.title')}
         </Typography>
       </Box>
       {Utils.isMacintosh() ? (
@@ -32,24 +35,24 @@ function NotRunningPopupComponent({ onRefresh }: NotRunningPopupComponentProps) 
             <IconButton color="primary" onClick={() => onLaunch(onRefresh)}>
               <RocketLaunch fontSize="inherit" />
             </IconButton>
-            <Button onClick={() => onLaunch(onRefresh)}>Launch Strongbox</Button>
+            <Button onClick={() => onLaunch(onRefresh)}>{t('not-running-popup-component.launch-strongbox')}</Button>
           </Box>
           <HorizontalRuleTwoTone sx={{ width: '300px' }} />
           <Box display="block" sx={{ display: 'flex', flexDirection: 'column' }}>
             <Box>
               <Typography variant="h6" align="center" sx={{ textOverflow: 'ellipsis', padding: 0 }}>
-                Troubleshooting
+                {t('not-running-popup-component.troubleshooting.title')}
                 <br />
                 <Typography variant="body2" align="left" sx={{ textOverflow: 'ellipsis', padding: 0 }}>
-                  1. Make sure Strongbox is installed and running.
+                  {t('not-running-popup-component.troubleshooting.message1')}
                   <br />
-                  2. Make sure you are a Pro user, AutoFill is a paid Pro feature.
+                  {t('not-running-popup-component.troubleshooting.message2')}
                   <br />
-                  3. Check the setting below is enabled:
+                  {t('not-running-popup-component.troubleshooting.message3')}
                   <br />
                   <p>
                     <Typography variant="caption" align="left" sx={{ textOverflow: 'ellipsis', padding: 0 }}>
-                      Settings {'>'} Advanced {'>'} Chrome & Firefox AutoFill Extension
+                      {t('not-running-popup-component.troubleshooting.settings-path')}
                     </Typography>
                   </p>
                 </Typography>
@@ -61,7 +64,7 @@ function NotRunningPopupComponent({ onRefresh }: NotRunningPopupComponentProps) 
         <>
           <HorizontalRuleTwoTone sx={{ width: '300px' }} />
           <Typography variant="body2" align="left" sx={{ textOverflow: 'ellipsis', padding: 0, paddingTop: '13px' }}>
-            Unfortunately Strongbox isn't yet available on this platform.
+            {t('not-running-popup-component.message')}
           </Typography>
         </>
       )}

@@ -21,6 +21,7 @@ module.exports = {
     popup: path.join(sourcePath, 'Popup', 'popup.tsx'),
     
     
+    iframe: path.join(sourcePath, 'Content', 'Iframe', 'iframe.tsx'),
   },
   output: {
     path: path.join(destPath, targetBrowser),
@@ -50,6 +51,13 @@ module.exports = {
       chunks: ['popup'],
       hash: true,
       filename: 'popup.html',
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(sourcePath, 'Content', 'Iframe', 'iframe.html'),
+      inject: 'body',
+      chunks: ['iframe'],
+      hash: true,
+      filename: 'iframe.html',
     }),
     new webpack.DefinePlugin({
       'process.env.VERSION': JSON.stringify(process.env.npm_package_version),

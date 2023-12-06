@@ -1,0 +1,130 @@
+{
+  "autodetected-language": "Автоматично виявлено ({{language}})",
+  "general": {
+    "app-name": "Автозаповнення Strongbox",
+    "company-name": "Phoebe Code Limited",
+    "loading": "Завантаження...",
+    "searching": "Виконується пошук...",
+    "cancel": "Скасувати",
+    "create": "Створити",
+    "add": "Додати",
+    "search": "Пошук",
+    "copy": "Copy",
+    "autofill": "AutoFill",
+    "launch-url": "Launch URL",
+    "show-hide": "Show/Hide"
+  },
+  "inline-mini-field-menu": {
+    "no-matching-entries-found": "Не знайдено відповідних записів",
+    "lock": "Замкнути",
+    "unlock": "Відімкнути {{database}}",
+    "create-new": "Зберегти в Strongbox",
+    "no-autofill-enabled-databases": "Немає баз даних з увімкненим автозаповненням"
+  },
+  "hide-inline-menu": {
+    "hide-for-a-while": "Приховати на деякий час",
+    "hide-on-page": "Приховати на сторінці",
+    "hide-on-domain": "Приховати на домені"
+  },
+  "inline-menu-credential-item": {
+    "view-details": "View Details",
+    "copy-username": "Копіювати ім'я користувача",
+    "copy-password": "Копіювати пароль"
+  },
+  "create-new-entry-dialog": {
+    "title": "Створити новий запис",
+    "credential-title": "Назва",
+    "username": "Ім'я користувача",
+    "password": "Пароль",
+    "url": "URL",
+    "totp": "TOTP",
+    "modified-date": "Modified",
+    "database": "База паролів",
+    "group": "Група",
+    "save-in": "Зберегти в",
+    "no-autoFill-databases-available": "Немає доступних баз паролів для автозаповнення",
+    "please-unlock-your-database": "Відімкніть свою базу паролів...",
+    "could-not-load-databases": "Не вдалося завантажити бази даних!",
+    "could-not-load-defaults": "Не вдалося завантажити типові значення!",
+    "could-not-refresh-groups": "Не вдалося оновити групи!",
+    "could-not-generate-password": "Не вдалося згенерувати пароль",
+    "could-not-unlock-database": "Не вдалося відімкнути базу даних",
+    "could-not-refresh-status": "Не вдалося оновити статус",
+    "could-not-connect-to-strongbox": "Не вдалося під'єднатися до Strongbox",
+    "error-getting-defaults": "Помилка отримання типових значень",
+    "there-is-not-a-valid-new-entry": "Немає жодного дійсного нового запису.",
+    "could-not-create-new-entry": "Не вдалося створити новий запис. error=({{error}})"
+  },
+  "notification-toast": {
+    "successfully-created-new-entry": "Новий запис успішно створено",
+    "username-copied": "Ім'я користувача скопійовано",
+    "password-copied": "Пароль скопійовано",
+    "totp-copied": "TOTP скопійовано",
+    "url-copied": "URL Copied",
+    "modified-date-copied": "Modified Date Copied",
+    "custom-field-copied": "Custom Field Copied"
+  },
+  "current-tab-credentials": {
+    "title": "Збіги",
+    "autofill": "AutoFill",
+    "tags": "Tags",
+    "notes": "Notes"
+  },
+  "database-list-item": {
+    "lock": "Замкнути",
+    "locked": "Замкнено",
+    "unlock": "Відімкнути",
+    "unlocked": "Відімкнено",
+    "autofill-not-enabled": "Автозаповнення не ввімкнено"
+  },
+  "databases-list-popup-component": {
+    "title": "Бази паролів",
+    "no-databases": "Немає баз даних",
+    "no-databases-message": "У вас ще немає жодної бази даних. Бажаєте створити нову в Strongbox?"
+  },
+  "no-results-found-popup-component": {
+    "title": "Немає збігів",
+    "message": "Strongbox не знайшов відповідних записів для цього вебсайту"
+  },
+  "not-running-popup-component": {
+    "title": "Strongbox недоступний",
+    "launch-strongbox": "Запустити Strongbox",
+    "troubleshooting": {
+      "title": "Усунення проблем",
+      "message1": "1. Переконайтеся, що Strongbox встановлено та запущено.",
+      "message2": "2. Переконайтеся, що ви є Pro-користувачем. Автозаповнення є платною функцією Pro.",
+      "message3": "3. Перевірте, чи ввімкнено наведені нижче параметри:",
+      "settings-path": "Параметри > Розширені > Розширення автозаповнення для Chrome та Firefox"
+    },
+    "message": "На жаль, Strongbox ще не доступний на цій платформі."
+  },
+  "search-bar": {
+    "title": "Пошук...",
+    "place-holder": "Search Strongbox"
+  },
+  "settings-popup-component": {
+    "title": "Параметри",
+    "title-tab1": "Програма",
+    "title-tab2": "Стиль",
+    "show-inline-menus": "Показати вбудовані меню",
+    "show-match-count-badge-on-popup-icon": "Show Match Count Badge",
+    "fill-on-load-if-only-single-match-found": "Fill on Load if Only Single Match",
+    "always-fill-on-load-with-first-match": "Завжди заповнювати при завантаженні першим збігом",
+    "do-not-fill-on-load-on-this-domain": "Вимкнути автозаповнення для цього домену",
+    "do-not-show-inline-menus-on-this-domain": "Не показувати вбудовані меню для цього домену",
+    "do-not-show-inline-menus-on-this-page": "Не показувати вбудовані меню на цій сторінці",
+    "do-not-show-credential-details-on-popup": "Hide Details on Popup",
+    "do-not-show-credential-details-on-inline-menu": "Hide Details on Inline Menu",
+    "language": "Мова",
+    "appearance": "Зовнішній вигляд",
+    "font-size": "Розмір шрифту",
+    "spacing": "Інтервал",
+    "appearance-dark": "Темна",
+    "appearance-light": "Світла",
+    "appearance-system": "Системна",
+    "style-small": "Малий",
+    "style-medium": "Середній",
+    "style-large": "Великий",
+    "style-xl": "Найбільший"
+  }
+}

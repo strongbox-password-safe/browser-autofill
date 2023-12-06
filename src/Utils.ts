@@ -53,4 +53,34 @@ export class Utils {
   static isMacintosh(): boolean {
     return navigator.platform.indexOf('Mac') > -1;
   }
+
+  static mapProperties<T1, T2>(source: T1, target: T2, excludedProperties: string[] = []): T2 {
+    for (const [key, value] of Object.entries(source as object)) {
+      if (!excludedProperties.includes(key)) {
+        (target as any)[key] = value;
+      }
+    }
+
+    return target;
+  }
+
+  static getEntropyPercent = (entropy: number) => {
+    const foo = Math.round((entropy / 128) * 100);
+    return Math.min(foo, 100);
+  };
+
+  static getEntropyColor(entropy: number) {
+    const percent = this.getEntropyPercent(entropy);
+    const r = percent < 50 ? 255 : Math.floor(255 - ((percent * 2 - 100) * 255) / 100);
+    const g = percent > 50 ? 255 : Math.floor((percent * 2 * 255) / 100);
+    return 'rgb(' + r + ',' + g + ',0)';
+  }
+
+  static isParentDocument() {
+    if (window.location !== window.parent.location) {
+      return false;
+    }
+
+    return true;
+  }
 }

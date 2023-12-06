@@ -2,6 +2,7 @@ import { DatabaseSummary } from './DatabaseSummary';
 
 export class ServerSettings {
   public supportsCreateNew: boolean;
+  public markdownNotes: boolean;
 }
 
 export class GetStatusResponse {

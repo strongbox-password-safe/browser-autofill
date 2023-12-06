@@ -1,0 +1,130 @@
+{
+  "autodetected-language": "Rilevato Automaticamente ({{language}})",
+  "general": {
+    "app-name": "Riempimento Automatico di Strongbox",
+    "company-name": "Phoebe Code Limited",
+    "loading": "Caricamento in corso...",
+    "searching": "Ricerca in corso...",
+    "cancel": "Annullare",
+    "create": "Creare",
+    "add": "Aggiungere",
+    "search": "Ricerca",
+    "copy": "Copiare",
+    "autofill": "Riempimento Automatico",
+    "launch-url": "Avviare URL",
+    "show-hide": "Mostrare/Nascondere"
+  },
+  "inline-mini-field-menu": {
+    "no-matching-entries-found": "Nessuna Voce Corrispondente Trovata",
+    "lock": "Bloccare",
+    "unlock": "Sbloccare {{database}}",
+    "create-new": "Salvare in Strongbox",
+    "no-autofill-enabled-databases": "Nessun Database Abilitato per Riempimento Automatico"
+  },
+  "hide-inline-menu": {
+    "hide-for-a-while": "Nascondere per un po'",
+    "hide-on-page": "Nascondere sulla pagina",
+    "hide-on-domain": "Nascondere sul dominio"
+  },
+  "inline-menu-credential-item": {
+    "view-details": "Visualizzare Dettagli",
+    "copy-username": "Copiare Nome Utente",
+    "copy-password": "Copiare Password"
+  },
+  "create-new-entry-dialog": {
+    "title": "Creare Nuovo Elemento",
+    "credential-title": "Titolo",
+    "username": "Nome Utente",
+    "password": "Password",
+    "url": "URL",
+    "totp": "TOTP",
+    "modified-date": "Modificato",
+    "database": "Database",
+    "group": "Gruppo",
+    "save-in": "Salvare in",
+    "no-autoFill-databases-available": "Nessun Database Di Riempimento Automatico Disponibile",
+    "please-unlock-your-database": "Si Prega di Sbloccare il Database...",
+    "could-not-load-databases": "Impossibile caricare i database!",
+    "could-not-load-defaults": "Impossibile caricare le impostazioni predefinite!",
+    "could-not-refresh-groups": "Impossibile aggiornare i gruppi!",
+    "could-not-generate-password": "Impossibile Generare La Password",
+    "could-not-unlock-database": "Impossibile Sbloccare il Database",
+    "could-not-refresh-status": "Impossibile aggiornare lo stato",
+    "could-not-connect-to-strongbox": "Impossibile connettersi a Strongbox",
+    "error-getting-defaults": "Errore nell'ottenere le impostazioni predefinite",
+    "there-is-not-a-valid-new-entry": "Non c'è un nuovo elemento valido.",
+    "could-not-create-new-entry": "Impossibile creare una nuova voce. errore=({{error}})"
+  },
+  "notification-toast": {
+    "successfully-created-new-entry": "Nuova Voce Creata Con Successo",
+    "username-copied": "Nome Utente Copiato",
+    "password-copied": "Password Copiata",
+    "totp-copied": "TOTP Copiato",
+    "url-copied": "URL Copiato",
+    "modified-date-copied": "Data Modificata Copiata",
+    "custom-field-copied": "Campo Personalizzato Copiato"
+  },
+  "current-tab-credentials": {
+    "title": "Corrispondenze",
+    "autofill": "Riempimento Automatico",
+    "tags": "Etichette",
+    "notes": "Note"
+  },
+  "database-list-item": {
+    "lock": "Bloccare",
+    "locked": "Bloccato",
+    "unlock": "Sbloccare",
+    "unlocked": "Sbloccato",
+    "autofill-not-enabled": "Riempimento Automatico Disabilitato"
+  },
+  "databases-list-popup-component": {
+    "title": "Database",
+    "no-databases": "Nessun Database",
+    "no-databases-message": "Non c'è ancora alcun database, perché non aggiungerne uno a Strongbox?"
+  },
+  "no-results-found-popup-component": {
+    "title": "Nessuna Corrispondenza",
+    "message": "Strongbox non ha trovato alcuna voce corrispondente per questo sito web"
+  },
+  "not-running-popup-component": {
+    "title": "Strongbox Non Disponibile",
+    "launch-strongbox": "Avviare Strongbox",
+    "troubleshooting": {
+      "title": "Risoluzione dei Problemi",
+      "message1": "1. Assicurarsi che Strongbox sia installato e in esecuzione.",
+      "message2": "2. Assicurati di essere un utente Pro, Riempimento Automatico è una funzione Pro a pagamento.",
+      "message3": "3. Verificare che l'impostazione seguente sia attivata:",
+      "settings-path": "Impostazioni > Avanzate > Estensione di riempimento automatico per Chrome e Firefox"
+    },
+    "message": "Purtroppo Strongbox non è ancora disponibile su questa piattaforma."
+  },
+  "search-bar": {
+    "title": "Ricerca...",
+    "place-holder": "Ricerca Strongbox"
+  },
+  "settings-popup-component": {
+    "title": "Impostazioni",
+    "title-tab1": "App",
+    "title-tab2": "Stile",
+    "show-inline-menus": "Mostrare Menu in Linea",
+    "show-match-count-badge-on-popup-icon": "Mostrare Badge Conteggio Corrispondenze",
+    "fill-on-load-if-only-single-match-found": "Riempimento Automatico Solo se Singola Corrispondenza",
+    "always-fill-on-load-with-first-match": "Riempire Sempre all'Esecuzione con la Prima Corrispondenza",
+    "do-not-fill-on-load-on-this-domain": "Non Riempire all'Esecuzione per Questo Dominio",
+    "do-not-show-inline-menus-on-this-domain": "Non Mostrare Menu In Linea per Questo Dominio",
+    "do-not-show-inline-menus-on-this-page": "Non Mostrare Menu In Linea per Questa Pagina",
+    "do-not-show-credential-details-on-popup": "Nascondere Dettagli su Popup",
+    "do-not-show-credential-details-on-inline-menu": "Nascondere Dettagli nel Menu In Linea",
+    "language": "Lingua",
+    "appearance": "Aspetto",
+    "font-size": "Dimensione Carattere",
+    "spacing": "Spaziatura",
+    "appearance-dark": "Scuro",
+    "appearance-light": "Chiaro",
+    "appearance-system": "Sistema",
+    "style-small": "Piccolo",
+    "style-medium": "Medio",
+    "style-large": "Grande",
+    "style-xl": "XL"
+  }
+}

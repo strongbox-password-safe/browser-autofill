@@ -1,0 +1,130 @@
+{
+  "autodetected-language": "Détecté automatiquement ({{language}})",
+  "general": {
+    "app-name": "Remplissage automatique Strongbox",
+    "company-name": "Phoebe Code Limited",
+    "loading": "Chargement...",
+    "searching": "Recherche en cours...",
+    "cancel": "Annuler",
+    "create": "Créer",
+    "add": "Ajouter",
+    "search": "Chercher",
+    "copy": "Copier",
+    "autofill": "Remplissage automatique",
+    "launch-url": "Suivre l'URL",
+    "show-hide": "Afficher/Masquer"
+  },
+  "inline-mini-field-menu": {
+    "no-matching-entries-found": "Aucune entrée correspondante trouvée",
+    "lock": "Verrouiller",
+    "unlock": "Déverrouiller {{database}}",
+    "create-new": "Enregistrer dans Strongbox",
+    "no-autofill-enabled-databases": "Aucune base de données de remplissage automatique activée"
+  },
+  "hide-inline-menu": {
+    "hide-for-a-while": "Cacher temporairement",
+    "hide-on-page": "Cacher sur la page",
+    "hide-on-domain": "Cacher sur le domaine"
+  },
+  "inline-menu-credential-item": {
+    "view-details": "Voir détails",
+    "copy-username": "Copier le nom d'utilisateur",
+    "copy-password": "Copier le mot de passe"
+  },
+  "create-new-entry-dialog": {
+    "title": "Créer une nouvelle entrée",
+    "credential-title": "Titre",
+    "username": "Nom d'utilisateur",
+    "password": "Mot de passe",
+    "url": "URL",
+    "totp": "TOTP",
+    "modified-date": "Dernière modification",
+    "database": "Base de données",
+    "group": "Groupe",
+    "save-in": "Enregistrer dans",
+    "no-autoFill-databases-available": "Aucune base de données de remplissage automatique disponible",
+    "please-unlock-your-database": "Veuillez déverrouiller votre base de données...",
+    "could-not-load-databases": "Impossible de charger les bases de données !",
+    "could-not-load-defaults": "Impossible de charger les valeurs par défaut !",
+    "could-not-refresh-groups": "Impossible d'actualiser les groupes !",
+    "could-not-generate-password": "Impossible de générer le mot de passe",
+    "could-not-unlock-database": "Impossible de déverrouiller la base de données",
+    "could-not-refresh-status": "Impossible d'actualiser le statut",
+    "could-not-connect-to-strongbox": "Impossible de se connecter à Strongbox",
+    "error-getting-defaults": "Erreur de chargement des paramètres par défaut",
+    "there-is-not-a-valid-new-entry": "Il n'y a pas de nouvelle entrée valide.",
+    "could-not-create-new-entry": "Impossible de créer une nouvelle entrée. erreur =({{error}})"
+  },
+  "notification-toast": {
+    "successfully-created-new-entry": "Entrée créée avec succès",
+    "username-copied": "Nom d'utilisateur copié",
+    "password-copied": "Mot de passe copié",
+    "totp-copied": "TOTP copié",
+    "url-copied": "URL copiée",
+    "modified-date-copied": "Date de modification copiée",
+    "custom-field-copied": "Champ personnalisé copié"
+  },
+  "current-tab-credentials": {
+    "title": "Correspondances",
+    "autofill": "Remplissage automatique",
+    "tags": "Étiquettes",
+    "notes": "Notes"
+  },
+  "database-list-item": {
+    "lock": "Verrouiller",
+    "locked": "Verrouillé",
+    "unlock": "Déverrouiller",
+    "unlocked": "Déverrouillée",
+    "autofill-not-enabled": "Remplissage automatique désactivé"
+  },
+  "databases-list-popup-component": {
+    "title": "Bases de données",
+    "no-databases": "Aucune base de données",
+    "no-databases-message": "Vous n'avez pas encore de base de données, pourquoi ne pas en ajouter une à Strongbox ?"
+  },
+  "no-results-found-popup-component": {
+    "title": "Aucune correspondance",
+    "message": "Strongbox n'a trouvé aucune entrée correspondante pour ce site web"
+  },
+  "not-running-popup-component": {
+    "title": "Strongbox indisponible",
+    "launch-strongbox": "Lancer Strongbox",
+    "troubleshooting": {
+      "title": "Dépannage",
+      "message1": "1. Assurez-vous que Strongbox est installé et en cours d'exécution.",
+      "message2": "2. Assurez-vous que vous êtes un utilisateur Pro, le remplissage automatique est une fonctionnalité payante Pro.",
+      "message3": "3. Vérifiez que le paramètre ci-dessous est activé :",
+      "settings-path": "Réglages > Avancé > Extension de remplissage auto pour Chrome et Firefox"
+    },
+    "message": "Malheureusement, Strongbox n'est pas encore disponible sur cette plateforme."
+  },
+  "search-bar": {
+    "title": "Recherche...",
+    "place-holder": "Rechercher dans Strongbox"
+  },
+  "settings-popup-component": {
+    "title": "Réglages",
+    "title-tab1": "Appli",
+    "title-tab2": "Style",
+    "show-inline-menus": "Show Inline Menus",
+    "show-match-count-badge-on-popup-icon": "Afficher le nombre de correspondances sur l'icône",
+    "fill-on-load-if-only-single-match-found": "Remplir au chargement si unique correspondance trouvée",
+    "always-fill-on-load-with-first-match": "Toujours remplir au chargement avec la première correspondance",
+    "do-not-fill-on-load-on-this-domain": "Ne pas remplir lors du chargement sur ce domaine",
+    "do-not-show-inline-menus-on-this-domain": "Do Not Show Inline Menus on this Domain",
+    "do-not-show-inline-menus-on-this-page": "Do Not Show Inline Menus on this Page",
+    "do-not-show-credential-details-on-popup": "Cacher les détails dans la fenêtre contextuelle",
+    "do-not-show-credential-details-on-inline-menu": "Hide Details on Inline Menu",
+    "language": "Langue",
+    "appearance": "Apparence",
+    "font-size": "Taille du texte",
+    "spacing": "Espacement",
+    "appearance-dark": "Sombre",
+    "appearance-light": "Claire",
+    "appearance-system": "Système",
+    "style-small": "Petit",
+    "style-medium": "Moyen",
+    "style-large": "Grand",
+    "style-xl": "XL"
+  }
+}

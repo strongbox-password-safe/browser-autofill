@@ -2,13 +2,7 @@ import { AutoFillCredential } from '../Messaging/Protocol/AutoFillCredential';
 import { PageAnalyser } from './PageAnalyser';
 
 export class AutoFiller {
-  async doIt(
-    credential: AutoFillCredential,
-    inlineFieldInitiator: HTMLInputElement | null = null,
-    inlineFieldInitiatorIsPassword = false,
-    fillMultiple = false,
-    isPageLoadFill = false
-  ): Promise<boolean> {
+  async doIt(credential: AutoFillCredential, inlineFieldInitiator: HTMLInputElement | null = null, inlineFieldInitiatorIsPassword = false, fillMultiple = false): Promise<boolean> {
     
 
     
@@ -61,6 +55,10 @@ export class AutoFiller {
     return filledSomething;
   }
 
+  async doItSingleField(text: string, inlineFieldInitiator: HTMLInputElement): Promise<void> {
+    this.fillFieldAndAnimate(inlineFieldInitiator, text);
+  }
+
   private fillFieldAndAnimate(field: HTMLInputElement, value: string) {
     this.fillField(field, value);
 
@@ -83,7 +81,15 @@ export class AutoFiller {
   private fillField(field: HTMLInputElement, value: string) {
     const originalValue = field.value;
 
-    field.click();
+    const clickEvent = new MouseEvent('click', {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+    });
+
+    clickEvent.stopPropagation();
+
+    field.dispatchEvent(clickEvent);
     field.focus();
 
     field.dispatchEvent(this.getKeyboardEvent('keydown'));

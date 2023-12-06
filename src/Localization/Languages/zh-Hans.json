@@ -1,0 +1,130 @@
+{
+  "autodetected-language": "自动检测 ({{language}})",
+  "general": {
+    "app-name": "Strongbox 自动填充",
+    "company-name": "Phoebe Code Limited",
+    "loading": "加载中...",
+    "searching": "搜索中...",
+    "cancel": "取消",
+    "create": "创建",
+    "add": "添加",
+    "search": "搜索",
+    "copy": "复制",
+    "autofill": "自动填充",
+    "launch-url": "打开 URL",
+    "show-hide": "显示/隐藏"
+  },
+  "inline-mini-field-menu": {
+    "no-matching-entries-found": "未找到匹配条目",
+    "lock": "锁定",
+    "unlock": "解锁 {{database}}",
+    "create-new": "保存到 Strongbox",
+    "no-autofill-enabled-databases": "没有已启用自动填充的数据库"
+  },
+  "hide-inline-menu": {
+    "hide-for-a-while": "暂时隐藏",
+    "hide-on-page": "在页面上隐藏",
+    "hide-on-domain": "在域名上隐藏"
+  },
+  "inline-menu-credential-item": {
+    "view-details": "查看详细信息",
+    "copy-username": "复制用户名",
+    "copy-password": "复制密码"
+  },
+  "create-new-entry-dialog": {
+    "title": "创建新条目",
+    "credential-title": "标题",
+    "username": "用户名",
+    "password": "密码",
+    "url": "URL",
+    "totp": "TOTP",
+    "modified-date": "修改时间",
+    "database": "数据库",
+    "group": "群组",
+    "save-in": "保存到",
+    "no-autoFill-databases-available": "没有可用的自动填充数据库",
+    "please-unlock-your-database": "请解锁您的数据库...",
+    "could-not-load-databases": "无法加载数据库！",
+    "could-not-load-defaults": "无法加载默认设置！",
+    "could-not-refresh-groups": "无法刷新群组！",
+    "could-not-generate-password": "无法生成密码",
+    "could-not-unlock-database": "无法解锁数据库",
+    "could-not-refresh-status": "无法刷新状态",
+    "could-not-connect-to-strongbox": "无法连接到 Strongbox",
+    "error-getting-defaults": "获取默认值出错",
+    "there-is-not-a-valid-new-entry": "没有有效的新条目。",
+    "could-not-create-new-entry": "无法创建新条目。error=({{error}})"
+  },
+  "notification-toast": {
+    "successfully-created-new-entry": "已成功创建新条目",
+    "username-copied": "用户名已复制",
+    "password-copied": "密码已复制",
+    "totp-copied": "TOTP 已复制",
+    "url-copied": "URL 已复制",
+    "modified-date-copied": "修改时间已复制",
+    "custom-field-copied": "自定义字段已复制"
+  },
+  "current-tab-credentials": {
+    "title": "匹配",
+    "autofill": "自动填充",
+    "tags": "标签",
+    "notes": "备注"
+  },
+  "database-list-item": {
+    "lock": "锁定",
+    "locked": "已锁定",
+    "unlock": "解锁",
+    "unlocked": "已解锁",
+    "autofill-not-enabled": "自动填充未启用"
+  },
+  "databases-list-popup-component": {
+    "title": "数据库",
+    "no-databases": "无数据库",
+    "no-databases-message": "您还没有任何数据库，现在添加一个到 Strongbox？"
+  },
+  "no-results-found-popup-component": {
+    "title": "无匹配",
+    "message": "Strongbox 无法找到与该网站匹配的条目"
+  },
+  "not-running-popup-component": {
+    "title": "Strongbox 无法使用",
+    "launch-strongbox": "启动 Strongbox",
+    "troubleshooting": {
+      "title": "故障排除",
+      "message1": "1. 确保 Strongbox 已安装并运行。",
+      "message2": "2. 确保您是专业版用户，自动填充功能仅在专业版中可用。",
+      "message3": "3. 确保以下设置已启用：",
+      "settings-path": "设置 > 高级 > Chrome 浏览器和火狐浏览器自动填充扩展"
+    },
+    "message": "很抱歉，Strongbox 尚未支持此平台。"
+  },
+  "search-bar": {
+    "title": "搜索中...",
+    "place-holder": "搜索 Strongbox"
+  },
+  "settings-popup-component": {
+    "title": "设置",
+    "title-tab1": "应用程序",
+    "title-tab2": "样式",
+    "show-inline-menus": "显示内联菜单",
+    "show-match-count-badge-on-popup-icon": "显示匹配计数标记",
+    "fill-on-load-if-only-single-match-found": "如果只找到一个匹配项，则立即填充",
+    "always-fill-on-load-with-first-match": "始终使用首个匹配项进行填充",
+    "do-not-fill-on-load-on-this-domain": "此域名不使用立即填充",
+    "do-not-show-inline-menus-on-this-domain": "不在此域名上显示内联菜单",
+    "do-not-show-inline-menus-on-this-page": "不在此页面上显示内联菜单",
+    "do-not-show-credential-details-on-popup": "在弹出窗口隐藏详细信息",
+    "do-not-show-credential-details-on-inline-menu": "在内联菜单隐藏详细信息",
+    "language": "语言",
+    "appearance": "外观",
+    "font-size": "字体大小",
+    "spacing": "间距",
+    "appearance-dark": "深色",
+    "appearance-light": "浅色",
+    "appearance-system": "跟随系统",
+    "style-small": "较小",
+    "style-medium": "中等",
+    "style-large": "较大",
+    "style-xl": "特大"
+  }
+}

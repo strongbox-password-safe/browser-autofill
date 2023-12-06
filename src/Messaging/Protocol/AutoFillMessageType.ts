@@ -9,4 +9,10 @@ export enum AutoFillMessageType {
   getGroups,
   getNewEntryDefaults,
   generatePassword,
+  getIcon,
+  generatePasswordV2,
+  getPasswordStrength,
+  getNewEntryDefaultsV2,
+  getFavourites,
+  copyString,
 }

@@ -1,8 +1,9 @@
-import { Box, List, ListItem, ListSubheader, Typography } from '@mui/material';
+import { Box, List, ListSubheader, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { NativeAppApi } from '../Messaging/NativeAppApi';
 import { DatabaseSummary } from '../Messaging/Protocol/DatabaseSummary';
 import DatabaseListItem from './DatabaseListItem';
+import { useTranslation } from 'react-i18next';
 
 interface DatabasesListPopupComponentProps {
   showToast: (message: string) => void;
@@ -12,6 +13,7 @@ function DatabasesListPopupComponent({ showToast }: DatabasesListPopupComponentP
   const [databases, setDatabases] = useState<DatabaseSummary[]>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>();
+  const [t] = useTranslation('global');
 
   React.useEffect(() => {
     async function getCurrentStatus() {
@@ -34,7 +36,7 @@ function DatabasesListPopupComponent({ showToast }: DatabasesListPopupComponentP
     <List
       subheader={
         <ListSubheader component="div" id="nested-list-subheader" sx={{ textAlign: 'center' }}>
-          Databases
+          {t('databases-list-popup-component.title')}
         </ListSubheader>
       }
       sx={{ minWidth: '400px', minHeight: '100px', mt: 0, pt: 0 }}
@@ -54,7 +56,7 @@ function DatabasesListPopupComponent({ showToast }: DatabasesListPopupComponentP
                   padding: 0,
                 }}
               >
-                No Databases
+                {t('databases-list-popup-component.no-databases')}
               </Typography>
             </Box>
             <Box>
@@ -67,13 +69,13 @@ function DatabasesListPopupComponent({ showToast }: DatabasesListPopupComponentP
                   padding: '5px',
                 }}
               >
-                You don't have any databases yet, why not add one to Strongbox?
+                {t('databases-list-popup-component.no-databases-message')}
               </Typography>
             </Box>
           </Box>
         )
       ) : (
-        'Loading...'
+        t('general.loading')
       )}
     </List>
   );

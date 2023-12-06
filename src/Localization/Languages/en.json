@@ -1,0 +1,130 @@
+{
+  "autodetected-language": "Auto-Detected ({{language}})",
+  "general": {
+    "app-name": "Strongbox AutoFill",
+    "company-name": "Phoebe Code Limited",
+    "loading": "Loading...",
+    "searching": "Searching...",
+    "cancel": "Cancel",
+    "create": "Create",
+    "add": "Add",
+    "search": "Search",
+    "copy": "Copy",
+    "autofill": "AutoFill",
+    "launch-url": "Launch URL",
+    "show-hide": "Show/Hide"
+  },
+  "inline-mini-field-menu": {
+    "no-matching-entries-found": "No Matching Entries Found",
+    "lock": "Lock",
+    "unlock": "Unlock {{database}}",
+    "create-new": "Save in Strongbox",
+    "no-autofill-enabled-databases": "No AutoFill Enabled Databases"
+  },
+  "hide-inline-menu": {
+    "hide-for-a-while": "Hide for a while",
+    "hide-on-page": "Hide on page",
+    "hide-on-domain": "Hide on domain"
+  },
+  "inline-menu-credential-item": {
+    "view-details": "View Details",
+    "copy-username": "Copy Username",
+    "copy-password": "Copy Password"
+  },
+  "create-new-entry-dialog": {
+    "title": "Create New Entry",
+    "credential-title": "Title",
+    "username": "Username",
+    "password": "Password",
+    "url": "URL",
+    "totp": "TOTP",
+    "modified-date": "Modified",
+    "database": "Database",
+    "group": "Group",
+    "save-in": "Save in",
+    "no-autoFill-databases-available": "No AutoFill Databases Available",
+    "please-unlock-your-database": "Please Unlock Your Database...",
+    "could-not-load-databases": "Could not load databases!",
+    "could-not-load-defaults": "Could not load defaults!",
+    "could-not-refresh-groups": "Could not refresh groups!",
+    "could-not-generate-password": "Could Not Generate Password",
+    "could-not-unlock-database": "Could not Unlock Database",
+    "could-not-refresh-status": "Could not refresh status",
+    "could-not-connect-to-strongbox": "Could not Connect to Strongbox",
+    "error-getting-defaults": "Error getting defaults",
+    "there-is-not-a-valid-new-entry": "There is not a valid new entry.",
+    "could-not-create-new-entry": "Could not create new entry. error=({{error}})"
+  },
+  "notification-toast": {
+    "successfully-created-new-entry": "Successfully Created New Entry",
+    "username-copied": "Username Copied",
+    "password-copied": "Password Copied",
+    "totp-copied": "TOTP Copied",
+    "url-copied": "URL Copied",
+    "modified-date-copied": "Modified Date Copied",
+    "custom-field-copied": "Custom Field Copied"
+  },
+  "current-tab-credentials": {
+    "title": "Matches",
+    "autofill": "AutoFill",
+    "tags": "Tags",
+    "notes": "Notes"
+  },
+  "database-list-item": {
+    "lock": "Lock",
+    "locked": "Locked",
+    "unlock": "Unlock",
+    "unlocked": "Unlocked",
+    "autofill-not-enabled": "AutoFill Not Enabled"
+  },
+  "databases-list-popup-component": {
+    "title": "Databases",
+    "no-databases": "No Databases",
+    "no-databases-message": "You don't have any databases yet, why not add one to Strongbox?"
+  },
+  "no-results-found-popup-component": {
+    "title": "No Matches",
+    "message": "Strongbox could not find any matching entries for this website"
+  },
+  "not-running-popup-component": {
+    "title": "Strongbox Unavailable",
+    "launch-strongbox": "Launch Strongbox",
+    "troubleshooting": {
+      "title": "Troubleshooting",
+      "message1": "1. Make sure Strongbox is installed and running.",
+      "message2": "2. Make sure you are a Pro user, AutoFill is a paid Pro feature.",
+      "message3": "3. Check the setting below is enabled:",
+      "settings-path": "Settings > Advanced > Chrome & Firefox AutoFill Extension"
+    },
+    "message": "Unfortunately Strongbox isn't yet available on this platform."
+  },
+  "search-bar": {
+    "title": "Search...",
+    "place-holder": "Search Strongbox"
+  },
+  "settings-popup-component": {
+    "title": "Settings",
+    "title-tab1": "App",
+    "title-tab2": "Style",
+    "show-inline-menus": "Show Inline Menus",
+    "show-match-count-badge-on-popup-icon": "Show Match Count Badge",
+    "fill-on-load-if-only-single-match-found": "Fill on Load if Only Single Match",
+    "always-fill-on-load-with-first-match": "Always Fill on Load with First Match",
+    "do-not-fill-on-load-on-this-domain": "Do Not Fill on Load on this Domain",
+    "do-not-show-inline-menus-on-this-domain": "Do Not Show Inline Menus on this Domain",
+    "do-not-show-inline-menus-on-this-page": "Do Not Show Inline Menus on this Page",
+    "do-not-show-credential-details-on-popup": "Hide Details on Popup",
+    "do-not-show-credential-details-on-inline-menu": "Hide Details on Inline Menu",
+    "language": "Language",
+    "appearance": "Appearance",
+    "font-size": "Font Size",
+    "spacing": "Spacing",
+    "appearance-dark": "Dark",
+    "appearance-light": "Light",
+    "appearance-system": "System",
+    "style-small": "Small",
+    "style-medium": "Medium",
+    "style-large": "Large",
+    "style-xl": "XL"
+  }
+}

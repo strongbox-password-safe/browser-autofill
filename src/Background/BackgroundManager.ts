@@ -18,9 +18,14 @@ import { UnlockResponse } from '../Messaging/Protocol/UnlockResponse';
 import { DatabaseSummary } from '../Messaging/Protocol/DatabaseSummary';
 import { LastKnownDatabasesItem } from '../Settings/Settings';
 import { CopyFieldResponse } from '../Messaging/Protocol/CopyFieldRequest';
+import { GeneratePasswordV2Response } from '../Messaging/Protocol/GeneratePasswordV2Response';
+import { GetPasswordAndStrengthRequest } from '../Messaging/Protocol/GetPasswordAndStrengthRequest';
+import { GetPasswordAndStrengthResponse } from '../Messaging/Protocol/GetPasswordAndStrengthResponse';
+import { GetNewEntryDefaultsResponseV2 } from '../Messaging/Protocol/GetNewEntryDefaultsResponseV2';
 
 export class BackgroundManager {
   private static instance: BackgroundManager;
+  private nativeAppApi = NativeAppApi.getInstance();
 
   private constructor() {
     
@@ -157,15 +162,30 @@ export class BackgroundManager {
     await browser.tabs.sendMessage(tabId, { credential: credential, onLoadFill: onLoad });
   }
 
+  public async openCreateNewDialog(tabId: number) {
+
+    await browser.tabs.sendMessage(tabId, { openCreateNewDialog: true });
+  }
+
   
 
   private async updateBadgeAndIconBasedOnCredentialsResponse(
     response: CredentialsForUrlResponse,
     endTime: number,
-    startTime: number
+    startTime: number,
+    skip: number
   ) {
     const unlockedDatabaseCount = response.unlockedDatabaseCount;
-    const resultCount = response.results.length;
+
+    let resultCount = `${this.nativeAppApi.credentialResultsPageSize}+`;
+
+    if (skip === 0) {
+      if (response.results.length < this.nativeAppApi.credentialResultsPageSize) {
+        resultCount = response.results.length.toString();
+      }
+    } else if (response.results.length <= 0) {
+      return;
+    }
 
     
     
@@ -177,11 +197,11 @@ export class BackgroundManager {
     if (unlockedDatabaseCount == 0) {
       await IconManager.setIcon(IconState.allDatabasesLocked);
     } else {
-      if (response.results.length > 0) {
+      if (skip !== 0 || response.results.length > 0) {
         const settings = await SettingsStore.getSettings();
 
         if (settings.showMatchCountOnPopupBadge) {
-          await IconManager.setIcon(IconState.good, response.results.length.toString());
+          await IconManager.setIcon(IconState.good, resultCount);
         } else {
           await IconManager.setIcon(IconState.good);
         }
@@ -251,10 +271,44 @@ export class BackgroundManager {
     return response;
   }
 
+  private async getNewEntryDefaultsV2(
+    details: GetNewEntryDefaultsRequest
+  ): Promise<GetNewEntryDefaultsResponseV2 | null> {
+    
+
+    const response = await NativeAppApi.getInstance().getNewEntryDefaultsV2(details);
+
+    
+
+    return response;
+  }
+
   private async generatePassword(details: GeneratePasswordRequest): Promise<GeneratePasswordResponse | null> {
     
 
     const response = await NativeAppApi.getInstance().generatePassword(details);
+
+    
+
+    return response;
+  }
+
+  private async generatePasswordV2(): Promise<GeneratePasswordV2Response | null> {
+    
+
+    const response = await NativeAppApi.getInstance().generatePasswordsV2();
+
+    
+
+    return response;
+  }
+
+  private async getPasswordStrength(
+    details: GetPasswordAndStrengthRequest
+  ): Promise<GetPasswordAndStrengthResponse | null> {
+    
+
+    const response = await NativeAppApi.getInstance().getPasswordStrength(details);
 
     
 
@@ -357,12 +411,40 @@ export class BackgroundManager {
       
 
       return response;
+    } else if (message.type === 'get-new-entry-defaults-v2') {
+      const details = message.details;
+
+      
+
+      const response = await this.getNewEntryDefaultsV2(details);
+
+      
+
+      return response;
     } else if (message.type === 'generate-password') {
       const details = message.details;
 
       
 
       const response = await this.generatePassword(details);
+
+      
+
+      return response;
+    } else if (message.type === 'generate-password-v2') {
+      
+
+      const response = await this.generatePasswordV2();
+
+      
+
+      return response;
+    } else if (message.type === 'get-password-strength') {
+      const details = message.details;
+
+      
+
+      const response = await this.getPasswordStrength(details);
 
       
 
@@ -428,7 +510,9 @@ export class BackgroundManager {
       const url = tab?.url;
 
       if (url) {
-        const credentials = await this.checkForCredentialsUrl(url);
+        const { skip, take } = message.details;
+
+        const credentials = await this.checkForCredentialsUrl(url, skip, take);
 
         
 
@@ -436,20 +520,42 @@ export class BackgroundManager {
       } else {
         return [];
       }
+    } else if (message.type === 'get-search') {
+      
+
+      const { query, skip, take } = message.details;
+
+      return await NativeAppApi.getInstance().search(query, skip, take);
+    } else if (message.type === 'get-icon') {
+      
+
+      const { databaseId, nodeId } = message.details;
+
+      return await NativeAppApi.getInstance().getIcon(databaseId, nodeId);
+    } else if (message.type === 'copy-string') {
+      
+
+      const value = message.details;
+
+      return await NativeAppApi.getInstance().copyString(value);
     }
 
     return Promise.reject();
   }
 
-  private async checkForCredentialsUrl(url: string): Promise<AutoFillCredential[] | null> {
+  private async checkForCredentialsUrl(
+    url: string,
+    skip = 0,
+    take = this.nativeAppApi.credentialResultsPageSize
+  ): Promise<AutoFillCredential[] | null> {
     const startTime = performance.now();
 
-    const response = await NativeAppApi.getInstance().credentialsForUrl(url);
+    const response = await NativeAppApi.getInstance().credentialsForUrl(url, skip, take);
 
     if (response != null) {
       const endTime = performance.now();
 
-      await this.updateBadgeAndIconBasedOnCredentialsResponse(response, endTime, startTime);
+      await this.updateBadgeAndIconBasedOnCredentialsResponse(response, endTime, startTime, skip);
 
       return response.results;
     } else {
@@ -457,5 +563,25 @@ export class BackgroundManager {
     }
 
     return null;
+  }
+
+  async restoreFocus(): Promise<void> {
+    const tab = await BackgroundManager.getCurrentTab();
+
+    if (!tab || !tab.id) {
+      return;
+    }
+
+    await browser.tabs.sendMessage(tab.id, { restoreFocus: true });
+  }
+
+  async openInlineMenu(): Promise<void> {
+    const tab = await BackgroundManager.getCurrentTab();
+
+    if (!tab || !tab.id) {
+      return;
+    }
+
+    await browser.tabs.sendMessage(tab.id, { openInlineMenu: true });
   }
 }

@@ -13,6 +13,8 @@ export class AutoFillCredential {
   databaseName = 'Foo';
   tags: string[] = [];
   favourite = false;
+  notes: string;
+  modified: string;
 
   static getCurrentTotpCode(credential: AutoFillCredential, formatted = true): string {
     if (credential.totp.length > 0) {

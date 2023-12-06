@@ -3,4 +3,5 @@ export class DatabaseSummary {
   public nickName: string;
   public locked: boolean;
   public autoFillEnabled: boolean;
+  public includeFavIconForNewEntries = true;
 }

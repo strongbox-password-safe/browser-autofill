@@ -1,0 +1,130 @@
+{
+  "autodetected-language": "Автоопределение ({{language}})",
+  "general": {
+    "app-name": "Автозаполнение Strongbox",
+    "company-name": "Phoebe Code Limited",
+    "loading": "Загрузка ...",
+    "searching": "Поиск ...",
+    "cancel": "Отмена",
+    "create": "Создать",
+    "add": "Добавить",
+    "search": "Поиск",
+    "copy": "Копировать",
+    "autofill": "Автозаполнение",
+    "launch-url": "Открыть URL",
+    "show-hide": "Показать / Скрыть"
+  },
+  "inline-mini-field-menu": {
+    "no-matching-entries-found": "Записей не найдено",
+    "lock": "Заблокировать",
+    "unlock": "Разблокировать {{database}}",
+    "create-new": "Сохранить в Strongbox",
+    "no-autofill-enabled-databases": "Нет БД с поддержкой автозаполнения"
+  },
+  "hide-inline-menu": {
+    "hide-for-a-while": "Скрыть на некоторое время",
+    "hide-on-page": "Скрыть на странице",
+    "hide-on-domain": "Скрыть в домене"
+  },
+  "inline-menu-credential-item": {
+    "view-details": "Подробности",
+    "copy-username": "Копировать логин",
+    "copy-password": "Копировать пароль"
+  },
+  "create-new-entry-dialog": {
+    "title": "Добавить запись",
+    "credential-title": "Название",
+    "username": "Логин",
+    "password": "Пароль",
+    "url": "URL",
+    "totp": "TOTP",
+    "modified-date": "Дата изменения",
+    "database": "База данных",
+    "group": "Группа",
+    "save-in": "Сохранить в ...",
+    "no-autoFill-databases-available": "Отсутствуют БД для автозаполнения",
+    "please-unlock-your-database": "Пожалуйста, разблокируйте вашу БД ...",
+    "could-not-load-databases": "Не удалось загрузить базы данных!",
+    "could-not-load-defaults": "Не удалось загрузить значения по умолчанию!",
+    "could-not-refresh-groups": "Не удалось обновить группы!",
+    "could-not-generate-password": "Не удалось сгенерировать пароль",
+    "could-not-unlock-database": "Не удалось разблокировать БД",
+    "could-not-refresh-status": "Не удалось обновить статус",
+    "could-not-connect-to-strongbox": "Не удалось подключиться к Strongbox",
+    "error-getting-defaults": "Ошибка при загрузке значений по умолчанию",
+    "there-is-not-a-valid-new-entry": "Некорректная новая запись.",
+    "could-not-create-new-entry": "Не удалось создать новую запись. error=({{error}})"
+  },
+  "notification-toast": {
+    "successfully-created-new-entry": "Успешно создана новая запись",
+    "username-copied": "Логин скопирован",
+    "password-copied": "Пароль скопирован",
+    "totp-copied": "TOTP скопирован",
+    "url-copied": "URL скопирован",
+    "modified-date-copied": "Modified Date Copied",
+    "custom-field-copied": "Custom Field Copied"
+  },
+  "current-tab-credentials": {
+    "title": "Совпадения",
+    "autofill": "Автозаполнение",
+    "tags": "Теги",
+    "notes": "Заметки"
+  },
+  "database-list-item": {
+    "lock": "Заблокировать",
+    "locked": "Заблокирован",
+    "unlock": "Разблокировать",
+    "unlocked": "Разблокировано",
+    "autofill-not-enabled": "Автозаполнение выключено"
+  },
+  "databases-list-popup-component": {
+    "title": "Базы данных",
+    "no-databases": "Нет баз данных",
+    "no-databases-message": "У вас еще нет баз данных, почему бы не добавить их в Strongbox?"
+  },
+  "no-results-found-popup-component": {
+    "title": "Нет совпадений",
+    "message": "Strongbox не смог найти ни одной подходящей записи для этого сайта"
+  },
+  "not-running-popup-component": {
+    "title": "Strongbox недоступен",
+    "launch-strongbox": "Запустить Strongbox",
+    "troubleshooting": {
+      "title": "Устранение неисправностей",
+      "message1": "1. Убедитесь, что Strongbox установлен и работает.",
+      "message2": "",
+      "message3": "3. Убедитесь, что указанная ниже настройка включена:",
+      "settings-path": "Настройки > Дополнительно > Расширение автозаполнения для Chrome и Firefox"
+    },
+    "message": "К сожалению, Strongbox еще не доступен на этой платформе."
+  },
+  "search-bar": {
+    "title": "Поиск ...",
+    "place-holder": "Search Strongbox"
+  },
+  "settings-popup-component": {
+    "title": "Параметры",
+    "title-tab1": "Приложение",
+    "title-tab2": "Внешний вид",
+    "show-inline-menus": "Показать встроенные меню",
+    "show-match-count-badge-on-popup-icon": "Show Match Count Badge",
+    "fill-on-load-if-only-single-match-found": "Fill on Load if Only Single Match",
+    "always-fill-on-load-with-first-match": "Всегда заполнять при первом совпадении",
+    "do-not-fill-on-load-on-this-domain": "Не заполнять при загрузке этого домена",
+    "do-not-show-inline-menus-on-this-domain": "Не показывать встроенные меню в этом домене",
+    "do-not-show-inline-menus-on-this-page": "Не показывать встроенные меню на этой странице",
+    "do-not-show-credential-details-on-popup": "Hide Details on Popup",
+    "do-not-show-credential-details-on-inline-menu": "Hide Details on Inline Menu",
+    "language": "Язык",
+    "appearance": "Оформление",
+    "font-size": "Размер шрифта",
+    "spacing": "Интервал",
+    "appearance-dark": "Темный",
+    "appearance-light": "Светлый",
+    "appearance-system": "Система",
+    "style-small": "Маленький",
+    "style-medium": "Средний",
+    "style-large": "Большой",
+    "style-xl": "XL"
+  }
+}

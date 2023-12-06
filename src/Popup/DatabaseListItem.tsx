@@ -5,19 +5,25 @@ import { Lock, LockOpen } from '@mui/icons-material';
 import { Button, Paper } from '@mui/material';
 import { DatabaseSummary } from '../Messaging/Protocol/DatabaseSummary';
 import { NativeAppApi } from '../Messaging/NativeAppApi';
+import { BackgroundManager } from '../Background/BackgroundManager';
+import { useTranslation } from 'react-i18next';
 
 interface DatabaseListItemProps {
   database: DatabaseSummary;
   showToast: (message: string) => void;
 }
 
-export default function DatabaseListItem({ database, showToast }: DatabaseListItemProps) {
+export default function DatabaseListItem({ database }: DatabaseListItemProps) {
+  const [t] = useTranslation('global');
+
   const onUnlock = async (database: DatabaseSummary) => {
     await NativeAppApi.getInstance().unlockDatabase(database.uuid);
+    await BackgroundManager.getInstance().restoreFocus();
     window.close();
   };
   const onLock = async (database: DatabaseSummary) => {
     await NativeAppApi.getInstance().lockDatabase(database.uuid);
+    await BackgroundManager.getInstance().restoreFocus();
     window.close();
   };
 
@@ -87,7 +93,11 @@ export default function DatabaseListItem({ database, showToast }: DatabaseListIt
                 textOverflow: 'ellipsis',
               }}
             >
-              {database.autoFillEnabled ? (database.locked ? 'Locked' : 'Unlocked') : 'AutoFill Not Enabled'}
+              {database.autoFillEnabled
+                ? database.locked
+                  ? t('database-list-item.locked')
+                  : t('database-list-item.unlocked')
+                : t('autofill-not-enabled')}
             </Typography>
           </Box>
         </Box>
@@ -101,7 +111,7 @@ export default function DatabaseListItem({ database, showToast }: DatabaseListIt
                   onUnlock(database);
                 }}
               >
-                Unlock
+                {t('database-list-item.unlock')}
               </Button>
             ) : (
               <Button
@@ -111,7 +121,7 @@ export default function DatabaseListItem({ database, showToast }: DatabaseListIt
                   onLock(database);
                 }}
               >
-                Lock
+                {t('database-list-item.lock')}
               </Button>
             )
           ) : (

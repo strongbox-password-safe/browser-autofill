@@ -39,8 +39,13 @@ browser.runtime.onMessage.addListener((message: any, sender: any): Promise<any> 
 
 
 browser.commands.onCommand.addListener(command => {
+
   if (command == 'autofill-first') {
     BackgroundManager.getInstance().autoFillCurrentTabWithFirstMatch();
+  }
+
+  if (command == 'open-inline-menu') {
+    BackgroundManager.getInstance().openInlineMenu();
   }
 });
 

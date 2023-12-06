@@ -1,0 +1,130 @@
+{
+  "autodetected-language": "Auto-Detected ({{language}})",
+  "general": {
+    "app-name": "Strongbox Otomatik Doldur",
+    "company-name": "Phoebe Code Limited",
+    "loading": "Yükleniyor...",
+    "searching": "Aranıyor...",
+    "cancel": "İptal",
+    "create": "Oluştur",
+    "add": "Add",
+    "search": "Search",
+    "copy": "Copy",
+    "autofill": "AutoFill",
+    "launch-url": "Launch URL",
+    "show-hide": "Show/Hide"
+  },
+  "inline-mini-field-menu": {
+    "no-matching-entries-found": "Eşleşen Girdi Bulunmadı",
+    "lock": "Kilitle",
+    "unlock": "{{database}} kilidini aç",
+    "create-new": "Save in Strongbox",
+    "no-autofill-enabled-databases": "Otomatik Doldurma Etkin Veritabanı Yok"
+  },
+  "hide-inline-menu": {
+    "hide-for-a-while": "Bir süreliğine sakla",
+    "hide-on-page": "Sayfada gizle",
+    "hide-on-domain": "Etki alanında gizle"
+  },
+  "inline-menu-credential-item": {
+    "view-details": "View Details",
+    "copy-username": "Kullanıcı Adını Kopyala",
+    "copy-password": "Şifreyi Kopyala"
+  },
+  "create-new-entry-dialog": {
+    "title": "Yeni Girdi Oluştur",
+    "credential-title": "Başlık",
+    "username": "Kullanıcı Adı",
+    "password": "Şifre",
+    "url": "URL",
+    "totp": "TOTP",
+    "modified-date": "Modified",
+    "database": "Veritabanı",
+    "group": "Grup",
+    "save-in": "Kaydet",
+    "no-autoFill-databases-available": "Otomatik Doldurma Veritabanları Mevcut Değil",
+    "please-unlock-your-database": "Lütfen Veritabanınızın Kilidini Açın...",
+    "could-not-load-databases": "Veritabanları yüklenemedi!",
+    "could-not-load-defaults": "Varsayılanlar yüklenemedi!",
+    "could-not-refresh-groups": "Gruplar yenilenemedi!",
+    "could-not-generate-password": "Parola Oluşturulamadı",
+    "could-not-unlock-database": "Veritabanı Kilidi Açılamadı",
+    "could-not-refresh-status": "Durum yenilenemedi",
+    "could-not-connect-to-strongbox": "Strongbox'a Bağlanılamadı",
+    "error-getting-defaults": "Varsayılanlar alınırken hata oluştu",
+    "there-is-not-a-valid-new-entry": "Geçerli yeni bir girdi yok.",
+    "could-not-create-new-entry": "Yeni girdi oluşturulamadı. Hata=({{error}})"
+  },
+  "notification-toast": {
+    "successfully-created-new-entry": "Yeni Girdi Başarıyla Oluşturuldu",
+    "username-copied": "Kullanıcı Adı Kopyalandı",
+    "password-copied": "Şifre Kopyalandı",
+    "totp-copied": "TOTP Kopyalandı",
+    "url-copied": "URL Copied",
+    "modified-date-copied": "Modified Date Copied",
+    "custom-field-copied": "Custom Field Copied"
+  },
+  "current-tab-credentials": {
+    "title": "Eşleşmeler",
+    "autofill": "AutoFill",
+    "tags": "Tags",
+    "notes": "Notes"
+  },
+  "database-list-item": {
+    "lock": "Kilitle",
+    "locked": "Kilitli",
+    "unlock": "Kilidi aç",
+    "unlocked": "Kilit açıldı",
+    "autofill-not-enabled": "Otomatik Doldurma Etkin Değil"
+  },
+  "databases-list-popup-component": {
+    "title": "Veritabanları",
+    "no-databases": "Veritabanı Yok",
+    "no-databases-message": "Henüz herhangi bir veritabanınız yok, neden Strongbox'a bir tane eklemiyorsunuz?"
+  },
+  "no-results-found-popup-component": {
+    "title": "Eşleşme Yok",
+    "message": "Strongbox bu web sitesi için eşleşen herhangi bir girdi bulamadı"
+  },
+  "not-running-popup-component": {
+    "title": "Strongbox Kullanılamıyor",
+    "launch-strongbox": "Strongbox'ı Başlat",
+    "troubleshooting": {
+      "title": "Sorun Giderme",
+      "message1": "1. Strongbox'ın kurulu ve çalışır durumda olduğundan emin olun.",
+      "message2": "2. Pro kullanıcı olduğunuzdan emin olun, Otomatik Doldurma ücretli bir Pro özelliğidir.",
+      "message3": "3. Aşağıdaki ayarın etkin olup olmadığını kontrol edin:",
+      "settings-path": "Ayarlar > Gelişmiş > Chrome ve Firefox Otomatik Doldurma Uzantısı"
+    },
+    "message": "Ne yazık ki Strongbox henüz bu platformda mevcut değil."
+  },
+  "search-bar": {
+    "title": "Ara...",
+    "place-holder": "Search Strongbox"
+  },
+  "settings-popup-component": {
+    "title": "Ayarlar",
+    "title-tab1": "Uygulama",
+    "title-tab2": "Stil",
+    "show-inline-menus": "Satır İçi Menüleri Göster",
+    "show-match-count-badge-on-popup-icon": "Show Match Count Badge",
+    "fill-on-load-if-only-single-match-found": "Fill on Load if Only Single Match",
+    "always-fill-on-load-with-first-match": "Her Zaman İlk Eşleşme ile Doldur",
+    "do-not-fill-on-load-on-this-domain": "Bu Alan Adında Otomatik Doldurma",
+    "do-not-show-inline-menus-on-this-domain": "Bu Etki Alanında Satır İçi Menüleri Gösterme",
+    "do-not-show-inline-menus-on-this-page": "Bu Sayfada Satır İçi Menüleri Gösterme",
+    "do-not-show-credential-details-on-popup": "Hide Details on Popup",
+    "do-not-show-credential-details-on-inline-menu": "Hide Details on Inline Menu",
+    "language": "Language",
+    "appearance": "Appearance",
+    "font-size": "Font Size",
+    "spacing": "Spacing",
+    "appearance-dark": "Karanlık",
+    "appearance-light": "Aydınlık",
+    "appearance-system": "Sistem",
+    "style-small": "Küçük",
+    "style-medium": "Orta",
+    "style-large": "Büyük",
+    "style-xl": "XL"
+  }
+}

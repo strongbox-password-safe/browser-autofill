@@ -5,8 +5,6 @@ import browser from 'webextension-polyfill';
 import { CreateEntryRequest } from '../Messaging/Protocol/CreateEntryRequest';
 import { CreateEntryResponse } from '../Messaging/Protocol/CreateEntryResponse';
 import ReactDOM from 'react-dom/client';
-import CreateNewEntryDialog from './CreateNewEntryDialog';
-import React from 'react';
 import { Utils } from '../Utils';
 import { GetGroupsResponse } from '../Messaging/Protocol/GetGroupsResponse';
 import { GetGroupsRequest } from '../Messaging/Protocol/GetGroupsRequest';
@@ -14,21 +12,34 @@ import { GetNewEntryDefaultsRequest } from '../Messaging/Protocol/GetNewEntryDef
 import { GetNewEntryDefaultsResponse } from '../Messaging/Protocol/GetNewEntryDefaultsResponse';
 import { GeneratePasswordRequest } from '../Messaging/Protocol/GeneratePasswordRequest';
 import { GeneratePasswordResponse } from '../Messaging/Protocol/GeneratePasswordResponse';
-import NotificationToast from './NotificationToast';
 import { UnlockResponse } from '../Messaging/Protocol/UnlockResponse';
 import { PageAnalyser } from './PageAnalyser';
-import InlineMiniFieldMenu from './InlineMiniFieldMenu';
 import { SettingsStore } from '../Settings/SettingsStore';
-import createCache, { EmotionCache } from '@emotion/cache';
 import { LastKnownDatabasesItem, Settings } from '../Settings/Settings';
+import { IframeComponentTypes, IframeManager } from './Iframe/iframeManager';
+import { GeneratePasswordV2Response } from '../Messaging/Protocol/GeneratePasswordV2Response';
+import { GetPasswordAndStrengthRequest } from '../Messaging/Protocol/GetPasswordAndStrengthRequest';
+import { GetPasswordAndStrengthResponse } from '../Messaging/Protocol/GetPasswordAndStrengthResponse';
+import { SearchResponse } from '../Messaging/Protocol/SearchResponse';
+import { GetNewEntryDefaultsResponseV2 } from '../Messaging/Protocol/GetNewEntryDefaultsResponseV2';
+
+export interface MainPageInformation {
+  title: string;
+  url: string;
+  favIconBase64: string | null;
+  favIconUrl: string | null;
+}
 
 export class ContentScriptManager {
   pageLoadFillDone = false;
   reactRoot: ReactDOM.Root;
   reactRootPopupMenu: ReactDOM.Root | null;
-  currentlyFocusedInputElement: HTMLElement | null;
+  currentInlineMenuInputElement: HTMLElement | null;
+  iframeManager: IframeManager;
+  hideInlineMenusForAWhile = false;
 
   constructor() {
+    this.iframeManager = new IframeManager(this);
   }
 
   onDOMLoaded() {
@@ -51,16 +62,8 @@ export class ContentScriptManager {
     
     
 
-    this.bindToFocus();
+    this.autoShowInlineMenuIfFocusedInputRecognized();
   }
-
-  
-  
-  
-
-  
-  
-  
 
   async getStatus(): Promise<GetStatusResponse | null> {
     const ret = await browser.runtime.sendMessage({ type: 'get-status' });
@@ -70,8 +73,24 @@ export class ContentScriptManager {
     return ret;
   }
 
-  async getCredentials(): Promise<AutoFillCredential[] | null> {
-    const ret = await browser.runtime.sendMessage({ type: 'get-credentials' });
+  async getCredentials(skip: number, take: number): Promise<AutoFillCredential[] | null> {
+    const ret = await browser.runtime.sendMessage({ type: 'get-credentials', details: { skip, take } });
+
+    
+
+    return ret;
+  }
+
+  async getIcon(databaseId: string, nodeId: string) {
+    const ret = await browser.runtime.sendMessage({ type: 'get-icon', details: { databaseId, nodeId } });
+
+    
+
+    return ret;
+  }
+
+  async getSearchCredentials(query: string, skip: number, take: number): Promise<SearchResponse | null> {
+    const ret = await browser.runtime.sendMessage({ type: 'get-search', details: { query, skip, take } });
 
     
 
@@ -106,6 +125,14 @@ export class ContentScriptManager {
     await browser.runtime.sendMessage({ type: 'copy-totp', details: credential });
   }
 
+  async onCopy(value: string) {
+    await browser.runtime.sendMessage({ type: 'copy-string', details: value });
+  }
+
+  async onRedirectUrl(url: string) {
+    window.open(url, '_blank');
+  }
+
   async unlockDatabase(uuid: string): Promise<UnlockResponse | null> {
     const ret = await browser.runtime.sendMessage({
       type: 'unlock-database',
@@ -127,8 +154,32 @@ export class ContentScriptManager {
     return ret;
   }
 
+  async getNewEntryDefaultsV2(request: GetNewEntryDefaultsRequest): Promise<GetNewEntryDefaultsResponseV2 | null> {
+    const ret = await browser.runtime.sendMessage({ type: 'get-new-entry-defaults-v2', details: request });
+
+    
+
+    return ret;
+  }
+
   async generatePassword(request: GeneratePasswordRequest): Promise<GeneratePasswordResponse | null> {
     const ret = await browser.runtime.sendMessage({ type: 'generate-password', details: request });
+
+    
+
+    return ret;
+  }
+
+  async generatePasswordV2(): Promise<GeneratePasswordV2Response | null> {
+    const ret = await browser.runtime.sendMessage({ type: 'generate-password-v2' });
+
+    
+
+    return ret;
+  }
+
+  async getPasswordStrength(request: GetPasswordAndStrengthRequest): Promise<GetPasswordAndStrengthResponse | null> {
+    const ret = await browser.runtime.sendMessage({ type: 'get-password-strength', details: request });
 
     
 
@@ -159,131 +210,20 @@ export class ContentScriptManager {
     return ret;
   }
 
-  onCreatedNewItem(credential: AutoFillCredential) {
-    this.showNotificationToast();
+  async onCreatedNewItem(credential: AutoFillCredential, message: string) {
+    await this.onFillWithCredential(credential);
 
-    this.onFillWithCredential(credential);
+    setTimeout(() => {
+      this.showNotificationToast(message);
+    }, 300);
   }
 
-  
-
-  snackBarShadowRoot: HTMLElement;
-  snackBarEmotionCache: EmotionCache;
-  snackBarReactRoot: ReactDOM.Root;
-  static readonly SNACKBAR_SHADOW_CONTAINER_ID = 'strongbox-cs-snackbar-shadow-container';
-
-  ensureSnackBarRoot() {
-    const found = document.getElementById(ContentScriptManager.SNACKBAR_SHADOW_CONTAINER_ID);
-    if (!found) {
-      const created = document.createElement('div');
-      created.id = ContentScriptManager.SNACKBAR_SHADOW_CONTAINER_ID;
-      document.body.append(created);
-
-      const shadowContainer = created.attachShadow({ mode: 'open' });
-      const emotionRoot = document.createElement('style');
-      const shadowRootElement = document.createElement('div');
-      shadowContainer.appendChild(emotionRoot);
-      shadowContainer.appendChild(shadowRootElement);
-
-      this.snackBarEmotionCache = createCache({
-        key: 'css',
-        prepend: true,
-        container: emotionRoot,
-      });
-
-      this.snackBarShadowRoot = shadowRootElement;
-      this.snackBarReactRoot = ReactDOM.createRoot(this.snackBarShadowRoot);
-    }
+  showNotificationToast(message: string) {
+    this.iframeManager.initialize(IframeComponentTypes.NotificationToast, document.body as HTMLInputElement, false, message);
   }
 
-  showNotificationToast() {
-    this.ensureSnackBarRoot();
-
-    const snackbar = React.createElement(NotificationToast, {
-      key: Utils.getUUIDString(), 
-      shadowRootElement: this.snackBarShadowRoot,
-      cache: this.snackBarEmotionCache,
-    });
-
-    this.snackBarReactRoot.render(snackbar);
-  }
-
-  
-
-  createNewDialogShadowRoot: HTMLElement;
-  createNewDialogEmotionCache: EmotionCache;
-  createNewDialogReactRoot: ReactDOM.Root;
-  static readonly CREATE_NEW_DIALOG_SHADOW_CONTAINER_ID = 'strongbox-cs-create-new-dialog-shadow-container';
-
-  ensureCreateNewDialogRoot() {
-    const found = document.getElementById(ContentScriptManager.CREATE_NEW_DIALOG_SHADOW_CONTAINER_ID);
-    if (!found) {
-      const created = document.createElement('div');
-      created.id = ContentScriptManager.CREATE_NEW_DIALOG_SHADOW_CONTAINER_ID;
-      document.body.append(created);
-
-      const shadowContainer = created.attachShadow({ mode: 'open' });
-      const emotionRoot = document.createElement('style');
-      const shadowRootElement = document.createElement('div');
-      shadowContainer.appendChild(emotionRoot);
-      shadowContainer.appendChild(shadowRootElement);
-
-      this.createNewDialogEmotionCache = createCache({
-        key: 'css',
-        prepend: true,
-        container: emotionRoot,
-      });
-
-      this.createNewDialogShadowRoot = shadowRootElement;
-      this.createNewDialogReactRoot = ReactDOM.createRoot(this.createNewDialogShadowRoot);
-    }
-  }
-
-  async showCreateNewEntryDialog() {
-    this.ensureCreateNewDialogRoot();
-
-    const url = await this.getFavIconUrl();
-
-    const favIconBase64 = url ? await this.getFavIconBase64Data(url) : null;
-    const isDefaultFavIcon = favIconBase64 == null;
-    const favIconUrl: string | null = isDefaultFavIcon ? null : url;
-
-    const dialog = React.createElement(CreateNewEntryDialog, {
-      getStatus: async () => {
-        const status = await this.getStatus();
-        return status;
-      },
-      getGroups: async request => {
-        const response = await this.getGroups(request);
-        return response;
-      },
-      getNewEntryDefaults: async request => {
-        const response = await this.getNewEntryDefaults(request);
-        return response;
-      },
-      generatePassword: async request => {
-        const response = await this.generatePassword(request);
-        return response;
-      },
-      faviconUrl: favIconUrl,
-      onCreate: async details => {
-        const response = await this.createNewEntry(details);
-        return response;
-      },
-      onCreatedItem: credential => {
-        this.onCreatedNewItem(credential);
-      },
-      key: Utils.getUUIDString(), 
-      unlockDatabase: async uuid => {
-        const response = await this.unlockDatabase(uuid);
-        return response;
-      },
-      shadowRootElement: this.createNewDialogShadowRoot,
-      cache: this.createNewDialogEmotionCache,
-      favIconBase64: favIconBase64,
-    });
-
-    this.createNewDialogReactRoot.render(dialog);
+  showCreateNewDialog() {
+    this.iframeManager.initialize(IframeComponentTypes.CreateNewEntryDialog, document.body as HTMLInputElement, false);
   }
 
   async getFavIconBase64Data(url: string): Promise<string | null> {
@@ -326,7 +266,7 @@ export class ContentScriptManager {
     return imageData;
   }
 
-  private async getFavIconUrl(): Promise<string | null> {
+  async getFavIconUrl(): Promise<string | null> {
     if (Utils.isFirefox()) {
       const thisTab = await this.getCurrentTab();
       return thisTab?.favIconUrl ?? null;
@@ -340,6 +280,35 @@ export class ContentScriptManager {
 
   handleSaveNewEntry(details: CreateEntryRequest) {
     return this.createNewEntry(details);
+  }
+
+  
+
+  async getLastKnownAutoFillDatabases(): Promise<LastKnownDatabasesItem[]> {
+    const stored = await SettingsStore.getSettings();
+    return stored.lastKnownDatabases;
+  }
+
+  async shouldAutoShowInlineMenuOnFocus(): Promise<boolean> {
+    const settings = await SettingsStore.getSettings();
+
+    if (!Utils.isMacintosh()) {
+      return false;
+    }
+
+    if (!settings.showInlineIconAndPopupMenu || Settings.isUrlIsInDoNotShowInlineMenusList(settings, document.location.href)) {
+      return false;
+    }
+
+    if (!settings.showInlineIconAndPopupMenu || Settings.isUrlPageIsInDoNotShowInlineMenusList(settings, document.location.href)) {
+      return false;
+    }
+
+    if (!settings.showInlineIconAndPopupMenu || this.hideInlineMenusForAWhile) {
+      return false;
+    }
+
+    return true;
   }
 
   
@@ -370,6 +339,8 @@ export class ContentScriptManager {
   }
 
   async onFocusChanged(event: Event) {
+    this.currentInlineMenuInputElement = null;
+
     if (!this.listen) {
       
       return;
@@ -384,234 +355,84 @@ export class ContentScriptManager {
     if (event.type === 'blur') {
       
       this.timeout = setTimeout(() => {
-        this.bindToFocus();
+        this.autoShowInlineMenuIfFocusedInputRecognized();
         this.timeout = null;
       }, 200);
     } else {
-      this.bindToFocus();
+      this.autoShowInlineMenuIfFocusedInputRecognized();
     }
   }
 
-  async bindToFocus() {
-    const focusedElement = document.activeElement as HTMLInputElement;
+  
 
-    
+  async autoShowInlineMenuIfFocusedInputRecognized() {
+    if (document.activeElement && document.activeElement instanceof HTMLInputElement) {
+      const focusedElement = document.activeElement as HTMLInputElement;
 
-    
-    
-    
-    
+      const shouldRun = await this.shouldAutoShowInlineMenuOnFocus();
+      if (!shouldRun) {
+        return;
+      }
 
-    
-    
-    
-    
-    
-
-    const shouldRun = await this.shouldRun();
-    if (!shouldRun) {
-      return;
-    }
-
-    
-    
-    
-    
-
-    if (focusedElement) {
       const usernames = await PageAnalyser.getAllUsernameInputs();
-      const attachUsername = usernames.find(input => input == focusedElement);
+      const isRecognizedUsernameField = usernames.some(input => input == focusedElement);
       const passwords = await PageAnalyser.getAllPasswordInputs();
-      const attachPassword = passwords.find(input => input == focusedElement);
+      const isRecognizedPasswordField = passwords.some(input => input == focusedElement);
 
-      if (attachUsername || attachPassword) {
-        const isPasswordField = attachPassword !== undefined;
+      if (isRecognizedUsernameField || isRecognizedPasswordField) {
 
+        this.currentInlineMenuInputElement = focusedElement;
 
-        const status = await this.getStatus();
-
-        
-        
-
-        this.showInlineMenu(focusedElement, status, isPasswordField);
+        this.showInlineMenuOnInputElement(focusedElement, isRecognizedPasswordField);
       } else {
       }
     } else {
     }
   }
 
-  async onMiniIconClick(fieldElement: HTMLInputElement, isPasswordField: boolean) {
-    this.removeFocusListener();
-    this.clearBlurTimeout();
-
-    const status = await this.getStatus();
-
-    const noUnlockedDatabases = false;
-    const singleAutoFillDatabaseUuid: string | null = null;
-
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    if (noUnlockedDatabases && singleAutoFillDatabaseUuid) {
-      await this.unlockDatabase(singleAutoFillDatabaseUuid);
-    } else {
-      await this.showInlineMenu(fieldElement, status, isPasswordField);
-    }
-
-    this.addFocusListener();
-  }
-
-  async getLastKnownAutoFillDatabases(): Promise<LastKnownDatabasesItem[]> {
-    const stored = await SettingsStore.getSettings();
-    return stored.lastKnownDatabases;
-  }
-
-  
-
-  inlineMenuShadowRoot: HTMLElement;
-  inlineMenuEmotionCache: EmotionCache;
-  inlineMenuReactRoot: ReactDOM.Root;
-  static readonly INLINE_MENU_SHADOW_CONTAINER_ID = 'strongbox-cs-inline-menu-shadow-container';
-
-  ensureInlineMenuRoot() {
-    const found = document.getElementById(ContentScriptManager.INLINE_MENU_SHADOW_CONTAINER_ID);
-    if (!found) {
-      const created = document.createElement('div');
-      created.id = ContentScriptManager.INLINE_MENU_SHADOW_CONTAINER_ID;
-      document.body.append(created);
-
-      const shadowContainer = created.attachShadow({ mode: 'open' });
-      const emotionRoot = document.createElement('style');
-      const shadowRootElement = document.createElement('div');
-      shadowContainer.appendChild(emotionRoot);
-      shadowContainer.appendChild(shadowRootElement);
-
-      this.inlineMenuEmotionCache = createCache({
-        key: 'css',
-        prepend: true,
-        container: emotionRoot,
-      });
-
-      this.inlineMenuShadowRoot = shadowRootElement;
-      this.inlineMenuReactRoot = ReactDOM.createRoot(this.inlineMenuShadowRoot);
-    }
-  }
-
-  async shouldRun(): Promise<boolean> {
-    const settings = await SettingsStore.getSettings();
-
+  async forceShowInlineMenuOnCurrentInput() {
     if (!Utils.isMacintosh()) {
       return false;
     }
 
-    if (
-      !settings.showInlineIconAndPopupMenu ||
-      Settings.isUrlIsInDoNotShowInlineMenusList(settings, document.location.href)
-    ) {
-      return false;
-    }
+    if (document.activeElement && document.activeElement instanceof HTMLInputElement) {
+      const focusedElement = document.activeElement as HTMLInputElement;
 
-    return true;
+      this.currentInlineMenuInputElement = focusedElement;
+
+      const passwords = await PageAnalyser.getAllPasswordInputs();
+      const isLikelyPasswordField = passwords.some(input => input == focusedElement) || focusedElement.type === 'password';
+
+      await this.showInlineMenuOnInputElement(focusedElement, isLikelyPasswordField);
+    } else {
+    }
   }
 
-  async showInlineMenu(
-    fieldElement: HTMLInputElement,
-    status: GetStatusResponse | null,
-    isPasswordField: boolean,
-    show = true
-  ) {
+  async showInlineMenuOnInputElement(fieldElement: HTMLInputElement, isPasswordField: boolean) {
     
-
-    const shouldRun = await this.shouldRun();
-    if (!shouldRun) {
-      return;
-    }
-
-    this.ensureInlineMenuRoot();
+    const status = await this.getStatus();
 
     if (status == null) {
     }
 
-    const showCreateNew = status?.serverSettings?.supportsCreateNew ?? false;
-    const unlockedDatabaseAvailable = status
-      ? status.databases.filter(database => database.autoFillEnabled && !database.locked).length != 0
-      : false;
-
-    const credentials = status == null ? [] : (await this.getCredentials()) ?? [];
-
-    const unlockableDatabases = await this.getUnlockableDatabases(status);
-
-    const menuComponent = React.createElement(InlineMiniFieldMenu, {
-      anchorEl: fieldElement,
-      unlockedDatabaseAvailable: unlockedDatabaseAvailable,
-      key: Utils.getUUIDString(), 
-      credentials: credentials,
-      showCreateNew: showCreateNew && unlockedDatabaseAvailable,
-      onCreateNewEntry: () => {
-        this.showCreateNewEntryDialog();
-      },
-      onLaunchStrongbox: () => {
-        this.launchStrongbox();
-      },
-      onUnlockDatabase: async (databaseUuid: string) => {
-        return await this.unlockDatabase(databaseUuid);
-      },
-      onFillWithCredential: async credential => {
-        await this.onFillWithCredential(credential, fieldElement, isPasswordField);
-      },
-      isPasswordField: isPasswordField,
-      shadowRootElement: this.inlineMenuShadowRoot,
-      cache: this.inlineMenuEmotionCache,
-      show: show,
-      unlockableDatabases: unlockableDatabases,
-      onCopyUsername: credential => {
-        this.onCopyUsername(credential);
-      },
-      onCopyPassword: credential => {
-        this.onCopyPassword(credential);
-      },
-      onCopyTotp: credential => {
-        this.onCopyTotp(credential);
-      },
-      refreshInlineMenu: async () => {
-        const status = await this.getStatus();
-        this.showInlineMenu(fieldElement, status, isPasswordField, show);
-      },
-    });
-
-    await this.inlineMenuReactRoot.render(menuComponent);
+    this.iframeManager.initialize(IframeComponentTypes.InlineMiniFieldMenu, fieldElement, isPasswordField);
   }
 
   async getUnlockableDatabases(status: GetStatusResponse | null): Promise<LastKnownDatabasesItem[]> {
     if (status) {
-      return status.databases
-        .filter(database => database.autoFillEnabled && database.locked)
-        .map(database => new LastKnownDatabasesItem(database.nickName, database.uuid));
+      return status.databases.filter(database => database.autoFillEnabled && database.locked).map(database => new LastKnownDatabasesItem(database.nickName, database.uuid));
     } else {
       const stored = await SettingsStore.getSettings();
       return stored.lastKnownDatabases;
     }
   }
 
-  async onFillWithCredential(
-    credential: AutoFillCredential,
-    inlineFieldInitiator: HTMLInputElement | null = null,
-    inlineFieldInitiatorIsPassword = false
-  ) {
+  async onFillWithCredential(credential: AutoFillCredential, inlineFieldInitiator: HTMLInputElement | null = null, inlineFieldInitiatorIsPassword = false) {
     await this.autoFillWithCredential(credential, false, inlineFieldInitiator, inlineFieldInitiatorIsPassword);
+  }
+
+  async onFillSingleField(text: string, inlineFieldInitiator: HTMLInputElement) {
+    await this.autoFillSingleField(text, inlineFieldInitiator);
   }
 
   async autoFillWithCredential(
@@ -641,22 +462,34 @@ export class ContentScriptManager {
     this.removeFocusListener();
 
     const autoFiller = new AutoFiller();
-    const filled = await autoFiller.doIt(
-      credential,
-      inlineFieldInitiator,
-      inlineFieldInitiatorIsPassword,
-      fillMultiple,
-      isPageLoadFill
-    );
+    const filled = await autoFiller.doIt(credential, inlineFieldInitiator, inlineFieldInitiatorIsPassword, fillMultiple);
 
     setTimeout(() => {
       this.addFocusListener();
     }, 500);
 
     if (filled) {
+      this.iframeManager.remove();
       this.copyTotpCodeIfConfiguredAfterFill(credential);
     }
 
     return filled;
+  }
+
+  async autoFillSingleField(text: string, inlineFieldInitiator: HTMLInputElement): Promise<void> {
+
+    
+
+    this.removeFocusListener();
+
+    const autoFiller = new AutoFiller();
+
+    await autoFiller.doItSingleField(text, inlineFieldInitiator);
+
+    setTimeout(() => {
+      this.addFocusListener();
+    }, 500);
+
+    this.iframeManager.remove();
   }
 }

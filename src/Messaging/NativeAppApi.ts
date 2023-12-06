@@ -21,11 +21,21 @@ import { SearchRequest } from './Protocol/SearchRequest';
 import { UnlockRequest } from './Protocol/UnlockRequest';
 import { UnlockResponse } from './Protocol/UnlockResponse';
 import { WellKnownField } from './Protocol/WellKnownField';
+import { SearchResponse } from './Protocol/SearchResponse';
+import { GetIconRequest } from './Protocol/GetIconRequest';
+import { GetIconResponse } from './Protocol/GetIconResponse';
+import { GeneratePasswordV2Response } from './Protocol/GeneratePasswordV2Response';
+import { GetPasswordAndStrengthRequest } from './Protocol/GetPasswordAndStrengthRequest';
+import { GetPasswordAndStrengthResponse } from './Protocol/GetPasswordAndStrengthResponse';
+import { GetNewEntryDefaultsResponseV2 } from './Protocol/GetNewEntryDefaultsResponseV2';
+import { CopyStringRequest, CopyStringResponse } from './Protocol/CopyStringRequest';
 
 export class NativeAppApi {
   private static instance: NativeAppApi;
   private keyPair: BoxKeyPair;
   private latestServerPublicKey: string | undefined;
+
+  public credentialResultsPageSize = 9;
 
   private constructor() {
     this.keyPair = nacl.box.keyPair();
@@ -82,15 +92,25 @@ export class NativeAppApi {
     return await this.sendMessage<GetNewEntryDefaultsResponse>(encrypted);
   }
 
+  public async getNewEntryDefaultsV2(
+    details: GetNewEntryDefaultsRequest
+  ): Promise<GetNewEntryDefaultsResponseV2 | null> {
+    const encrypted = await this.buildEncryptedRequest(details, AutoFillMessageType.getNewEntryDefaultsV2);
+
+    return await this.sendMessage<GetNewEntryDefaultsResponseV2>(encrypted);
+  }
+
   public async generatePassword(details: GeneratePasswordRequest): Promise<GeneratePasswordResponse | null> {
     const encrypted = await this.buildEncryptedRequest(details, AutoFillMessageType.generatePassword);
 
     return await this.sendMessage<GeneratePasswordResponse>(encrypted);
   }
 
-  public async credentialsForUrl(url: string): Promise<CredentialsForUrlResponse | null> {
+  public async credentialsForUrl(url: string, skip: number, take: number): Promise<CredentialsForUrlResponse | null> {
     const credRequest = new CredentialsForUrlRequest();
     credRequest.url = url;
+    credRequest.skip = skip;
+    credRequest.take = take;
 
     const encrypted = await this.buildEncryptedRequest(credRequest, AutoFillMessageType.getCredentialsForUrl);
 
@@ -258,13 +278,62 @@ export class NativeAppApi {
 
   
 
-  public async search(query: string) {
+  public async search(query: string, skip: number, take: number) {
+    
 
     const searchRequest = new SearchRequest();
 
     searchRequest.query = query;
+    searchRequest.skip = skip;
+    searchRequest.take = take;
 
-    const encrypted = this.buildEncryptedRequest(searchRequest, AutoFillMessageType.search);
+    const encrypted = await this.buildEncryptedRequest(searchRequest, AutoFillMessageType.search);
 
+    
+
+    return await this.sendMessage<SearchResponse>(encrypted);
+  }
+
+  public async getIcon(databaseId: string, nodeId: string) {
+    
+
+    const getIconRequest = new GetIconRequest();
+
+    getIconRequest.databaseId = databaseId;
+    getIconRequest.nodeId = nodeId;
+
+    const encrypted = await this.buildEncryptedRequest(getIconRequest, AutoFillMessageType.getIcon);
+
+    
+
+    return await this.sendMessage<GetIconResponse>(encrypted);
+  }
+
+  public async copyString(value: string): Promise<CopyStringResponse | null> {
+    
+
+    const copyStringRequest = new CopyStringRequest();
+
+    copyStringRequest.value = value;
+
+    const encrypted = await this.buildEncryptedRequest(copyStringRequest, AutoFillMessageType.copyString);
+
+    
+
+    return await this.sendMessage<CopyStringResponse>(encrypted);
+  }
+
+  public async generatePasswordsV2() {
+    const encrypted = await this.buildEncryptedRequest({}, AutoFillMessageType.generatePasswordV2);
+    return await this.sendMessage<GeneratePasswordV2Response>(encrypted);
+  }
+
+  public async getPasswordStrength(
+    details: GetPasswordAndStrengthRequest
+  ): Promise<GetPasswordAndStrengthResponse | null> {
+    const encrypted = await this.buildEncryptedRequest(details, AutoFillMessageType.getPasswordStrength);
+
+    const result = await this.sendMessage<GetPasswordAndStrengthResponse>(encrypted);
+    return result;
   }
 }

@@ -1,5 +1,5 @@
 {
-  "autodetected-language": "Automatikus felismerés ({{language}})",
+  "autodetected-language": "{{language}} (Auto)",
   "general": {
     "app-name": "Strongbox automatikus kitöltő",
     "company-name": "Phoebe Code Limited",
@@ -12,7 +12,8 @@
     "copy": "Másolás",
     "autofill": "Automatikus kitöltés",
     "launch-url": "URL megnyitása",
-    "show-hide": "Megjelenítés/Elrejtés"
+    "show-hide": "Megjelenítés/Elrejtés",
+    "dismiss": "Elvetés"
   },
   "inline-mini-field-menu": {
     "no-matching-entries-found": "Nincsenek megfelelő bejegyzések",
@@ -62,7 +63,10 @@
     "totp-copied": "TOTP másolva",
     "url-copied": "URL másolva",
     "modified-date-copied": "Módosított dátum másolása",
-    "custom-field-copied": "Egyéni mező másolva"
+    "custom-field-copied": "Egyéni mező másolva",
+    "hide-for-a-while": "Inline menük egy időre elrejtve",
+    "hide-on-this-page": "Ezen az oldalon elrejtett inline menük",
+    "hide-on-this-domain": "Ezen a tartományon elrejtett inline menük"
   },
   "current-tab-credentials": {
     "title": "Találatok",
@@ -104,17 +108,20 @@
   },
   "settings-popup-component": {
     "title": "Beállítások",
-    "title-tab1": "Alkalmazás",
-    "title-tab2": "Stílus",
+    "title-tab1": "Általános",
+    "title-tab2": "Kitöltés",
+    "title-tab3": "Inline menü",
+    "title-tab4": "Stílus",
     "show-inline-menus": "Soron belüli menük megjelenítése",
-    "show-match-count-badge-on-popup-icon": "Show Match Count Badge",
-    "fill-on-load-if-only-single-match-found": "Fill on Load if Only Single Match",
+    "show-match-count-badge-on-popup-icon": "Találatok száma a jelvényen",
+    "fill-on-load-if-only-single-match-found": "Kitöltés betöltéskor, ha csak egyetlen egyezés volt",
     "always-fill-on-load-with-first-match": "Mindig az első találattal töltse ki",
     "do-not-fill-on-load-on-this-domain": "Ne töltse ki ezen tartomány esetén",
-    "do-not-show-inline-menus-on-this-domain": "Ne jelenítsen meg soron belüli menüket ennél a tartománynál",
-    "do-not-show-inline-menus-on-this-page": "Ne jelenítsen meg soron belüli menüket ennél az oldalnál",
+    "do-not-show-inline-menus-on-this-domain": "Soron belüli menük elrejtése ennél a tartománynál",
+    "do-not-show-inline-menus-on-this-page": "Soron belüli menük elrejtése ezen az oldalon",
     "do-not-show-credential-details-on-popup": "Részletek elrejtése a felugró ablakban",
     "do-not-show-credential-details-on-inline-menu": "Részletek elrejtése az Inline menüben",
+    "show-scrollbars": "Gördítősávok megjelenítése",
     "language": "Nyelv",
     "appearance": "Kinézet",
     "font-size": "Betűméret",

@@ -18,9 +18,10 @@ import { Settings } from '../Settings/Settings';
 
 interface CurrentTabCredentialsComponentProps {
   showToast: (message: string) => void;
+  initScrollbars: () => void;
 }
 
-function CurrentTabCredentialsComponent({ showToast }: CurrentTabCredentialsComponentProps) {
+function CurrentTabCredentialsComponent({ showToast, initScrollbars }: CurrentTabCredentialsComponentProps) {
   const nativeAppApi = NativeAppApi.getInstance();
   const [loading, setLoading] = useState(true);
   const [credentials, setCredentials] = useState<AutoFillCredential[]>(() => []);
@@ -42,6 +43,7 @@ function CurrentTabCredentialsComponent({ showToast }: CurrentTabCredentialsComp
 
     getStoredSettings();
     bindSearchOrUrlResults();
+    initScrollbars();
   }, []);
 
   const handleSearchChange = async (searchText: string) => {
@@ -220,8 +222,9 @@ function CurrentTabCredentialsComponent({ showToast }: CurrentTabCredentialsComp
     return resp?.success ?? false;
   };
 
-  const onRedirectUrl = (url: string) => {
-    window.open(url, '_blank');
+  const onRedirectUrl = async (newUrl: string): Promise<void> => {
+    await BackgroundManager.getInstance().redirectUrl(newUrl);
+    window.close();
   };
 
   const getStatus = async () => {
@@ -249,7 +252,7 @@ function CurrentTabCredentialsComponent({ showToast }: CurrentTabCredentialsComp
   }, []);
 
   return (
-    <Box sx={{ flexGrow: 1, width: settings.hideCredentialDetailsOnPopup || credentials.length === 0 ? 350 : 700 }}>
+    <Box sx={{ flexGrow: 1, width: settings.hideCredentialDetailsOnPopup || credentials.length === 0 ? 500 : 700 }}>
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <Box sx={{ textAlign: 'center', p: 2, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
@@ -321,24 +324,26 @@ function CurrentTabCredentialsComponent({ showToast }: CurrentTabCredentialsComp
           </Box>
         </Grid>
         {!settings.hideCredentialDetailsOnPopup && credentials.length != 0 && (
-          <Grid item xs={7.5}>
+          <Grid item xs={7.5} sx={{ pr: 1 }}>
             <Paper sx={{ textAlign: 'center', height: '100%', pb: 0, boxShadow: 'none' }}>
               {credentials.length > 0 && selectedCredential && (
-                <CredentialDetails
-                  getStatus={getStatus}
-                  onCopyUsername={onCopyUsername}
-                  onCopyPassword={onCopyPassword}
-                  onCopyTotp={onCopyTotp}
-                  onCopy={onCopy}
-                  onRedirectUrl={onRedirectUrl}
-                  notifyAction={showToast}
-                  credential={selectedCredential}
-                  showTitle={true}
-                  showModified={true}
-                  allowAutofillField={false}
-                  onFillSingleField={() => {
-                  }}
-                ></CredentialDetails>
+                <Box sx={{ maxHeight: 400, overflowY: 'scroll', boxShadow: 'none' }}>
+                  <CredentialDetails
+                    getStatus={getStatus}
+                    onCopyUsername={onCopyUsername}
+                    onCopyPassword={onCopyPassword}
+                    onCopyTotp={onCopyTotp}
+                    onCopy={onCopy}
+                    onRedirectUrl={onRedirectUrl}
+                    notifyAction={showToast}
+                    credential={selectedCredential}
+                    showTitle={true}
+                    showModified={true}
+                    allowAutofillField={false}
+                    onFillSingleField={() => {
+                    }}
+                  ></CredentialDetails>
+                </Box>
               )}
             </Paper>
           </Grid>

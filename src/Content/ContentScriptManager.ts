@@ -28,6 +28,7 @@ export interface MainPageInformation {
   url: string;
   favIconBase64: string | null;
   favIconUrl: string | null;
+  inlineMenuTruncatedHeight: string | null;
 }
 
 export class ContentScriptManager {
@@ -129,7 +130,7 @@ export class ContentScriptManager {
     await browser.runtime.sendMessage({ type: 'copy-string', details: value });
   }
 
-  async onRedirectUrl(url: string) {
+  redirectUrl(url: string) {
     window.open(url, '_blank');
   }
 

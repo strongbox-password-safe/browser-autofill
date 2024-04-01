@@ -59,7 +59,15 @@ function CustomTextBox({
                 <Tooltip title={t('general.show-hide')} placement="top" arrow>
                   <Box sx={{ pt: 3, pb: 3 }}>
                     <InputAdornment position="end">
-                      <IconButton size="small" aria-label={t('general.show-hide')} edge="end" onClick={() => setHideText(hide => !hide)}>
+                      <IconButton
+                        size="small"
+                        aria-label={t('general.show-hide')}
+                        edge="end"
+                        onClick={event => {
+                          event.stopPropagation();
+                          setHideText(hide => !hide);
+                        }}
+                      >
                         {!hideText ? <VisibilityOff /> : <Visibility />}
                       </IconButton>
                     </InputAdornment>

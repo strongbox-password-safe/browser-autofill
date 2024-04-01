@@ -12,6 +12,7 @@ export interface CreateNewEntryDialogProps {
   hideInlineMenusForAWhile: () => void;
   setOpenHideMenu: (value: boolean) => void;
   notifyAction: (message: string) => void;
+  onCloseMenu: () => void;
 }
 
 enum HideMenuOptions {
@@ -34,21 +35,21 @@ export default function HideInlineMenu(props: CreateNewEntryDialogProps) {
   }, []);
 
   const handleSave = async (hideMenuOption: HideMenuOptions) => {
-    let message = 'Inline Menus Hidden ';
+    let message = '';
 
     switch (hideMenuOption) {
       case HideMenuOptions.ForAWhile: {
-        message = message + ' For a While';
+        message = t('notification-toast.hide-for-a-while');
         props.hideInlineMenusForAWhile();
         break;
       }
       case HideMenuOptions.OnPage: {
-        message = message + ' On This Page';
+        message = t('notification-toast.hide-on-this-page');
         await addThisPageToDoNotRunList(props.url);
         break;
       }
       case HideMenuOptions.OnDomain: {
-        message = message + ' On This Domain';
+        message = t('notification-toast.hide-on-this-domain');
 
         await addThisDomainToDoNotRunList(props.url);
         break;
@@ -97,16 +98,14 @@ export default function HideInlineMenu(props: CreateNewEntryDialogProps) {
       id="hide-menu"
       anchorEl={props.anchorEl}
       open={props.open}
-      onClose={() => props.setOpenHideMenu(false)}
-      sx={{ zIndex: '2147483642', height: '200px', minHeight: '240px', overflow: 'hidden' }}
+      onClose={props.onCloseMenu}
+      sx={{ zIndex: '2147483642', minHeight: '400px', overflow: 'hidden' }}
       MenuListProps={{
         'aria-labelledby': 'hide-menu',
         sx: { p: 0 },
       }}
     >
-      <MenuItem onClick={() => handleSave(HideMenuOptions.ForAWhile)}>
-        {t('hide-inline-menu.hide-for-a-while')}
-      </MenuItem>
+      <MenuItem onClick={() => handleSave(HideMenuOptions.ForAWhile)}>{t('hide-inline-menu.hide-for-a-while')}</MenuItem>
       <MenuItem onClick={() => handleSave(HideMenuOptions.OnPage)}>{t('hide-inline-menu.hide-on-page')}</MenuItem>
       <MenuItem onClick={() => handleSave(HideMenuOptions.OnDomain)}>{t('hide-inline-menu.hide-on-domain')}</MenuItem>
     </Menu>

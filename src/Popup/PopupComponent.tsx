@@ -11,7 +11,7 @@ import '@fontsource/roboto/700.css';
 
 import CurrentTabCredentialsComponent from './CurrentTabCredentials';
 
-import { Snackbar, Alert, Paper, BottomNavigation, BottomNavigationAction } from '@mui/material';
+import { Snackbar, Alert, Paper, BottomNavigation, BottomNavigationAction, Tooltip } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { NativeAppApi } from '../Messaging/NativeAppApi';
 import NotRunningPopupComponent from './NotRunningPopupComponent';
@@ -21,7 +21,7 @@ import SettingsPopupComponent from './SettingsPopupComponent';
 import { useCustomStyle } from '../Contexts/CustomStyleContext';
 import { useTranslation } from 'react-i18next';
 import { Utils } from '../Utils';
-import { FontSize } from '../Settings/Settings';
+import { SettingsStore } from '../Settings/SettingsStore';
 
 enum Tabs {
   Credentials = 0,
@@ -31,7 +31,7 @@ enum Tabs {
 
 export default function PopupComponent() {
   const [t] = useTranslation('global');
-  const { getCustomStyle, fontSize } = useCustomStyle();
+  const { getCustomStyle, sizeHandler } = useCustomStyle();
   const theme = createTheme(getCustomStyle());
 
   const ref = React.useRef<HTMLDivElement>(null); 
@@ -86,7 +86,31 @@ export default function PopupComponent() {
 
     getCurrentStatus().catch(() => {
     });
+
+    initScrollbars();
   }, []);
+
+  async function initScrollbars() {
+    const stored = await SettingsStore.getSettings();
+
+    if (!stored.showScrollbars) {
+      const styleElement = document.createElement('style');
+
+      const cssRules = `
+            div::-webkit-scrollbar { width: 0; display: none; } 
+            div { overflow: -moz-scrollbars-none; -ms-overflow-style: none; scrollbar-width: none; }`;
+
+      styleElement.innerHTML = cssRules;
+      styleElement.id = 'hide-scrollbar-style';
+      document.head.appendChild(styleElement);
+    } else {
+      const styleElementsToRemove = document.querySelectorAll('style#hide-scrollbar-style');
+
+      styleElementsToRemove.forEach(element => {
+        element.remove();
+      });
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -106,7 +130,7 @@ export default function PopupComponent() {
               <SettingsPopupComponent />
             )
           ) : (
-            <CurrentTabCredentialsComponent showToast={message => showToast(message)} />
+            <CurrentTabCredentialsComponent initScrollbars={initScrollbars} showToast={message => showToast(message)} />
           )}
         </Box>
         <Snackbar open={popupVisible} autoHideDuration={1000} onClose={handleToastClose}>
@@ -116,11 +140,7 @@ export default function PopupComponent() {
         </Snackbar>
 
         {Utils.isMacintosh() && (
-          <Paper
-            elevation={1}
-            square
-            sx={{ boxShadow: 'none', margin: `${[FontSize.xl, FontSize.large].includes(fontSize) ? '10px' : '0px'}` }}
-          >
+          <Paper elevation={1} square sx={{ boxShadow: 'none', margin: sizeHandler.getPopupComponentMargin() }}>
             <BottomNavigation
               showLabels
               value={selectedTab}
@@ -132,18 +152,30 @@ export default function PopupComponent() {
                 ''
               ) : (
                 <BottomNavigationAction
-                  label={unlockedCount === 0 ? '' : t('current-tab-credentials.title')}
-                  icon={<DomainVerification color={selectedTab == Tabs.Credentials ? 'primary' : 'disabled'} />}
+                  label={unlockedCount === 0 ? '' : sizeHandler.getPopupTabTitle(t('current-tab-credentials.title'))}
+                  icon={
+                    <Tooltip title={sizeHandler.getPopupTabTitle(t('current-tab-credentials.title'), true)} placement="top" arrow>
+                      <DomainVerification color={selectedTab == Tabs.Credentials ? 'primary' : 'disabled'} />
+                    </Tooltip>
+                  }
                 />
               )}
               <BottomNavigationAction
-                label={t('databases-list-popup-component.title')}
-                icon={<Storage color={selectedTab == Tabs.Databases ? 'primary' : 'disabled'} />}
+                label={sizeHandler.getPopupTabTitle(t('databases-list-popup-component.title'))}
+                icon={
+                  <Tooltip title={sizeHandler.getPopupTabTitle(t('databases-list-popup-component.title'), true)} placement="top" arrow>
+                    <Storage color={selectedTab == Tabs.Databases ? 'primary' : 'disabled'} />
+                  </Tooltip>
+                }
               />
 
               <BottomNavigationAction
-                label={t('settings-popup-component.title')}
-                icon={<Settings color={selectedTab == Tabs.Settings ? 'primary' : 'disabled'} />}
+                label={sizeHandler.getPopupTabTitle(t('settings-popup-component.title'))}
+                icon={
+                  <Tooltip title={sizeHandler.getPopupTabTitle(t('settings-popup-component.title'), true)} placement="top" arrow>
+                    <Settings color={selectedTab == Tabs.Settings ? 'primary' : 'disabled'} />
+                  </Tooltip>
+                }
               />
             </BottomNavigation>
           </Paper>

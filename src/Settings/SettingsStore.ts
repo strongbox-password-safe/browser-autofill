@@ -18,6 +18,7 @@ const settingsSerializableObject: {
   spacing: number;
   hideCredentialDetailsOnPopup: boolean;
   hideCredentialDetailsOnInlineMenu: boolean;
+  showScrollbars: boolean;
 } = {
   lng: String(),
   lastSelectedNewEntryGroupUuidForDatabase: String(),
@@ -34,6 +35,7 @@ const settingsSerializableObject: {
   spacing: 0,
   hideCredentialDetailsOnPopup: false,
   hideCredentialDetailsOnInlineMenu: false,
+  showScrollbars: true,
 };
 
 const settingsKey = 'settings.v8'; 
@@ -45,9 +47,7 @@ export class SettingsStore {
     const serializableObject = Utils.mapProperties(settings, settingsSerializableObject, excludedProperties);
 
     
-    serializableObject.lastSelectedNewEntryGroupUuidForDatabase = JSON.stringify(
-      Array.from(settings.lastSelectedNewEntryGroupUuidForDatabase.entries())
-    );
+    serializableObject.lastSelectedNewEntryGroupUuidForDatabase = JSON.stringify(Array.from(settings.lastSelectedNewEntryGroupUuidForDatabase.entries()));
 
     
     return JSON.stringify(settingsSerializableObject);

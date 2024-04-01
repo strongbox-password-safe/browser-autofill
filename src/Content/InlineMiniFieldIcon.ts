@@ -107,9 +107,7 @@ export class InlineMiniFieldIcon {
     const offset = InlineMiniFieldIcon.calculateIconOffset(this.fieldElement, size);
 
     this.iconElement.style.top = InlineMiniFieldIcon.pixelsCssString(top + scrollTop + offset);
-    this.iconElement.style.left = InlineMiniFieldIcon.pixelsCssString(
-      left + scrollLeft + this.fieldElement.offsetWidth - size - offset
-    );
+    this.iconElement.style.left = InlineMiniFieldIcon.pixelsCssString(left + scrollLeft + this.fieldElement.offsetWidth - size - offset);
   }
 
   static calculateIconOffset(field: HTMLElement, size: number) {

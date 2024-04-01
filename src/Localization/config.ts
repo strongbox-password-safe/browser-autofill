@@ -12,9 +12,11 @@ import global_zhHans from './Languages/zh-Hans.json';
 import global_it from './Languages/it.json';
 import global_ru from './Languages/ru.json';
 import global_ptbr from './Languages/pt-BR.json';
+import global_engb from './Languages/en-GB.json';
 
 const resources = {
   en: { global: global_en },
+  'en-GB': { global: global_engb },
   de: { global: global_de },
   fr: { global: global_fr },
   es: { global: global_es },
@@ -53,7 +55,15 @@ export const getSelectedlanguage = async () => {
 };
 
 export const isAutoDetected = (lng: string) => {
+  if (isKnownLanguage()) {
+    return [navigator.language].includes(lng);
+  }
+
   return [navigator.language, navigator.language.split('-')[0]].includes(lng);
+};
+
+const isKnownLanguage = () => {
+  return Object.keys(resources).reduce((exists, key) => (exists = !exists ? key === navigator.language : exists), false);
 };
 
 export const config = {

@@ -93,11 +93,7 @@ export default function DatabaseListItem({ database }: DatabaseListItemProps) {
                 textOverflow: 'ellipsis',
               }}
             >
-              {database.autoFillEnabled
-                ? database.locked
-                  ? t('database-list-item.locked')
-                  : t('database-list-item.unlocked')
-                : t('autofill-not-enabled')}
+              {database.autoFillEnabled ? (database.locked ? t('database-list-item.locked') : t('database-list-item.unlocked')) : t('autofill-not-enabled')}
             </Typography>
           </Box>
         </Box>

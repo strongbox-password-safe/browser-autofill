@@ -66,14 +66,7 @@ function SimpleDialog(props: SimpleDialogProps) {
                     {databaseName}
                   </ListSubheader>
                   {(groupedCredentials.get(databaseName) || []).map(credential => (
-                    <ListItem
-                      sx={{ mb: '3px', mt: '3px' }}
-                      disableGutters
-                      disablePadding
-                      button
-                      key={credential.uuid}
-                      onClick={() => handleListItemClick(credential)}
-                    >
+                    <ListItem sx={{ mb: '3px', mt: '3px' }} disableGutters disablePadding button key={credential.uuid} onClick={() => handleListItemClick(credential)}>
                       <CredentialsListItem
                         credential={credential}
                         showToast={showToast}
@@ -131,13 +124,7 @@ export default function SelectCredentialComponent(props: SelectCredentialCompone
 
   return (
     <div>
-      <SimpleDialog
-        selectedValue={selectedValue}
-        open={open}
-        onClose={handleClose}
-        groupedCredentials={props.groupedCredentials}
-        fillCredential={props.fillCredential}
-      />
+      <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} groupedCredentials={props.groupedCredentials} fillCredential={props.fillCredential} />
     </div>
   );
 }

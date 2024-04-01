@@ -1,5 +1,5 @@
 {
-  "autodetected-language": "Détecté automatiquement ({{language}})",
+  "autodetected-language": "{{language}} (Auto)",
   "general": {
     "app-name": "Remplissage automatique Strongbox",
     "company-name": "Phoebe Code Limited",
@@ -12,7 +12,8 @@
     "copy": "Copier",
     "autofill": "Remplissage automatique",
     "launch-url": "Suivre l'URL",
-    "show-hide": "Afficher/Masquer"
+    "show-hide": "Afficher/Masquer",
+    "dismiss": "Faire disparaître"
   },
   "inline-mini-field-menu": {
     "no-matching-entries-found": "Aucune entrée correspondante trouvée",
@@ -62,7 +63,10 @@
     "totp-copied": "TOTP copié",
     "url-copied": "URL copiée",
     "modified-date-copied": "Date de modification copiée",
-    "custom-field-copied": "Champ personnalisé copié"
+    "custom-field-copied": "Champ personnalisé copié",
+    "hide-for-a-while": "Menus de suggestions masqués temporairement",
+    "hide-on-this-page": "Menus de suggestions masqués sur cette page",
+    "hide-on-this-domain": "Menus de suggestions masqués sur ce domaine"
   },
   "current-tab-credentials": {
     "title": "Correspondances",
@@ -104,17 +108,20 @@
   },
   "settings-popup-component": {
     "title": "Réglages",
-    "title-tab1": "Appli",
-    "title-tab2": "Style",
-    "show-inline-menus": "Show Inline Menus",
+    "title-tab1": "Général",
+    "title-tab2": "Remplissage",
+    "title-tab3": "Menu de suggestion",
+    "title-tab4": "Style",
+    "show-inline-menus": "Afficher les menus de suggestions",
     "show-match-count-badge-on-popup-icon": "Afficher le nombre de correspondances sur l'icône",
     "fill-on-load-if-only-single-match-found": "Remplir au chargement si unique correspondance trouvée",
     "always-fill-on-load-with-first-match": "Toujours remplir au chargement avec la première correspondance",
     "do-not-fill-on-load-on-this-domain": "Ne pas remplir lors du chargement sur ce domaine",
-    "do-not-show-inline-menus-on-this-domain": "Do Not Show Inline Menus on this Domain",
-    "do-not-show-inline-menus-on-this-page": "Do Not Show Inline Menus on this Page",
+    "do-not-show-inline-menus-on-this-domain": "Masquer les menus de suggestions sur ce domaine",
+    "do-not-show-inline-menus-on-this-page": "Masquer les menus de suggestions sur cette page",
     "do-not-show-credential-details-on-popup": "Cacher les détails dans la fenêtre contextuelle",
-    "do-not-show-credential-details-on-inline-menu": "Hide Details on Inline Menu",
+    "do-not-show-credential-details-on-inline-menu": "Masquer les détails dans les menus de suggestions",
+    "show-scrollbars": "Afficher les barres de défilement",
     "language": "Langue",
     "appearance": "Apparence",
     "font-size": "Taille du texte",

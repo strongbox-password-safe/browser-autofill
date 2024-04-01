@@ -1,9 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { SettingsStore } from '../Settings/SettingsStore';
-import { FontSize, LightOrDarkAppearance, Spacing } from '../Settings/Settings';
 import { IframeMessageTypes } from '../Content/Iframe/iframeManager';
 import { Utils } from '../Utils';
 import { tooltipClasses } from '@mui/material';
+import githubMarkdownDarkStyle from '../Popup/markdown-styles/github-markdown-dark';
+import githubMarkdownLightStyle from '../Popup/markdown-styles/github-markdown-light';
+import { SizeHandler } from '../SizeHandler';
+import { StrongboxColours } from '../StrongboxColours';
 
 interface ThemeContextType {
   getCustomStyle: (components?: object | null) => object;
@@ -14,9 +17,29 @@ interface ThemeContextType {
   setFontSize: (fontSize: FontSize) => void;
   setSpacing: (spacing: Spacing) => void;
   switchToSystemMode: () => void;
+  sizeHandler: SizeHandler;
 }
 
 const CustomStyleContext = createContext<ThemeContextType | undefined>(undefined);
+
+export enum LightOrDarkAppearance {
+  dark,
+  light,
+  system,
+}
+
+export enum FontSize {
+  small = 20,
+  medium = 16,
+  large = 12,
+  xl = 10,
+}
+
+export enum Spacing {
+  small = 4,
+  medium = 6,
+  large = 8,
+}
 
 export function useCustomStyle() {
   const context = useContext(CustomStyleContext);
@@ -39,20 +62,8 @@ export function CustomStyleProvider({ children }: ThemeProviderProps) {
   const theme = {
     palette: { mode: 'light' },
     spacing: spacing,
-    typography: {
-      htmlFontSize: fontSize as number,
-    },
-    components: {
-      MuiTooltip: {
-        styleOverrides: {
-          tooltip: {
-            [`.${tooltipClasses.popper}[data-popper-placement*="right"] &`]: {
-              marginLeft: '1px',
-            },
-          },
-        },
-      },
-    },
+    typography: { htmlFontSize: fontSize as number },
+    components: {},
   };
 
   React.useEffect(() => {
@@ -70,7 +81,7 @@ export function CustomStyleProvider({ children }: ThemeProviderProps) {
         addColorSchemeTag(false);
       }
     };
-
+    initializeStyles();
     mediaQuery.addEventListener('change', handleSystemThemeChange);
     return () => {
       mediaQuery.removeEventListener('change', handleSystemThemeChange);
@@ -88,6 +99,36 @@ export function CustomStyleProvider({ children }: ThemeProviderProps) {
 
     theme.typography.htmlFontSize = parseInt(fontSize.toString());
     theme.spacing = spacing;
+
+    theme.components = {
+      MuiTooltip: {
+        styleOverrides: {
+          tooltip: {
+            [`.${tooltipClasses.popper}[data-popper-placement*="right"] &`]: {
+              marginLeft: '1px',
+            },
+          },
+        },
+      },
+    };
+
+    
+    let styleElement = document.createElement('style');
+    let cssRules = `
+    ::-webkit-scrollbar {width: 10px;}
+    ::-webkit-scrollbar-track {background: transparent;border-radius: 15px;}
+    ::-webkit-scrollbar-thumb {background:  ${darkMode ? StrongboxColours.scrollbar.thumb.background.dark : StrongboxColours.scrollbar.thumb.background.light};border-radius: 6px;}
+    ::-webkit-scrollbar-thumb:hover {background: ${darkMode ? StrongboxColours.scrollbar.thumb.hover.background.dark : StrongboxColours.scrollbar.thumb.hover.background.light};}`;
+    styleElement.innerHTML = cssRules;
+    styleElement.id = 'custom-scrollbar-style';
+    document.head.appendChild(styleElement);
+
+    
+    styleElement = document.createElement('style');
+    cssRules = darkMode ? githubMarkdownDarkStyle : githubMarkdownLightStyle;
+    styleElement.innerHTML = cssRules;
+    styleElement.id = 'github-markdown-style';
+    document.head.appendChild(styleElement);
 
     return theme;
   };
@@ -149,6 +190,8 @@ export function CustomStyleProvider({ children }: ThemeProviderProps) {
     }
   };
 
+  const sizeHandler = new SizeHandler(fontSize);
+
   const contextValue = {
     getCustomStyle,
     darkMode,
@@ -158,6 +201,7 @@ export function CustomStyleProvider({ children }: ThemeProviderProps) {
     systemMode,
     switchToSystemMode,
     fontSize,
+    sizeHandler,
   };
 
   return <CustomStyleContext.Provider value={contextValue}>{children}</CustomStyleContext.Provider>;

@@ -111,10 +111,7 @@ export class BackgroundManager {
 
           const settings = await SettingsStore.getSettings();
 
-          if (
-            (tabID && settings.autoFillImmediatelyIfOnlyASingleMatch && credentials.length == 1) ||
-            settings.autoFillImmediatelyWithFirstMatch
-          ) {
+          if ((tabID && settings.autoFillImmediatelyIfOnlyASingleMatch && credentials.length == 1) || settings.autoFillImmediatelyWithFirstMatch) {
             setTimeout(() => {
               this.doOnLoadFill(tabID, credentials[0]);
             }, 100);
@@ -167,14 +164,20 @@ export class BackgroundManager {
     await browser.tabs.sendMessage(tabId, { openCreateNewDialog: true });
   }
 
-  
+  public async redirectUrl(newUrl: string) {
 
-  private async updateBadgeAndIconBasedOnCredentialsResponse(
-    response: CredentialsForUrlResponse,
-    endTime: number,
-    startTime: number,
-    skip: number
-  ) {
+    const tab = await BackgroundManager.getCurrentTab();
+    const url = tab ? tab.url : undefined;
+    const tabId = tab?.id;
+
+    if (!url || !tabId) {
+      return;
+    }
+
+    await browser.tabs.sendMessage(tabId, { redirectUrl: newUrl });
+  }
+
+  private async updateBadgeAndIconBasedOnCredentialsResponse(response: CredentialsForUrlResponse, endTime: number, startTime: number, skip: number) {
     const unlockedDatabaseCount = response.unlockedDatabaseCount;
 
     let resultCount = `${this.nativeAppApi.credentialResultsPageSize}+`;
@@ -271,9 +274,7 @@ export class BackgroundManager {
     return response;
   }
 
-  private async getNewEntryDefaultsV2(
-    details: GetNewEntryDefaultsRequest
-  ): Promise<GetNewEntryDefaultsResponseV2 | null> {
+  private async getNewEntryDefaultsV2(details: GetNewEntryDefaultsRequest): Promise<GetNewEntryDefaultsResponseV2 | null> {
     
 
     const response = await NativeAppApi.getInstance().getNewEntryDefaultsV2(details);
@@ -303,9 +304,7 @@ export class BackgroundManager {
     return response;
   }
 
-  private async getPasswordStrength(
-    details: GetPasswordAndStrengthRequest
-  ): Promise<GetPasswordAndStrengthResponse | null> {
+  private async getPasswordStrength(details: GetPasswordAndStrengthRequest): Promise<GetPasswordAndStrengthResponse | null> {
     
 
     const response = await NativeAppApi.getInstance().getPasswordStrength(details);
@@ -338,9 +337,7 @@ export class BackgroundManager {
 
   async updateLastKnownDatabases(databases: DatabaseSummary[]) {
     const stored = await SettingsStore.getSettings();
-    const mapped = databases
-      .filter(database => database.autoFillEnabled)
-      .map(database => new LastKnownDatabasesItem(database.nickName, database.uuid));
+    const mapped = databases.filter(database => database.autoFillEnabled).map(database => new LastKnownDatabasesItem(database.nickName, database.uuid));
     stored.lastKnownDatabases = mapped;
 
     await SettingsStore.setSettings(stored);
@@ -354,18 +351,9 @@ export class BackgroundManager {
     return response;
   }
 
-  private async copyField(
-    credential: AutoFillCredential,
-    field: WellKnownField,
-    explicitTotp = false
-  ): Promise<CopyFieldResponse | null> {
+  private async copyField(credential: AutoFillCredential, field: WellKnownField, explicitTotp = false): Promise<CopyFieldResponse | null> {
 
-    const response = await NativeAppApi.getInstance().copyField(
-      credential.databaseId,
-      credential.uuid,
-      field,
-      explicitTotp
-    );
+    const response = await NativeAppApi.getInstance().copyField(credential.databaseId, credential.uuid, field, explicitTotp);
 
 
     return response;
@@ -543,11 +531,7 @@ export class BackgroundManager {
     return Promise.reject();
   }
 
-  private async checkForCredentialsUrl(
-    url: string,
-    skip = 0,
-    take = this.nativeAppApi.credentialResultsPageSize
-  ): Promise<AutoFillCredential[] | null> {
+  private async checkForCredentialsUrl(url: string, skip = 0, take = this.nativeAppApi.credentialResultsPageSize): Promise<AutoFillCredential[] | null> {
     const startTime = performance.now();
 
     const response = await NativeAppApi.getInstance().credentialsForUrl(url, skip, take);

@@ -1,5 +1,5 @@
 {
-  "autodetected-language": "Detección automática ({{language}})",
+  "autodetected-language": "{{language}} (Auto)",
   "general": {
     "app-name": "AutoRelleno de Strongbox",
     "company-name": "Phoebe Code Limited",
@@ -12,7 +12,8 @@
     "copy": "Copiar",
     "autofill": "Autorrelleno",
     "launch-url": "Iniciar URL",
-    "show-hide": "Mostrar/Ocultar"
+    "show-hide": "Mostrar/Ocultar",
+    "dismiss": "Descartar"
   },
   "inline-mini-field-menu": {
     "no-matching-entries-found": "No se han encontrado entradas coincidentes",
@@ -62,7 +63,10 @@
     "totp-copied": "TOTP copiado",
     "url-copied": "URL copiada",
     "modified-date-copied": "Fecha modificada copiada",
-    "custom-field-copied": "Campo personalizado copiado"
+    "custom-field-copied": "Campo personalizado copiado",
+    "hide-for-a-while": "Menús en línea ocultos durante un tiempo",
+    "hide-on-this-page": "Menús en línea ocultos en esta página",
+    "hide-on-this-domain": "Menús en línea ocultos en este dominio"
   },
   "current-tab-credentials": {
     "title": "Coincidencias",
@@ -104,17 +108,20 @@
   },
   "settings-popup-component": {
     "title": "Ajustes",
-    "title-tab1": "App",
-    "title-tab2": "Estilo",
+    "title-tab1": "General",
+    "title-tab2": "Rellenar",
+    "title-tab3": "Menú en línea",
+    "title-tab4": "Estilo",
     "show-inline-menus": "Mostrar menús en línea",
     "show-match-count-badge-on-popup-icon": "Mostrar recuento de coincidencias",
     "fill-on-load-if-only-single-match-found": "Rellenar al cargar si sólo se encuentra una coincidencia",
     "always-fill-on-load-with-first-match": "Rellenar siempre al cargar con la primera coincidencia",
     "do-not-fill-on-load-on-this-domain": "No rellenar al cargar en este dominio",
-    "do-not-show-inline-menus-on-this-domain": "No mostrar menús en línea en este dominio",
-    "do-not-show-inline-menus-on-this-page": "No mostrar menús en línea en esta página",
+    "do-not-show-inline-menus-on-this-domain": "Ocultar menús en línea en este dominio",
+    "do-not-show-inline-menus-on-this-page": "Ocultar menús en línea en esta página",
     "do-not-show-credential-details-on-popup": "Ocultar detalles en la ventana emergente",
     "do-not-show-credential-details-on-inline-menu": "Ocultar detalles en el menú en línea",
+    "show-scrollbars": "Mostrar barras de desplazamiento",
     "language": "Idioma",
     "appearance": "Apariencia",
     "font-size": "Tamaño de fuente",

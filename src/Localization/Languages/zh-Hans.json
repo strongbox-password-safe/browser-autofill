@@ -1,5 +1,5 @@
 {
-  "autodetected-language": "自动检测 ({{language}})",
+  "autodetected-language": "{{language}} (Auto)",
   "general": {
     "app-name": "Strongbox 自动填充",
     "company-name": "Phoebe Code Limited",
@@ -12,7 +12,8 @@
     "copy": "复制",
     "autofill": "自动填充",
     "launch-url": "打开 URL",
-    "show-hide": "显示/隐藏"
+    "show-hide": "显示/隐藏",
+    "dismiss": "Dismiss"
   },
   "inline-mini-field-menu": {
     "no-matching-entries-found": "未找到匹配条目",
@@ -62,7 +63,10 @@
     "totp-copied": "TOTP 已复制",
     "url-copied": "URL 已复制",
     "modified-date-copied": "修改时间已复制",
-    "custom-field-copied": "自定义字段已复制"
+    "custom-field-copied": "自定义字段已复制",
+    "hide-for-a-while": "Inline Menus Hidden For a While",
+    "hide-on-this-page": "Inline Menus Hidden On This Page",
+    "hide-on-this-domain": "Inline Menus Hidden On This Domain"
   },
   "current-tab-credentials": {
     "title": "匹配",
@@ -104,17 +108,20 @@
   },
   "settings-popup-component": {
     "title": "设置",
-    "title-tab1": "应用程序",
-    "title-tab2": "样式",
+    "title-tab1": "General",
+    "title-tab2": "Fill",
+    "title-tab3": "Inline Menu",
+    "title-tab4": "Style",
     "show-inline-menus": "显示内联菜单",
     "show-match-count-badge-on-popup-icon": "显示匹配计数标记",
     "fill-on-load-if-only-single-match-found": "如果只找到一个匹配项，则立即填充",
     "always-fill-on-load-with-first-match": "始终使用首个匹配项进行填充",
     "do-not-fill-on-load-on-this-domain": "此域名不使用立即填充",
-    "do-not-show-inline-menus-on-this-domain": "不在此域名上显示内联菜单",
-    "do-not-show-inline-menus-on-this-page": "不在此页面上显示内联菜单",
+    "do-not-show-inline-menus-on-this-domain": "Hide Inline Menus on this Domain",
+    "do-not-show-inline-menus-on-this-page": "Hide Inline Menus on this Page",
     "do-not-show-credential-details-on-popup": "在弹出窗口隐藏详细信息",
     "do-not-show-credential-details-on-inline-menu": "在内联菜单隐藏详细信息",
+    "show-scrollbars": "Show Scrollbars",
     "language": "语言",
     "appearance": "外观",
     "font-size": "字体大小",

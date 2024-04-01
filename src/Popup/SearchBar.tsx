@@ -96,7 +96,7 @@ export default function SearchBar(props: SearchBarProps) {
   };
 
   return SearchMode.InlineMenu == props.searchMode ? (
-    <Box sx={{ display: 'flex', alignItems: 'center', paddingLeft: '10px' }}>
+    <Box sx={{ display: 'flex', alignItems: 'center', pl: '10px' }}>
       <SearchIcon style={{ marginRight: '10px' }} />
       <InputBase
         placeholder={t('search-bar.place-holder')}
@@ -111,7 +111,7 @@ export default function SearchBar(props: SearchBarProps) {
       </IconButton>
     </Box>
   ) : (
-    <Box sx={{ flexGrow: 1, paddingRight: '10px', paddingLeft: '10px' }}>
+    <Box sx={{ flexGrow: 1, pr: '10px', pl: '10px' }}>
       <Search style={{ marginRight: '0px', marginLeft: 0 }}>
         <SearchIconWrapper>
           <SearchIcon />

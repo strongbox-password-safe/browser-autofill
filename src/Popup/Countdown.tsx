@@ -28,9 +28,7 @@ const Countdown = (props: CountdownProps) => {
 
   const percentage = Math.floor((count / seconds) * 100);
 
-  return (
-    <CircularProgress style={{ color: Utils.getEntropyColor(percentage) }} variant="determinate" value={percentage} />
-  );
+  return <CircularProgress style={{ color: Utils.getEntropyColor(percentage) }} variant="determinate" value={percentage} />;
 };
 
 export default Countdown;

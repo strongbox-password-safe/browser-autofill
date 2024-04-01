@@ -1,6 +1,6 @@
 {
   "name": "strongbox-af-ext",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Strongbox Browser AutoFill Extension",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "build:chrome": "NODE_ENV=production TARGET_BROWSER=chrome webpack",
     "build:firefox": "NODE_ENV=production TARGET_BROWSER=firefox webpack",
     "lint": "eslint . --ext .ts",
-    "prettier": "prettier --write './**/*.{js,ts,tsx}'",
+    "prettier": "prettier --write './**/*.{js,ts,tsx,html}'",
     "zip": "node release-zip-files.js",
     "release": "node release-update-version.js"
   },

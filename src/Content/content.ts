@@ -26,5 +26,9 @@ browser.runtime.onMessage.addListener((message): void => {
     }
   } else if (message.openInlineMenu) {
     contentScriptManager.forceShowInlineMenuOnCurrentInput();
+  } else if (message.redirectUrl) {
+    if (Utils.isParentDocument()) {
+      contentScriptManager.redirectUrl(message.redirectUrl);
+    }
   }
 });

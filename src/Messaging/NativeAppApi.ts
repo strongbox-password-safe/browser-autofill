@@ -92,9 +92,7 @@ export class NativeAppApi {
     return await this.sendMessage<GetNewEntryDefaultsResponse>(encrypted);
   }
 
-  public async getNewEntryDefaultsV2(
-    details: GetNewEntryDefaultsRequest
-  ): Promise<GetNewEntryDefaultsResponseV2 | null> {
+  public async getNewEntryDefaultsV2(details: GetNewEntryDefaultsRequest): Promise<GetNewEntryDefaultsResponseV2 | null> {
     const encrypted = await this.buildEncryptedRequest(details, AutoFillMessageType.getNewEntryDefaultsV2);
 
     return await this.sendMessage<GetNewEntryDefaultsResponseV2>(encrypted);
@@ -117,12 +115,7 @@ export class NativeAppApi {
     return await this.sendMessage<CredentialsForUrlResponse>(encrypted);
   }
 
-  public async copyField(
-    databaseId: string,
-    nodeId: string,
-    field: WellKnownField,
-    explicitTotp = false
-  ): Promise<CopyFieldResponse | null> {
+  public async copyField(databaseId: string, nodeId: string, field: WellKnownField, explicitTotp = false): Promise<CopyFieldResponse | null> {
     const request = new CopyFieldRequest();
     request.databaseId = databaseId;
     request.nodeId = nodeId;
@@ -224,10 +217,7 @@ export class NativeAppApi {
     
   }
 
-  private async buildEncryptedRequest<Type>(
-    innerRequest: Type,
-    messageType: AutoFillMessageType
-  ): Promise<AutoFillEncryptedRequest | null> {
+  private async buildEncryptedRequest<Type>(innerRequest: Type, messageType: AutoFillMessageType): Promise<AutoFillEncryptedRequest | null> {
     
     const json = JSON.stringify(innerRequest);
     const nonce = this.generateNonce();
@@ -328,9 +318,7 @@ export class NativeAppApi {
     return await this.sendMessage<GeneratePasswordV2Response>(encrypted);
   }
 
-  public async getPasswordStrength(
-    details: GetPasswordAndStrengthRequest
-  ): Promise<GetPasswordAndStrengthResponse | null> {
+  public async getPasswordStrength(details: GetPasswordAndStrengthRequest): Promise<GetPasswordAndStrengthResponse | null> {
     const encrypted = await this.buildEncryptedRequest(details, AutoFillMessageType.getPasswordStrength);
 
     const result = await this.sendMessage<GetPasswordAndStrengthResponse>(encrypted);

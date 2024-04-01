@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
 
 import { AutoFillCredential } from '../Messaging/Protocol/AutoFillCredential';
-import { Badge, Box, Chip, CircularProgress, Button, TextField } from '@mui/material';
+import { Badge, Box, Chip, CircularProgress, Button, TextField, IconButton, Tooltip } from '@mui/material';
 import { NativeAppApi } from '../Messaging/NativeAppApi';
 import { BackgroundManager } from '../Background/BackgroundManager';
 import StarIcon from '@mui/icons-material/Star';
@@ -15,6 +15,7 @@ import Countdown from './Countdown';
 import { GetStatusResponse } from '../Messaging/Protocol/GetStatusResponse';
 import CustomMarkDown from './CustomMarkDown';
 import CustomTextBox from './CustomTextBox';
+import ContentPasteGoIcon from '@mui/icons-material/ContentPasteGo';
 
 interface Props {
   credential: AutoFillCredential;
@@ -102,8 +103,12 @@ function CredentialDetails(props: Props) {
     }
   };
 
-  const onRedirectUrl = () => {
-    props.onRedirectUrl(credential.url);
+  const onRedirectUrl = (url: string | null = null) => {
+    if (!url) {
+      url = credential.url;
+    }
+
+    props.onRedirectUrl(url);
   };
 
   const getCurrentTotpCode = (): string => {
@@ -142,7 +147,7 @@ function CredentialDetails(props: Props) {
   };
 
   return (
-    <Card sx={{ maxHeight: 400, overflowY: 'scroll', p: 2, boxShadow: 'none' }}>
+    <Card style={{ boxShadow: 'none', padding: '15px' }}>
       {props.showTitle && (
         <CardHeader
           sx={{ p: 2, pb: 4 }}
@@ -164,7 +169,7 @@ function CredentialDetails(props: Props) {
                   mb: 'auto',
                   cursor: 'pointer',
                 }}
-                onClick={onRedirectUrl}
+                onClick={() => onRedirectUrl()}
               >
                 {loadingIcon ? (
                   <Box display="block" sx={{ height: 32, mr: '8px' }}>
@@ -178,7 +183,7 @@ function CredentialDetails(props: Props) {
                   </Box>
                 )}
               </Box>
-              <Box sx={{ width: '100%', pr: 1, display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={onRedirectUrl}>
+              <Box sx={{ width: '100%', pr: 1, display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => onRedirectUrl()}>
                 <Typography variant="h6" sx={{ textAlign: 'left' }}>
                   {credential.title}
                 </Typography>
@@ -186,9 +191,11 @@ function CredentialDetails(props: Props) {
               </Box>
 
               <Box sx={{ textAlign: 'right' }}>
-                <Button variant="outlined" color="primary" onClick={autofill} sx={{ maxWidth: '100px', overflow: 'hidden' }}>
-                  {t('current-tab-credentials.autofill')}
-                </Button>
+                <Tooltip title={t('current-tab-credentials.autofill')} placement="bottom" arrow>
+                  <Button variant="outlined" color="primary" onClick={autofill} sx={{ maxWidth: '100px', overflow: 'hidden', paddingLeft: '14px' }}>
+                    <ContentPasteGoIcon />
+                  </Button>
+                </Tooltip>
               </Box>
             </Box>
           }
@@ -338,13 +345,14 @@ function CredentialDetails(props: Props) {
                 {t('current-tab-credentials.notes')}
               </Typography>
             </Box>
-            <Box sx={{ textAlign: 'left', p: 3, pt: 0 }}>
-              <CustomMarkDown text={credential.notes} />
+            <Box sx={{ textAlign: 'left', p: 0, pt: 1 }}>
+              <CustomMarkDown onRedirectUrl={onRedirectUrl} text={credential.notes} />
             </Box>
           </Box>
         )}
       </CardContent>
     </Card>
+    
   );
 }
 

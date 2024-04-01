@@ -1,6 +1,6 @@
 import * as React from 'react';
 import DialogTitle from '@mui/material/DialogTitle';
-import Dialog from '@mui/material/Dialog';
+import Dialog, { DialogProps } from '@mui/material/Dialog';
 import {
   Accordion,
   AccordionDetails,
@@ -27,18 +27,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import {
-  AddCircle,
-  Close,
-  ExpandMore,
-  Folder,
-  Home,
-  Lock,
-  LockOpen,
-  Refresh,
-  Visibility,
-  VisibilityOff,
-} from '@mui/icons-material';
+import { AddCircle, Close, ExpandMore, Folder, Home, Lock, LockOpen, Refresh, Visibility, VisibilityOff } from '@mui/icons-material';
 import { CreateEntryRequest } from '../Messaging/Protocol/CreateEntryRequest';
 import { CreateEntryResponse } from '../Messaging/Protocol/CreateEntryResponse';
 import { DatabaseSummary } from '../Messaging/Protocol/DatabaseSummary';
@@ -59,6 +48,7 @@ import { GetPasswordAndStrengthRequest } from '../Messaging/Protocol/GetPassword
 import { GetPasswordAndStrengthResponse } from '../Messaging/Protocol/GetPasswordAndStrengthResponse';
 import { Utils } from '../Utils';
 import { GetNewEntryDefaultsResponseV2 } from '../Messaging/Protocol/GetNewEntryDefaultsResponseV2';
+import { useCustomStyle } from '../Contexts/CustomStyleContext';
 
 export interface CreateNewEntryDialogProps {
   title: string;
@@ -96,6 +86,7 @@ export default function CreateNewEntryDialog(props: CreateNewEntryDialogProps) {
   const [passwordAndStrength, setPasswordAndStrength] = React.useState<PasswordAndStrength | null>();
   const [showPassword, setShowPassword] = React.useState(false);
   const [url, setUrl] = React.useState<string>(new URL(props.url ?? String()).origin);
+  const { sizeHandler } = useCustomStyle();
 
   React.useEffect(() => {
     loadDatabasesAtStartup().catch(error => {
@@ -244,9 +235,7 @@ export default function CreateNewEntryDialog(props: CreateNewEntryDialogProps) {
 
         const stored = await SettingsStore.getSettings();
 
-        const lastSelectedNewEntryGroupUuid = stored.lastSelectedNewEntryGroupUuidForDatabase.get(
-          currentlySelectedDatabase()?.uuid || String()
-        );
+        const lastSelectedNewEntryGroupUuid = stored.lastSelectedNewEntryGroupUuidForDatabase.get(currentlySelectedDatabase()?.uuid || String());
 
         if (lastSelectedNewEntryGroupUuid && grps.groups.some(g => g.uuid == lastSelectedNewEntryGroupUuid)) {
           setSelectedGroup(lastSelectedNewEntryGroupUuid);
@@ -360,7 +349,7 @@ export default function CreateNewEntryDialog(props: CreateNewEntryDialogProps) {
       }}
       sx={{ p: '3px' }}
       fullWidth
-      maxWidth="xs"
+      maxWidth={sizeHandler.getCreatenewEntryDialogMaxWidth() as DialogProps['maxWidth']}
       onClose={handleClose}
       onKeyDown={async event => {
         if (event.metaKey && event.key === 'Enter') {
@@ -494,12 +483,7 @@ export default function CreateNewEntryDialog(props: CreateNewEntryDialogProps) {
                     type={showPassword ? 'text' : 'password'}
                     endAdornment={
                       <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                          edge="end"
-                        >
+                        <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword} edge="end">
                           {showPassword ? <VisibilityOff /> : <Visibility />}
                         </IconButton>
                       </InputAdornment>
@@ -524,7 +508,7 @@ export default function CreateNewEntryDialog(props: CreateNewEntryDialogProps) {
                     variant="determinate"
                     value={Utils.getEntropyPercent(passwordAndStrength?.strength.entropy || 0)}
                   />
-                  <Typography sx={{ padding: '8px' }} variant="caption" fontWeight="light">
+                  <Typography sx={{ p: '8px' }} variant="caption" fontWeight="light">
                     {passwordAndStrength?.strength.summaryString}
                   </Typography>
                 </Box>
@@ -532,13 +516,7 @@ export default function CreateNewEntryDialog(props: CreateNewEntryDialogProps) {
 
               <FormControl variant="outlined" fullWidth>
                 <InputLabel>{t('create-new-entry-dialog.url')}</InputLabel>
-                <OutlinedInput
-                  onChange={handleUrlChange}
-                  value={url}
-                  error={url.length === 0 ? true : false}
-                  type="text"
-                  label={t('create-new-entry-dialog.url')}
-                />
+                <OutlinedInput onChange={handleUrlChange} value={url} error={url.length === 0 ? true : false} type="text" label={t('create-new-entry-dialog.url')} />
               </FormControl>
             </Box>
           </Box>
@@ -551,13 +529,9 @@ export default function CreateNewEntryDialog(props: CreateNewEntryDialogProps) {
           >
             <AccordionSummary expandIcon={<ExpandMore />}>
               <Typography sx={{ color: 'text.secondary', pr: '20px' }} variant="body1" fontWeight="light">
-                {hasSelectedValidUnlockedDatabase()
-                  ? t('create-new-entry-dialog.save-in')
-                  : `${t('create-new-entry-dialog.save-in')}...`}
+                {hasSelectedValidUnlockedDatabase() ? t('create-new-entry-dialog.save-in') : `${t('create-new-entry-dialog.save-in')}...`}
               </Typography>
-              <Typography variant="body1">
-                {hasSelectedValidUnlockedDatabase() ? currentlySelectedDatabase()?.nickName : ''}
-              </Typography>
+              <Typography variant="body1">{hasSelectedValidUnlockedDatabase() ? currentlySelectedDatabase()?.nickName : ''}</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }} component="form">
@@ -577,13 +551,7 @@ export default function CreateNewEntryDialog(props: CreateNewEntryDialogProps) {
                       MenuProps={{
                         style: { zIndex: 2147483641 }, 
                       }}
-                      value={
-                        databases.length === 0
-                          ? 'no-available-databases'
-                          : selectedDatabaseIdx !== null
-                          ? selectedDatabaseIdx.toString()
-                          : ''
-                      }
+                      value={databases.length === 0 ? 'no-available-databases' : selectedDatabaseIdx !== null ? selectedDatabaseIdx.toString() : ''}
                       label="Database"
                       fullWidth
                       disabled={databases.length === 0}
@@ -638,11 +606,7 @@ export default function CreateNewEntryDialog(props: CreateNewEntryDialogProps) {
                         <MenuItem value={group.uuid} key={group.uuid}>
                           <div style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
                             {idx == 0 ? <Home /> : <Folder />}
-                            {idx == 0 ? (
-                              <Box sx={{ fontStyle: 'italic' }}>{group.title}</Box>
-                            ) : (
-                              <Box>{group.title}</Box>
-                            )}
+                            {idx == 0 ? <Box sx={{ fontStyle: 'italic' }}>{group.title}</Box> : <Box>{group.title}</Box>}
                           </div>
                         </MenuItem>
                       ))}

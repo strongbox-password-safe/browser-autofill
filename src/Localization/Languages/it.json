@@ -1,5 +1,5 @@
 {
-  "autodetected-language": "Rilevato Automaticamente ({{language}})",
+  "autodetected-language": "{{language}} (Auto)",
   "general": {
     "app-name": "Riempimento Automatico di Strongbox",
     "company-name": "Phoebe Code Limited",
@@ -12,7 +12,8 @@
     "copy": "Copiare",
     "autofill": "Riempimento Automatico",
     "launch-url": "Avviare URL",
-    "show-hide": "Mostrare/Nascondere"
+    "show-hide": "Mostrare/Nascondere",
+    "dismiss": "Chiudere"
   },
   "inline-mini-field-menu": {
     "no-matching-entries-found": "Nessuna Voce Corrispondente Trovata",
@@ -62,7 +63,10 @@
     "totp-copied": "TOTP Copiato",
     "url-copied": "URL Copiato",
     "modified-date-copied": "Data Modificata Copiata",
-    "custom-field-copied": "Campo Personalizzato Copiato"
+    "custom-field-copied": "Campo Personalizzato Copiato",
+    "hide-for-a-while": "Menu In Linea Nascosti Per Un Po'",
+    "hide-on-this-page": "Menu Inline Nascosti Su Questa Pagina",
+    "hide-on-this-domain": "Menu In Linea Nascosti Su Questo Dominio"
   },
   "current-tab-credentials": {
     "title": "Corrispondenze",
@@ -104,17 +108,20 @@
   },
   "settings-popup-component": {
     "title": "Impostazioni",
-    "title-tab1": "App",
-    "title-tab2": "Stile",
+    "title-tab1": "Generale",
+    "title-tab2": "Riempimento",
+    "title-tab3": "Menu in Linea",
+    "title-tab4": "Stile",
     "show-inline-menus": "Mostrare Menu in Linea",
     "show-match-count-badge-on-popup-icon": "Mostrare Badge Conteggio Corrispondenze",
     "fill-on-load-if-only-single-match-found": "Riempimento Automatico Solo se Singola Corrispondenza",
     "always-fill-on-load-with-first-match": "Riempire Sempre all'Esecuzione con la Prima Corrispondenza",
     "do-not-fill-on-load-on-this-domain": "Non Riempire all'Esecuzione per Questo Dominio",
-    "do-not-show-inline-menus-on-this-domain": "Non Mostrare Menu In Linea per Questo Dominio",
-    "do-not-show-inline-menus-on-this-page": "Non Mostrare Menu In Linea per Questa Pagina",
+    "do-not-show-inline-menus-on-this-domain": "Nascondere Menu In Linea per questo Dominio",
+    "do-not-show-inline-menus-on-this-page": "Nascondere Menu In Linea su questa Pagina",
     "do-not-show-credential-details-on-popup": "Nascondere Dettagli su Popup",
     "do-not-show-credential-details-on-inline-menu": "Nascondere Dettagli nel Menu In Linea",
+    "show-scrollbars": "Visualizzare Barre di Scorrimento",
     "language": "Lingua",
     "appearance": "Aspetto",
     "font-size": "Dimensione Carattere",

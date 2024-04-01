@@ -23,7 +23,7 @@ function NoResultsFoundPopupComponent() {
             align="center"
             sx={{
               textOverflow: 'ellipsis',
-              padding: 0,
+              p: 0,
             }}
           >
             {t('no-results-found-popup-component.title')}

@@ -89,8 +89,7 @@ export class PageAnalyser {
   }
 
   static isUsernameInput(input: HTMLInputElement) {
-    const isInteresting =
-      input.type === 'email' || input.type === 'text' || input.type === 'username' || input.type === 'tel';
+    const isInteresting = input.type === 'email' || input.type === 'text' || input.type === 'username' || input.type === 'tel';
 
     if (!isInteresting) {
       return false;
@@ -235,9 +234,7 @@ export class PageAnalyser {
 
     for (; theEl; ) {
       
-      if (
-        !!(theEl.offsetParent || theEl.offsetWidth || theEl.offsetHeight || theEl.getClientRects().length) === false
-      ) {
+      if (!!(theEl.offsetParent || theEl.offsetWidth || theEl.offsetHeight || theEl.getClientRects().length) === false) {
         
         return false;
       }

@@ -13,19 +13,12 @@ function NotRunningPopupComponent({ onRefresh }: NotRunningPopupComponentProps) 
   const [t] = useTranslation('global');
 
   return (
-    <Stack
-      direction="column"
-      justifyContent="center"
-      alignItems="center"
-      spacing={0}
-      minWidth="400px"
-      sx={{ m: 2, width: 300 }}
-    >
+    <Stack direction="column" justifyContent="center" alignItems="center" spacing={0} minWidth="400px" sx={{ m: 2, width: 300 }}>
       <Box>
         <SensorsOff color="disabled" sx={{ fontSize: 60 }} />
       </Box>
       <Box>
-        <Typography variant="h5" align="center" sx={{ textOverflow: 'ellipsis', padding: 0 }}>
+        <Typography variant="h5" align="center" sx={{ textOverflow: 'ellipsis', p: 0 }}>
           {t('not-running-popup-component.title')}
         </Typography>
       </Box>
@@ -40,10 +33,10 @@ function NotRunningPopupComponent({ onRefresh }: NotRunningPopupComponentProps) 
           <HorizontalRuleTwoTone sx={{ width: '300px' }} />
           <Box display="block" sx={{ display: 'flex', flexDirection: 'column' }}>
             <Box>
-              <Typography variant="h6" align="center" sx={{ textOverflow: 'ellipsis', padding: 0 }}>
+              <Typography variant="h6" align="center" sx={{ textOverflow: 'ellipsis', p: 0 }}>
                 {t('not-running-popup-component.troubleshooting.title')}
                 <br />
-                <Typography variant="body2" align="left" sx={{ textOverflow: 'ellipsis', padding: 0 }}>
+                <Typography variant="body2" align="left" sx={{ textOverflow: 'ellipsis', p: 0 }}>
                   {t('not-running-popup-component.troubleshooting.message1')}
                   <br />
                   {t('not-running-popup-component.troubleshooting.message2')}
@@ -51,7 +44,7 @@ function NotRunningPopupComponent({ onRefresh }: NotRunningPopupComponentProps) 
                   {t('not-running-popup-component.troubleshooting.message3')}
                   <br />
                   <p>
-                    <Typography variant="caption" align="left" sx={{ textOverflow: 'ellipsis', padding: 0 }}>
+                    <Typography variant="caption" align="left" sx={{ textOverflow: 'ellipsis', p: 0 }}>
                       {t('not-running-popup-component.troubleshooting.settings-path')}
                     </Typography>
                   </p>
@@ -63,7 +56,7 @@ function NotRunningPopupComponent({ onRefresh }: NotRunningPopupComponentProps) 
       ) : (
         <>
           <HorizontalRuleTwoTone sx={{ width: '300px' }} />
-          <Typography variant="body2" align="left" sx={{ textOverflow: 'ellipsis', padding: 0, paddingTop: '13px' }}>
+          <Typography variant="body2" align="left" sx={{ textOverflow: 'ellipsis', p: 0, pt: '13px' }}>
             {t('not-running-popup-component.message')}
           </Typography>
         </>

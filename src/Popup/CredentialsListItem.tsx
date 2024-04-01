@@ -8,7 +8,7 @@ import * as OTPAuth from 'otpauth';
 import { NativeAppApi } from '../Messaging/NativeAppApi';
 import { useTranslation } from 'react-i18next';
 import { useCustomStyle } from '../Contexts/CustomStyleContext';
-import { FontSize, Settings } from '../Settings/Settings';
+import { Settings } from '../Settings/Settings';
 import { BackgroundManager } from '../Background/BackgroundManager';
 import { SettingsStore } from '../Settings/SettingsStore';
 import StarIcon from '@mui/icons-material/Star';
@@ -28,7 +28,7 @@ export default function CredentialsListItem({ credential, selected, onClick }: C
   const [loadingIcon, setLoadingIcon] = React.useState(true);
   const [isHovered, setIsHovered] = React.useState(false);
   const [t] = useTranslation('global');
-  const { fontSize } = useCustomStyle();
+  const { sizeHandler } = useCustomStyle();
 
   React.useEffect(() => {
     const getStoredSettings = async () => {
@@ -74,35 +74,6 @@ export default function CredentialsListItem({ credential, selected, onClick }: C
     return '';
   }
 
-  const getWidth = (isSecondary = false) => {
-    const favouriteStartWidth = 20;
-
-    if (settings.hideCredentialDetailsOnPopup) {
-      return 250;
-    }
-
-    if (isHovered) {
-      const width = [FontSize.xl].includes(fontSize)
-        ? 95
-        : [FontSize.large].includes(fontSize)
-        ? 110
-        : [FontSize.small].includes(fontSize)
-        ? 135
-        : 125;
-
-      if (isSecondary) return width;
-      return credential.favourite ? width - favouriteStartWidth : width;
-    } else {
-      const width = 200;
-
-      if (credential.favourite && !isSecondary) {
-        return width - favouriteStartWidth;
-      }
-
-      return width;
-    }
-  };
-
   const autofill = async (): Promise<void> => {
     const tab = await BackgroundManager.getCurrentTab();
     const url = tab ? tab.url : undefined;
@@ -117,8 +88,9 @@ export default function CredentialsListItem({ credential, selected, onClick }: C
     window.close();
   };
 
-  const onRedirectUrl = (url: string) => {
-    window.open(url, '_blank');
+  const onRedirectUrl = async (url: string) => {
+    await BackgroundManager.getInstance().redirectUrl(url);
+    window.close();
   };
 
   return (
@@ -137,7 +109,7 @@ export default function CredentialsListItem({ credential, selected, onClick }: C
         display="flex"
         sx={{
           m: '5px',
-          p: '5px',
+          p: '0px 0px 5px 0px',
 
           alignContent: 'center',
           alignItems: 'center',
@@ -199,24 +171,22 @@ export default function CredentialsListItem({ credential, selected, onClick }: C
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
-                maxWidth: getWidth(),
+                maxWidth: sizeHandler.getCredentialListItemWidth(credential, settings, isHovered),
               }}
             >
               {credential.title}
             </Typography>
 
-            {credential.favourite && (
-              <StarIcon sx={{ fontSize: 16, color: 'yellow', ml: '5px', pl: '0px', pr: '0px' }} />
-            )}
+            {credential.favourite && <StarIcon sx={{ fontSize: 16, color: 'yellow', ml: '5px', pl: '0px', pr: '0px' }} />}
           </Box>
           <Box
             sx={{
               whiteSpace: 'nowrap',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
-              marginTop: '0px',
-              padding: 0,
-              maxWidth: getWidth(true),
+              mt: '0px',
+              p: 0,
+              maxWidth: sizeHandler.getCredentialListItemWidth(credential, settings, isHovered, true),
             }}
           >
             <Typography variant="caption" display="inline" color="text.secondary">

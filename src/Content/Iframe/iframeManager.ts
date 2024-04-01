@@ -1,6 +1,7 @@
 import browser from 'webextension-polyfill';
 import { ContentScriptManager, MainPageInformation } from '../ContentScriptManager';
 import { Utils } from '../../Utils';
+import { SettingsStore } from '../../Settings/SettingsStore';
 
 export enum IframeComponentTypes {
   InlineMiniFieldMenu,
@@ -138,7 +139,7 @@ export class IframeManager {
           }
           case IframeMessageTypes.onRedirectUrl: {
             const url = event.data.data;
-            await this.contentScriptManager.onRedirectUrl(url);
+            this.contentScriptManager.redirectUrl(url);
 
             break;
           }
@@ -175,16 +176,19 @@ export class IframeManager {
       };
 
       const onIFrameLoaded = async () => {
+        const stored = await SettingsStore.getSettings();
         const url = await this.contentScriptManager.getFavIconUrl();
         const favIconBase64 = url ? await this.contentScriptManager.getFavIconBase64Data(url) : null;
         const isDefaultFavIcon = favIconBase64 == null;
         const favIconUrl: string | null = isDefaultFavIcon ? null : url;
+        const inlineMenuTruncatedHeight = this.iframe.getAttribute('inline-menu-truncated-height') ?? null;
 
         const mainPageInformation: MainPageInformation = {
           title: document.title,
           url: document.location.href,
           favIconBase64,
           favIconUrl,
+          inlineMenuTruncatedHeight,
         };
 
         switch (this.iframeComponentType) {
@@ -193,7 +197,7 @@ export class IframeManager {
             this.iframe.contentWindow?.postMessage(
               {
                 type: IframeMessageTypes.render,
-                data: { iframeComponentType: this.iframeComponentType, mainPageInformation },
+                data: { iframeComponentType: this.iframeComponentType, mainPageInformation, showScrollbars: stored.showScrollbars },
               },
               '*'
             );
@@ -249,9 +253,17 @@ export class IframeManager {
     this.iframe.style.colorScheme = 'none';
     this.iframe.setAttribute('scrolling', 'no');
 
+    
+    const styleElement = document.createElement('style');
+    styleElement.innerHTML = `com-strongbox-extension {visibility: visible !important; /* Ensure visibility for Strongbox Extension  */}`;
+    document.head.appendChild(styleElement);
+
     switch (this.iframeComponentType) {
       case IframeComponentTypes.InlineMiniFieldMenu: {
         const inputRect = this.anchorEl.getBoundingClientRect();
+
+        this.prepareInlineMenuTruncated(inputRect);
+
         this.iframe.style.top = inputRect.bottom + 'px';
         this.iframe.style.left = inputRect.left + 'px';
         this.iframe.style.width = '0px';
@@ -274,4 +286,13 @@ export class IframeManager {
         break;
     }
   }
+
+  prepareInlineMenuTruncated = (inputRect: DOMRect): void => {
+    const parent = document.body.getBoundingClientRect();
+    const widthForRenderMenu = parent.bottom - inputRect.bottom;
+    const isTruncated = widthForRenderMenu < 300;
+    if (isTruncated) {
+      this.iframe.setAttribute('inline-menu-truncated-height', widthForRenderMenu.toString());
+    }
+  };
 }

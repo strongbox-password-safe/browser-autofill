@@ -22,6 +22,7 @@ import i18next from 'i18next';
 import { I18nextProvider } from 'react-i18next';
 import { config } from '../../Localization/config';
 import { NativeAppApi } from '../../Messaging/NativeAppApi';
+import { defaultIFrameExtraHeight, defaultIFrameExtraWidth } from '../../SizeHandler';
 
 const contentScriptManager = new ContentScriptManager();
 const iframeRoot = document.getElementById('strongbox-autofill-iframe-root') ?? new HTMLElement();
@@ -90,6 +91,7 @@ async function buildInlineMiniFieldMenu(mainPageInformation: MainPageInformation
   const menuComponent = React.createElement(InlineMiniFieldMenu, {
     status,
     url: mainPageInformation.url,
+    inlineMenuTruncatedHeight: mainPageInformation.inlineMenuTruncatedHeight,
     unlockedDatabaseAvailable,
     showCreateNew: showCreateNew && unlockedDatabaseAvailable,
     credentials,
@@ -223,7 +225,7 @@ async function buildNotificationToast(message: string) {
   return snackbar;
 }
 
-function resize(extraWidth = 2, extraHeight = 2) {
+function resize(extraWidth = defaultIFrameExtraWidth, extraHeight = defaultIFrameExtraHeight) {
   
   const children = iframeRoot.children[0] as HTMLElement;
   if (children) {
@@ -251,6 +253,20 @@ function onIFrameKeyup(event: KeyboardEvent) {
   }
 }
 
+function initScrollbars(showScrollbars: boolean) {
+  if (!showScrollbars) {
+    const styleElement = document.createElement('style');
+
+    const cssRules = `
+          div::-webkit-scrollbar { width: 0; display: none; } 
+          div { overflow: -moz-scrollbars-none; -ms-overflow-style: none; scrollbar-width: none; }`;
+
+    styleElement.innerHTML = cssRules;
+    styleElement.id = 'hide-scrollbar-style';
+    document.head.appendChild(styleElement);
+  }
+}
+
 async function onMessageReceivedFromMainPage(event: MessageEvent) {
   const iframeComponentType = event.data.data.iframeComponentType as IframeComponentTypes;
 
@@ -259,6 +275,9 @@ async function onMessageReceivedFromMainPage(event: MessageEvent) {
       switch (iframeComponentType) {
         case IframeComponentTypes.InlineMiniFieldMenu:
         case IframeComponentTypes.CreateNewEntryDialog: {
+          const { showScrollbars } = event.data.data;
+          initScrollbars(showScrollbars);
+
           const mainPageInformation: MainPageInformation = event.data.data.mainPageInformation;
           await render(iframeComponentType, mainPageInformation);
           break;

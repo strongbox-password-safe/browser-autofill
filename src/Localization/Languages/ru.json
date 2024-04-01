@@ -1,5 +1,5 @@
 {
-  "autodetected-language": "Автоопределение ({{language}})",
+  "autodetected-language": "{{language}} (Авто)",
   "general": {
     "app-name": "Автозаполнение Strongbox",
     "company-name": "Phoebe Code Limited",
@@ -12,7 +12,8 @@
     "copy": "Копировать",
     "autofill": "Автозаполнение",
     "launch-url": "Открыть URL",
-    "show-hide": "Показать / Скрыть"
+    "show-hide": "Показать / Скрыть",
+    "dismiss": "Отменить"
   },
   "inline-mini-field-menu": {
     "no-matching-entries-found": "Записей не найдено",
@@ -61,8 +62,11 @@
     "password-copied": "Пароль скопирован",
     "totp-copied": "TOTP скопирован",
     "url-copied": "URL скопирован",
-    "modified-date-copied": "Modified Date Copied",
-    "custom-field-copied": "Custom Field Copied"
+    "modified-date-copied": "Дата изменения скопирована",
+    "custom-field-copied": "Значение поля скопировано",
+    "hide-for-a-while": "Встроенные меню скрыты на время",
+    "hide-on-this-page": "Встроенные меню скрыты на странице",
+    "hide-on-this-domain": "Встроенные меню скрыты в домене"
   },
   "current-tab-credentials": {
     "title": "Совпадения",
@@ -100,21 +104,24 @@
   },
   "search-bar": {
     "title": "Поиск ...",
-    "place-holder": "Search Strongbox"
+    "place-holder": "Поиск Strongbox"
   },
   "settings-popup-component": {
     "title": "Параметры",
-    "title-tab1": "Приложение",
-    "title-tab2": "Внешний вид",
+    "title-tab1": "Общие",
+    "title-tab2": "Заполнять",
+    "title-tab3": "Встроенное меню",
+    "title-tab4": "Стиль",
     "show-inline-menus": "Показать встроенные меню",
-    "show-match-count-badge-on-popup-icon": "Show Match Count Badge",
-    "fill-on-load-if-only-single-match-found": "Fill on Load if Only Single Match",
+    "show-match-count-badge-on-popup-icon": "Показать счетчик совпадений",
+    "fill-on-load-if-only-single-match-found": "Заполнение при загрузке, если найдено только одно совпадение",
     "always-fill-on-load-with-first-match": "Всегда заполнять при первом совпадении",
     "do-not-fill-on-load-on-this-domain": "Не заполнять при загрузке этого домена",
     "do-not-show-inline-menus-on-this-domain": "Не показывать встроенные меню в этом домене",
     "do-not-show-inline-menus-on-this-page": "Не показывать встроенные меню на этой странице",
-    "do-not-show-credential-details-on-popup": "Hide Details on Popup",
-    "do-not-show-credential-details-on-inline-menu": "Hide Details on Inline Menu",
+    "do-not-show-credential-details-on-popup": "Скрыть подробности во всплывающем окне",
+    "do-not-show-credential-details-on-inline-menu": "Скрыть подробности в строчном меню",
+    "show-scrollbars": "Показать полосы прокрутки",
     "language": "Язык",
     "appearance": "Оформление",
     "font-size": "Размер шрифта",

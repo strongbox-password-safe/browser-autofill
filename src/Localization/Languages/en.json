@@ -1,5 +1,5 @@
 {
-  "autodetected-language": "Auto-Detected ({{language}})",
+  "autodetected-language": "{{language}} (Auto)",
   "general": {
     "app-name": "Strongbox AutoFill",
     "company-name": "Phoebe Code Limited",
@@ -12,7 +12,8 @@
     "copy": "Copy",
     "autofill": "AutoFill",
     "launch-url": "Launch URL",
-    "show-hide": "Show/Hide"
+    "show-hide": "Show/Hide",
+    "dismiss": "Dismiss"
   },
   "inline-mini-field-menu": {
     "no-matching-entries-found": "No Matching Entries Found",
@@ -62,7 +63,10 @@
     "totp-copied": "TOTP Copied",
     "url-copied": "URL Copied",
     "modified-date-copied": "Modified Date Copied",
-    "custom-field-copied": "Custom Field Copied"
+    "custom-field-copied": "Custom Field Copied",
+    "hide-for-a-while": "Inline Menus Hidden For a While",
+    "hide-on-this-page": "Inline Menus Hidden On This Page",
+    "hide-on-this-domain": "Inline Menus Hidden On This Domain"
   },
   "current-tab-credentials": {
     "title": "Matches",
@@ -104,17 +108,20 @@
   },
   "settings-popup-component": {
     "title": "Settings",
-    "title-tab1": "App",
-    "title-tab2": "Style",
+    "title-tab1": "General",
+    "title-tab2": "Fill",
+    "title-tab3": "Inline Menu",
+    "title-tab4": "Style",
     "show-inline-menus": "Show Inline Menus",
     "show-match-count-badge-on-popup-icon": "Show Match Count Badge",
     "fill-on-load-if-only-single-match-found": "Fill on Load if Only Single Match",
     "always-fill-on-load-with-first-match": "Always Fill on Load with First Match",
     "do-not-fill-on-load-on-this-domain": "Do Not Fill on Load on this Domain",
-    "do-not-show-inline-menus-on-this-domain": "Do Not Show Inline Menus on this Domain",
-    "do-not-show-inline-menus-on-this-page": "Do Not Show Inline Menus on this Page",
+    "do-not-show-inline-menus-on-this-domain": "Hide Inline Menus on this Domain",
+    "do-not-show-inline-menus-on-this-page": "Hide Inline Menus on this Page",
     "do-not-show-credential-details-on-popup": "Hide Details on Popup",
     "do-not-show-credential-details-on-inline-menu": "Hide Details on Inline Menu",
+    "show-scrollbars": "Show Scrollbars",
     "language": "Language",
     "appearance": "Appearance",
     "font-size": "Font Size",

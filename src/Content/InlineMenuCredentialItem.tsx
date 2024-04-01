@@ -8,7 +8,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import CredentialDetails from '../Popup/CredentialDetails';
 import { GetStatusResponse } from '../Messaging/Protocol/GetStatusResponse';
-import { FontSize, Settings } from '../Settings/Settings';
+import { Settings } from '../Settings/Settings';
 import { useCustomStyle } from '../Contexts/CustomStyleContext';
 import { SettingsStore } from '../Settings/SettingsStore';
 import { useTranslation } from 'react-i18next';
@@ -27,6 +27,7 @@ interface InlineMenuCredentialItemProps {
   credentialsAreFromMultipleDatabases: () => boolean;
   getIcon: (databaseId: string, nodeId: string) => Promise<GetIconResponse | null>;
   beforeOpenSubMenu: (showDetails: boolean, restoreIframeSize?: boolean) => void;
+  inlineMenuHasScrollbar: () => boolean;
 }
 
 export function InlineMenuCredentialItem(props: InlineMenuCredentialItemProps): JSX.Element {
@@ -42,8 +43,9 @@ export function InlineMenuCredentialItem(props: InlineMenuCredentialItemProps): 
     handleCopyTotp,
     credentialsAreFromMultipleDatabases,
     beforeOpenSubMenu,
+    inlineMenuHasScrollbar,
   } = props;
-  const { fontSize } = useCustomStyle();
+  const { sizeHandler } = useCustomStyle();
   const [icon, setIcon] = React.useState(credential.icon);
   const [loadingIcon, setLoadingIcon] = React.useState(true);
   const [anchorElDetails, setAnchorElDetails] = React.useState<null | HTMLElement>(null);
@@ -134,14 +136,6 @@ export function InlineMenuCredentialItem(props: InlineMenuCredentialItemProps): 
     beforeOpenSubMenu(true, true);
   };
 
-  const getMarginRight = () => {
-    if (!settings.hideCredentialDetailsOnInlineMenu) {
-      return [FontSize.xl].includes(fontSize) ? '43px' : [FontSize.large].includes(fontSize) ? '35px' : '25px';
-    }
-
-    return '10px';
-  };
-
   return (
     <MenuItem
       selected={anchorElDetails !== null}
@@ -149,7 +143,7 @@ export function InlineMenuCredentialItem(props: InlineMenuCredentialItemProps): 
       onClick={() => {
         handleCredentialClick(credential);
       }}
-      sx={{ p: `7.5px ${getMarginRight()} 7px 8px` }}
+      sx={{ p: `7.5px ${sizeHandler.getInlineMenuMarginRight(settings)} 7px 8px` }}
     >
       <Box sx={{ display: 'flex', gap: '0px', flexDirection: 'row', alignItems: 'center', flexGrow: 1 }}>
         <Box sx={{ flexShrink: 1, pl: '5px' }}>
@@ -159,8 +153,8 @@ export function InlineMenuCredentialItem(props: InlineMenuCredentialItemProps): 
               sx={{
                 width: 15,
                 margin: 'auto',
-                paddingLeft: '5px',
-                marginRight: '12px',
+                pl: '5px',
+                mr: '12px',
               }}
             >
               <CircularProgress style={{ color: 'gray' }} size={20} />
@@ -183,8 +177,8 @@ export function InlineMenuCredentialItem(props: InlineMenuCredentialItemProps): 
               sx={{
                 width: 15,
                 margin: 'auto',
-                paddingLeft: '5px',
-                marginRight: '12px',
+                pl: '5px',
+                mr: '12px',
               }}
             >
               <Badge fontSize="medium" />
@@ -255,7 +249,7 @@ export function InlineMenuCredentialItem(props: InlineMenuCredentialItemProps): 
                 sx={{ zIndex: '2147483642', height: '200px' }}
                 MenuListProps={{
                   'aria-labelledby': 'basic-button',
-                  sx: { padding: 0 },
+                  sx: { p: 0 },
                 }}
                 onClick={e => e.stopPropagation()}
               >
@@ -267,80 +261,71 @@ export function InlineMenuCredentialItem(props: InlineMenuCredentialItemProps): 
                   <MoreHoriz fontSize="small" />
                 </IconButton>
               )}
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  gap: '1px',
-                  justifyItems: 'center',
-                  alignItems: 'center',
+
+              <Menu
+                id="basic-menu-details"
+                open={openDetailsMenu}
+                anchorEl={anchorElDetails}
+                onClose={handleCloseDetails}
+                sx={{ ml: inlineMenuHasScrollbar() ? 2 : 0.3 }}
+                MenuListProps={{
+                  'aria-labelledby': 'basic-button-details',
+                  sx: { p: 0 },
+                }}
+                anchorOrigin={{
+                  vertical: 'center',
+                  horizontal: 'right',
+                }}
+                transformOrigin={{
+                  vertical: 'center',
+                  horizontal: 'left',
+                }}
+                onClick={e => e.stopPropagation()}
+                PaperProps={{
+                  sx: {
+                    backgroundColor: '#hhh',
+                    boxShadow: 'none',
+                    borderRadius: '6px',
+                  },
                 }}
               >
-                <Menu
-                  id="basic-menu-details"
-                  open={openDetailsMenu}
-                  anchorEl={anchorElDetails}
-                  onClose={handleCloseDetails}
-                  sx={{ ml: 0.1 }}
-                  MenuListProps={{
-                    'aria-labelledby': 'basic-button-details',
-                    sx: { padding: 0 },
-                  }}
-                  anchorOrigin={{
-                    vertical: 'center',
-                    horizontal: 'right',
-                  }}
-                  transformOrigin={{
-                    vertical: 'center',
-                    horizontal: 'left',
-                  }}
-                  onClick={e => e.stopPropagation()}
-                  PaperProps={{
-                    sx: {
-                      backgroundColor: 'transparent',
-                      boxShadow: 'none',
-                      borderRadius: '15px',
-                    },
-                  }}
-                >
-                  <Box sx={{ width: 300, maxHeight: '300px' }}>
-                    <CredentialDetails
-                      credential={credential}
-                      getStatus={async () => {
-                        return status;
-                      }}
-                      onCopyUsername={() => {
-                        handleCopyUsername(credential, false);
-                        handleCloseDetails();
-                      }}
-                      onCopyPassword={() => {
-                        handleCopyPassword(credential, false);
-                        handleCloseDetails();
-                      }}
-                      onCopyTotp={() => {
-                        handleCopyTotp(credential, false);
-                        handleCloseDetails();
-                      }}
-                      onCopy={async (text: string) => {
-                        await onCopy(text);
-                        handleCloseDetails();
-                        return true;
-                      }}
-                      onFillSingleField={onFillSingleField}
-                      onRedirectUrl={(url: string) => {
-                        onRedirectUrl(url);
-                        setOpenDetailsMenu(false);
-                        handleCloseDetails();
-                        return true;
-                      }}
-                      notifyAction={props.notifyAction}
-                      showTitle={false}
-                      showModified={false}
-                      allowAutofillField={true}
-                    />
-                  </Box>
-                </Menu>
-              </Box>
+                <Box sx={{ width: 300, maxHeight: '300px' }}>
+                  <CredentialDetails
+                    credential={credential}
+                    getStatus={async () => {
+                      return status;
+                    }}
+                    onCopyUsername={() => {
+                      handleCopyUsername(credential, false);
+                      handleCloseDetails();
+                    }}
+                    onCopyPassword={() => {
+                      handleCopyPassword(credential, false);
+                      handleCloseDetails();
+                    }}
+                    onCopyTotp={() => {
+                      handleCopyTotp(credential, false);
+                      handleCloseDetails();
+                    }}
+                    onCopy={async (text: string) => {
+                      await onCopy(text);
+                      handleCloseDetails();
+                      return true;
+                    }}
+                    onFillSingleField={onFillSingleField}
+                    onRedirectUrl={(url: string) => {
+                      onRedirectUrl(url);
+                      setOpenDetailsMenu(false);
+                      handleCloseDetails();
+                      return true;
+                    }}
+                    notifyAction={props.notifyAction}
+                    showTitle={false}
+                    showModified={false}
+                    allowAutofillField={true}
+                  />
+                </Box>
+              </Menu>
             </Box>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: '5px', alignItems: 'center' }}>

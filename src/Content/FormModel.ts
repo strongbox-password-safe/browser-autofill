@@ -7,12 +7,7 @@ export default class FormModel {
 
   submitButton: HTMLElement | null;
 
-  constructor(
-    element: HTMLFormElement,
-    passwordField: HTMLInputElement | null,
-    usernameField: HTMLInputElement | null,
-    submitButton: HTMLElement | null
-  ) {
+  constructor(element: HTMLFormElement, passwordField: HTMLInputElement | null, usernameField: HTMLInputElement | null, submitButton: HTMLElement | null) {
     this.element = element;
     this.passwordField = passwordField;
     this.usernameField = usernameField;

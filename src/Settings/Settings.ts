@@ -1,21 +1,4 @@
-export enum LightOrDarkAppearance {
-  dark,
-  light,
-  system,
-}
-
-export enum FontSize {
-  small = 20,
-  medium = 16,
-  large = 12,
-  xl = 10,
-}
-
-export enum Spacing {
-  small = 4,
-  medium = 6,
-  large = 8,
-}
+import { FontSize, LightOrDarkAppearance, Spacing } from '../Contexts/CustomStyleContext';
 
 export class LastKnownDatabasesItem {
   nickName = '';
@@ -38,6 +21,7 @@ export class Settings {
   doNotShowInlineMenusOnDomains: string[] = [];
   doNotShowInlineMenusOnPages: string[] = [];
   doNotFillOnDomains: string[] = [];
+  showScrollbars = true;
 
   
   lightOrDarkAppearance: number = LightOrDarkAppearance.system;

@@ -92,11 +92,7 @@ export default function SplitButton(props: SplitButtonProps) {
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu" autoFocusItem>
                   {props.options.map((option, index) => (
-                    <MenuItem
-                      key={option.value}
-                      selected={option.value === props.defaultValue}
-                      onClick={event => handleMenuItemClick(event, index)}
-                    >
+                    <MenuItem key={option.value} selected={option.value === props.defaultValue} onClick={event => handleMenuItemClick(event, index)}>
                       {option.title}
                     </MenuItem>
                   ))}

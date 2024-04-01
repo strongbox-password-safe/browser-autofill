@@ -1,5 +1,5 @@
 {
-  "autodetected-language": "Automatisk detektering ({{language}})",
+  "autodetected-language": "{{language}} (Auto)",
   "general": {
     "app-name": "Strongbox Autofyll",
     "company-name": "Phoebe Code Limited",
@@ -12,7 +12,8 @@
     "copy": "Kopiera",
     "autofill": "Autofyll",
     "launch-url": "Starta URL",
-    "show-hide": "Visa/dölj"
+    "show-hide": "Visa/dölj",
+    "dismiss": "Avfärda"
   },
   "inline-mini-field-menu": {
     "no-matching-entries-found": "Inga matchande poster hittades",
@@ -62,7 +63,10 @@
     "totp-copied": "TOTP kopierad",
     "url-copied": "URL kopierades",
     "modified-date-copied": "Ändringsdatum kopierat",
-    "custom-field-copied": "Anpassat fält kopierat"
+    "custom-field-copied": "Anpassat fält kopierat",
+    "hide-for-a-while": "Inlinemenyer dolda temporärt",
+    "hide-on-this-page": "Inlinemenyer dolda på denna sida",
+    "hide-on-this-domain": "Inlinemenyer dolda på denna domän"
   },
   "current-tab-credentials": {
     "title": "Träffar",
@@ -104,17 +108,20 @@
   },
   "settings-popup-component": {
     "title": "Inställningar",
-    "title-tab1": "App",
-    "title-tab2": "Stil",
+    "title-tab1": "Allmänt",
+    "title-tab2": "Fyll",
+    "title-tab3": "Inline-meny",
+    "title-tab4": "Stil",
     "show-inline-menus": "Visa inline-menyer",
     "show-match-count-badge-on-popup-icon": "Visa antal träffar på ikonen",
     "fill-on-load-if-only-single-match-found": "Fyll i vid laddning om det bara finns en träff",
     "always-fill-on-load-with-first-match": "Fyll alltid i vid laddning med första träffen",
     "do-not-fill-on-load-on-this-domain": "Fyll inte i vid laddning för denna domän",
-    "do-not-show-inline-menus-on-this-domain": "Visa inte inline-menyer för denna domän",
-    "do-not-show-inline-menus-on-this-page": "Visa inte inline-menyer för denna sida",
+    "do-not-show-inline-menus-on-this-domain": "Dölj inline-menyer på denna domän",
+    "do-not-show-inline-menus-on-this-page": "Dölj inline-menyer på denna sida",
     "do-not-show-credential-details-on-popup": "Dölj detaljer i popup-fönster",
     "do-not-show-credential-details-on-inline-menu": "Dölj detaljer i inline-menyn",
+    "show-scrollbars": "Visa rullningslister",
     "language": "Språk",
     "appearance": "Utseende",
     "font-size": "Textstorlek",

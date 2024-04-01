@@ -53,7 +53,7 @@ function DatabasesListPopupComponent({ showToast }: DatabasesListPopupComponentP
                 
                 sx={{
                   textOverflow: 'ellipsis',
-                  padding: 0,
+                  p: 0,
                 }}
               >
                 {t('databases-list-popup-component.no-databases')}
@@ -66,7 +66,7 @@ function DatabasesListPopupComponent({ showToast }: DatabasesListPopupComponentP
                 color="text.secondary"
                 sx={{
                   textOverflow: 'ellipsis',
-                  padding: '5px',
+                  p: '5px',
                 }}
               >
                 {t('databases-list-popup-component.no-databases-message')}

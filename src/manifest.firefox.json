@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Strongbox AutoFill",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "icons": {
     "128": "assets/icons/app-icon-blue-128.png"
   },

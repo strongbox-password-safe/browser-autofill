@@ -55,12 +55,12 @@ export class AutoFiller {
     return filledSomething;
   }
 
-  async doItSingleField(text: string, inlineFieldInitiator: HTMLInputElement): Promise<void> {
-    this.fillFieldAndAnimate(inlineFieldInitiator, text);
+  async doItSingleField(text: string, inlineFieldInitiator: HTMLInputElement, appendValue = false): Promise<void> {
+    this.fillFieldAndAnimate(inlineFieldInitiator, text, appendValue);
   }
 
-  private fillFieldAndAnimate(field: HTMLInputElement, value: string) {
-    this.fillField(field, value);
+  private fillFieldAndAnimate(field: HTMLInputElement, value: string, appendValue = false) {
+    this.fillField(field, value, appendValue);
 
     field.classList.add('com-phoebecode-strongbox-autofill-animated');
 
@@ -78,7 +78,7 @@ export class AutoFiller {
     });
   }
 
-  private fillField(field: HTMLInputElement, value: string) {
+  private fillField(field: HTMLInputElement, value: string, appendValue = false) {
     const originalValue = field.value;
 
     const clickEvent = new MouseEvent('click', {
@@ -100,7 +100,8 @@ export class AutoFiller {
       field.value = originalValue;
     }
 
-    field.value = value;
+    field.value = appendValue ? field.value + value : value;
+    value = appendValue ? field.value : value;
 
     field.dispatchEvent(this.getKeyboardEvent('keydown'));
     field.dispatchEvent(this.getKeyboardEvent('keypress'));

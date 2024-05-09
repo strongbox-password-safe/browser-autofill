@@ -2,11 +2,12 @@ import * as React from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import { AutoFillCredential } from '../Messaging/Protocol/AutoFillCredential';
 import { Badge, MoreHoriz } from '@mui/icons-material';
-import { Box, Button, CircularProgress, IconButton, Menu, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, IconButton, Menu, Tooltip, Typography } from '@mui/material';
 import { GetIconResponse } from '../Messaging/Protocol/GetIconResponse';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import FontDownloadOutlinedIcon from '@mui/icons-material/FontDownloadOutlined';
 
-import CredentialDetails from '../Popup/CredentialDetails';
+import CredentialDetails from '../Shared/Components/CredentialDetails';
 import { GetStatusResponse } from '../Messaging/Protocol/GetStatusResponse';
 import { Settings } from '../Settings/Settings';
 import { useCustomStyle } from '../Contexts/CustomStyleContext';
@@ -16,7 +17,7 @@ import { useTranslation } from 'react-i18next';
 interface InlineMenuCredentialItemProps {
   status: GetStatusResponse | null;
   credential: AutoFillCredential;
-  onFillSingleField: (text: string) => Promise<void>;
+  onFillSingleField: (text: string, appendValue?: boolean) => Promise<void>;
   handleCredentialClick: (credential: AutoFillCredential) => void;
   handleCopyUsername: (credential: AutoFillCredential, notifyAction?: boolean) => void;
   handleCopyPassword: (credential: AutoFillCredential, notifyAction?: boolean) => void;
@@ -28,6 +29,7 @@ interface InlineMenuCredentialItemProps {
   getIcon: (databaseId: string, nodeId: string) => Promise<GetIconResponse | null>;
   beforeOpenSubMenu: (showDetails: boolean, restoreIframeSize?: boolean) => void;
   inlineMenuHasScrollbar: () => boolean;
+  handleOpenLargeTextView: (uuid: string) => void;
 }
 
 export function InlineMenuCredentialItem(props: InlineMenuCredentialItemProps): JSX.Element {
@@ -44,6 +46,7 @@ export function InlineMenuCredentialItem(props: InlineMenuCredentialItemProps): 
     credentialsAreFromMultipleDatabases,
     beforeOpenSubMenu,
     inlineMenuHasScrollbar,
+    handleOpenLargeTextView,
   } = props;
   const { sizeHandler } = useCustomStyle();
   const [icon, setIcon] = React.useState(credential.icon);
@@ -93,10 +96,14 @@ export function InlineMenuCredentialItem(props: InlineMenuCredentialItemProps): 
       setTimeout(() => {
         setOpenDetailsMenu(true);
       }, 50);
-    } else {
-      
     }
 
+    event.stopPropagation();
+    event.preventDefault();
+  };
+
+  const handleLargeTextView = (event: any) => {
+    handleOpenLargeTextView(credential.uuid);
     event.stopPropagation();
     event.preventDefault();
   };
@@ -133,7 +140,10 @@ export function InlineMenuCredentialItem(props: InlineMenuCredentialItemProps): 
   const handleCloseDetails = () => {
     setAnchorElDetails(null);
     setOpenDetailsMenu(false);
-    beforeOpenSubMenu(true, true);
+
+    setTimeout(() => {
+      beforeOpenSubMenu(true, true);
+    }, 200);
   };
 
   return (
@@ -241,6 +251,13 @@ export function InlineMenuCredentialItem(props: InlineMenuCredentialItemProps): 
                   </Typography>
                 </Button>
               )}
+              <Box>
+                <Tooltip title={t('inline-menu-credential-item.large-text-view')} placement="top" arrow>
+                  <IconButton sx={{ m: 0, fontSize: sizeHandler.getLargeTextViewIconSize() }} onClick={handleLargeTextView}>
+                    <FontDownloadOutlinedIcon fontSize="inherit" sx={{ color: 'gray', '&:hover': { color: '#90caf9' } }} />
+                  </IconButton>
+                </Tooltip>
+              </Box>
               <Menu
                 id="basic-menu"
                 anchorEl={anchorEl}

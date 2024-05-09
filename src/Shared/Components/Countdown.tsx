@@ -1,6 +1,6 @@
 import { CircularProgress } from '@mui/material';
 import React, { useState, useEffect } from 'react';
-import { Utils } from '../Utils';
+import { Utils } from '../../Utils';
 
 interface CountdownProps {
   seconds: number;

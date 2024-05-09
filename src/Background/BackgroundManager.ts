@@ -560,9 +560,14 @@ export class BackgroundManager {
   }
 
   async openInlineMenu(): Promise<void> {
+    const settings = await SettingsStore.getSettings();
     const tab = await BackgroundManager.getCurrentTab();
 
     if (!tab || !tab.id) {
+      return;
+    }
+
+    if (!settings.showInlineIconAndPopupMenu) {
       return;
     }
 

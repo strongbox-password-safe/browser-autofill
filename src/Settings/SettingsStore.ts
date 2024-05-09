@@ -19,6 +19,7 @@ const settingsSerializableObject: {
   hideCredentialDetailsOnPopup: boolean;
   hideCredentialDetailsOnInlineMenu: boolean;
   showScrollbars: boolean;
+  uuidForLargeTextView: string;
 } = {
   lng: String(),
   lastSelectedNewEntryGroupUuidForDatabase: String(),
@@ -36,6 +37,7 @@ const settingsSerializableObject: {
   hideCredentialDetailsOnPopup: false,
   hideCredentialDetailsOnInlineMenu: false,
   showScrollbars: true,
+  uuidForLargeTextView: String(),
 };
 
 const settingsKey = 'settings.v8'; 

@@ -1,5 +1,5 @@
 {
-  "autodetected-language": "{{language}} (Auto)",
+  "autodetected-language": "{{language}} (Авто)",
   "general": {
     "app-name": "Автозаповнення Strongbox",
     "company-name": "Phoebe Code Limited",
@@ -13,7 +13,9 @@
     "autofill": "Автозаповнення",
     "launch-url": "Запуск URL",
     "show-hide": "Показати/Приховати",
-    "dismiss": "Dismiss"
+    "dismiss": "Відхилити",
+    "back": "Назад",
+    "version": "Версія"
   },
   "inline-mini-field-menu": {
     "no-matching-entries-found": "Не знайдено відповідних записів",
@@ -30,7 +32,8 @@
   "inline-menu-credential-item": {
     "view-details": "Переглянути подробиці",
     "copy-username": "Копіювати ім'я користувача",
-    "copy-password": "Копіювати пароль"
+    "copy-password": "Копіювати пароль",
+    "large-text-view": "Великий текст"
   },
   "create-new-entry-dialog": {
     "title": "Створити новий запис",
@@ -64,9 +67,9 @@
     "url-copied": "URL скопійовано",
     "modified-date-copied": "Дату зміни скопійовано",
     "custom-field-copied": "Власне поле скопійовано",
-    "hide-for-a-while": "Inline Menus Hidden For a While",
-    "hide-on-this-page": "Inline Menus Hidden On This Page",
-    "hide-on-this-domain": "Inline Menus Hidden On This Domain"
+    "hide-for-a-while": "Вбудовані меню приховані на деякий час",
+    "hide-on-this-page": "Вбудовані меню приховані на цій сторінці",
+    "hide-on-this-domain": "Вбудовані меню приховані на цьому домені"
   },
   "current-tab-credentials": {
     "title": "Збіги",
@@ -108,22 +111,22 @@
   },
   "settings-popup-component": {
     "title": "Параметри",
-    "title-tab1": "General",
-    "title-tab2": "Fill",
-    "title-tab3": "Inline Menu",
-    "title-tab4": "Style",
+    "title-tab1": "Загальні",
+    "title-tab2": "Заповнення",
+    "title-tab3": "Вбудоване меню",
+    "title-tab4": "Стиль",
     "show-inline-menus": "Показати вбудовані меню",
     "show-match-count-badge-on-popup-icon": "Показати кількість збігів",
     "fill-on-load-if-only-single-match-found": "Заповнити при завантаженні, якщо знайдено лише один збіг",
     "always-fill-on-load-with-first-match": "Завжди заповнювати при завантаженні першим збігом",
     "do-not-fill-on-load-on-this-domain": "Вимкнути автозаповнення для цього домену",
-    "do-not-show-inline-menus-on-this-domain": "Hide Inline Menus on this Domain",
-    "do-not-show-inline-menus-on-this-page": "Hide Inline Menus on this Page",
+    "do-not-show-inline-menus-on-this-domain": "Приховати вбудовані меню на цьому домені",
+    "do-not-show-inline-menus-on-this-page": "Приховати вбудовані меню на цій сторінці",
     "do-not-show-credential-details-on-popup": "Сховати подробиці у спливному вікні",
     "do-not-show-credential-details-on-inline-menu": "Сховати подробиці у вбудованому меню",
-    "show-scrollbars": "Show Scrollbars",
+    "show-scrollbars": "Показати смуги прокрутки",
     "language": "Мова",
-    "appearance": "Зовнішній вигляд",
+    "appearance": "Вигляд",
     "font-size": "Розмір шрифту",
     "spacing": "Інтервал",
     "appearance-dark": "Темна",
@@ -133,5 +136,10 @@
     "style-medium": "Середній",
     "style-large": "Великий",
     "style-xl": "Найбільший"
+  },
+  "shortcuts": {
+    "title": "Комбінації клавіш",
+    "autofill-first": "Автозаповнення",
+    "open-inline-menu": "Показати вбудоване меню"
   }
 }

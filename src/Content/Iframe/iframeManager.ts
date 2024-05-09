@@ -23,6 +23,7 @@ export enum IframeMessageTypes {
   colorSchemeChanged,
   onRedirectUrl,
   onCopy,
+  showLargeTextView,
 }
 
 export class IframeManager {
@@ -110,9 +111,13 @@ export class IframeManager {
           }
           case IframeMessageTypes.onFillSingleField: {
 
-            const text = event.data.data;
-            await this.contentScriptManager.onFillSingleField(text, this.anchorEl);
-            this.remove();
+            const text = event.data.data.text;
+            const appendValue = event.data.data.appendValue ?? false;
+            await this.contentScriptManager.onFillSingleField(text, this.anchorEl, appendValue);
+
+            if (!appendValue) {
+              this.remove();
+            }
             break;
           }
           case IframeMessageTypes.onCreatedNewItem: {
@@ -130,6 +135,10 @@ export class IframeManager {
           }
           case IframeMessageTypes.hideInlineMenusForAWhile: {
             this.contentScriptManager.hideInlineMenusForAWhile = true;
+            break;
+          }
+          case IframeMessageTypes.showLargeTextView: {
+            this.contentScriptManager.showLargeTextView = true;
             break;
           }
           case IframeMessageTypes.colorSchemeChanged: {
@@ -172,6 +181,8 @@ export class IframeManager {
       const onMainPageKeyup = (event: KeyboardEvent) => {
         if (event.key === 'Escape' || (event.key === 'Tab' && this.anchorEl != document.activeElement)) {
           this.remove();
+        } else if (event.key === 'ArrowDown') {
+          this.iframe.focus();
         }
       };
 
@@ -290,9 +301,14 @@ export class IframeManager {
   prepareInlineMenuTruncated = (inputRect: DOMRect): void => {
     const parent = document.body.getBoundingClientRect();
     const widthForRenderMenu = parent.bottom - inputRect.bottom;
-    const isTruncated = widthForRenderMenu < 300;
+
+    const isTruncated = widthForRenderMenu >= 0 && widthForRenderMenu < 300;
     if (isTruncated) {
-      this.iframe.setAttribute('inline-menu-truncated-height', widthForRenderMenu.toString());
+      if (widthForRenderMenu < 100) {
+        this.iframe.setAttribute('inline-menu-truncated-height', (widthForRenderMenu + 80).toString());
+      } else {
+        this.iframe.setAttribute('inline-menu-truncated-height', widthForRenderMenu.toString());
+      }
     }
   };
 }

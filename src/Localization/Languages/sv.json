@@ -13,7 +13,9 @@
     "autofill": "Autofyll",
     "launch-url": "Starta URL",
     "show-hide": "Visa/dölj",
-    "dismiss": "Avfärda"
+    "dismiss": "Avfärda",
+    "back": "Tillbaka",
+    "version": "Version"
   },
   "inline-mini-field-menu": {
     "no-matching-entries-found": "Inga matchande poster hittades",
@@ -30,7 +32,8 @@
   "inline-menu-credential-item": {
     "view-details": "Visa detaljer",
     "copy-username": "Kopiera användarnamn",
-    "copy-password": "Kopiera lösenord"
+    "copy-password": "Kopiera lösenord",
+    "large-text-view": "Stor textvy"
   },
   "create-new-entry-dialog": {
     "title": "Skapa ny post",
@@ -133,5 +136,10 @@
     "style-medium": "Medium",
     "style-large": "Stor",
     "style-xl": "Extra stor"
+  },
+  "shortcuts": {
+    "title": "Tangentbordsgenvägar",
+    "autofill-first": "Autofyll",
+    "open-inline-menu": "Visa inline-meny"
   }
 }

@@ -18,39 +18,29 @@ function SettingsPopupComponent() {
       <List
         subheader={
           <ListSubheader component="div" id="nested-list-subheader" sx={{ textAlign: 'center' }}>
-            {t('settings-popup-component.title')}
+            <Box sx={{ p: 1.5 }}>
+              <Box sx={{ lineHeight: 1.1 }}>
+                {t('settings-popup-component.title')}
+
+                <br />
+
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  sx={{
+                    textOverflow: 'ellipsis',
+                  }}
+                >
+                  {`${t('general.version')} ${process.env.VERSION}`}
+                </Typography>
+              </Box>
+            </Box>
           </ListSubheader>
         }
         sx={{ minWidth: sizeHandler.getSettingsPopupListMinWidth(), minHeight: '150px' }}
       >
         {!loading && <VerticalTabs />}
       </List>
-      <Divider />
-      <Box sx={{ p: 1 }}>
-        <Typography
-          variant="body2"
-          align="center"
-          color="text.primary"
-          sx={{
-            textOverflow: 'ellipsis',
-            p: '5px',
-          }}
-        >
-          {t('general.app-name')} {process.env.VERSION}
-        </Typography>
-        <Typography
-          variant="body2"
-          align="center"
-          color="text.secondary"
-          sx={{
-            textOverflow: 'ellipsis',
-            p: '5px',
-            textAlign: 'center',
-          }}
-        >
-          © {t('general.company-name')}
-        </Typography>
-      </Box>
       <Divider />
     </Box>
   );

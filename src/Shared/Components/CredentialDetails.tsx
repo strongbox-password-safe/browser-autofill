@@ -6,13 +6,14 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
 
-import { AutoFillCredential } from '../Messaging/Protocol/AutoFillCredential';
-import { Badge, Box, Chip, CircularProgress, Button, TextField, IconButton, Tooltip } from '@mui/material';
-import { NativeAppApi } from '../Messaging/NativeAppApi';
-import { BackgroundManager } from '../Background/BackgroundManager';
+import { AutoFillCredential } from '../../Messaging/Protocol/AutoFillCredential';
+import { Badge, Box, Chip, CircularProgress, Button, TextField, Tooltip } from '@mui/material';
+import { NativeAppApi } from '../../Messaging/NativeAppApi';
+import { BackgroundManager } from '../../Background/BackgroundManager';
+
 import StarIcon from '@mui/icons-material/Star';
 import Countdown from './Countdown';
-import { GetStatusResponse } from '../Messaging/Protocol/GetStatusResponse';
+import { GetStatusResponse } from '../../Messaging/Protocol/GetStatusResponse';
 import CustomMarkDown from './CustomMarkDown';
 import CustomTextBox from './CustomTextBox';
 import ContentPasteGoIcon from '@mui/icons-material/ContentPasteGo';
@@ -23,7 +24,7 @@ interface Props {
   onCopyUsername: (credential: AutoFillCredential, notifyAction?: boolean) => void;
   onCopyPassword: (credential: AutoFillCredential, notifyAction?: boolean) => void;
   onCopyTotp: (credential: AutoFillCredential, notifyAction?: boolean) => void;
-  onFillSingleField: (text: string) => void;
+  onFillSingleField: (text: string, appendValue?: boolean) => void;
   onCopy: (text: string) => Promise<boolean>;
   onRedirectUrl: (url: string) => void;
   notifyAction: (message: string) => void;
@@ -103,12 +104,8 @@ function CredentialDetails(props: Props) {
     }
   };
 
-  const onRedirectUrl = (url: string | null = null) => {
-    if (!url) {
-      url = credential.url;
-    }
-
-    props.onRedirectUrl(url);
+  const onRedirectUrl = (url?: string) => {
+    props.onRedirectUrl(url || credential.url);
   };
 
   const getCurrentTotpCode = (): string => {
@@ -315,7 +312,7 @@ function CredentialDetails(props: Props) {
               {t('current-tab-credentials.tags')}
             </Typography>
             <Box sx={{ textAlign: 'left', p: 2 }}>
-              {credential.tags.map(tag => (
+              {credential.tags.map((tag: string) => (
                 <Chip key={tag} sx={{ m: 1, borderRadius: '5px  ' }} label={tag} color="primary" />
               ))}
             </Box>
@@ -352,7 +349,6 @@ function CredentialDetails(props: Props) {
         )}
       </CardContent>
     </Card>
-    
   );
 }
 

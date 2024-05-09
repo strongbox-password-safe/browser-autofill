@@ -3,8 +3,8 @@ import { SettingsStore } from '../Settings/SettingsStore';
 import { IframeMessageTypes } from '../Content/Iframe/iframeManager';
 import { Utils } from '../Utils';
 import { tooltipClasses } from '@mui/material';
-import githubMarkdownDarkStyle from '../Popup/markdown-styles/github-markdown-dark';
-import githubMarkdownLightStyle from '../Popup/markdown-styles/github-markdown-light';
+import githubMarkdownDarkStyle from '../Shared/Styles/markdown-styles/github-markdown-dark';
+import githubMarkdownLightStyle from '../Shared/Styles/markdown-styles/github-markdown-light';
 import { SizeHandler } from '../SizeHandler';
 import { StrongboxColours } from '../StrongboxColours';
 
@@ -18,9 +18,17 @@ interface ThemeContextType {
   setSpacing: (spacing: Spacing) => void;
   switchToSystemMode: () => void;
   sizeHandler: SizeHandler;
+  convertToColouredChar: (char: string, ColourPalete: ColourPalete) => string;
 }
 
 const CustomStyleContext = createContext<ThemeContextType | undefined>(undefined);
+
+export enum ColourPalete {
+  dark,
+  light,
+  darkForBlind,
+  lightForBlind,
+}
 
 export enum LightOrDarkAppearance {
   dark,
@@ -190,6 +198,54 @@ export function CustomStyleProvider({ children }: ThemeProviderProps) {
     }
   };
 
+  const convertToColouredChar = (char: string, colourPalete: ColourPalete): string => {
+    if (/[a-z]/.test(char)) {
+      switch (colourPalete) {
+        case ColourPalete.dark:
+          return StrongboxColours.darkLowerLetterColor;
+        case ColourPalete.light:
+          return StrongboxColours.lightLowerLetterColor;
+        case ColourPalete.darkForBlind:
+          return StrongboxColours.darkColorBlindLowerLetterColor;
+        case ColourPalete.lightForBlind:
+          return StrongboxColours.lightColorBlindLowerLetterColor;
+      }
+    } else if (/[A-Z]/.test(char)) {
+      switch (colourPalete) {
+        case ColourPalete.dark:
+          return StrongboxColours.darkUpperLetterColor;
+        case ColourPalete.light:
+          return StrongboxColours.lightUpperLetterColor;
+        case ColourPalete.darkForBlind:
+          return StrongboxColours.darkColorBlindUpperLetterColor;
+        case ColourPalete.lightForBlind:
+          return StrongboxColours.lightColorBlindUpperLetterColor;
+      }
+    } else if (/[0-9]/.test(char)) {
+      switch (colourPalete) {
+        case ColourPalete.dark:
+          return StrongboxColours.darkNumberColor;
+        case ColourPalete.light:
+          return StrongboxColours.lightNumberColor;
+        case ColourPalete.darkForBlind:
+          return StrongboxColours.darkColorBlindNumberColor;
+        case ColourPalete.lightForBlind:
+          return StrongboxColours.lightColorBlindNumberColor;
+      }
+    } else {
+      switch (colourPalete) {
+        case ColourPalete.dark:
+          return StrongboxColours.darkSymbolColor;
+        case ColourPalete.light:
+          return StrongboxColours.lightSymbolColor;
+        case ColourPalete.darkForBlind:
+          return StrongboxColours.darkColorBlindSymbolColor;
+        case ColourPalete.lightForBlind:
+          return StrongboxColours.lightColorBlindSymbolColor;
+      }
+    }
+  };
+
   const sizeHandler = new SizeHandler(fontSize);
 
   const contextValue = {
@@ -202,6 +258,7 @@ export function CustomStyleProvider({ children }: ThemeProviderProps) {
     switchToSystemMode,
     fontSize,
     sizeHandler,
+    convertToColouredChar,
   };
 
   return <CustomStyleContext.Provider value={contextValue}>{children}</CustomStyleContext.Provider>;

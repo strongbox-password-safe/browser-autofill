@@ -18,7 +18,7 @@ interface CustomTextBoxProps {
   allowRedirect?: boolean;
 
   onCopy?: (value: string) => void;
-  onAutofill?: (value: string) => void;
+  onAutofill?: (value: string, appendValue?: boolean) => void;
   onRedirect?: (value: string) => void;
 }
 

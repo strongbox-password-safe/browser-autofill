@@ -38,6 +38,7 @@ export class ContentScriptManager {
   currentInlineMenuInputElement: HTMLElement | null;
   iframeManager: IframeManager;
   hideInlineMenusForAWhile = false;
+  showLargeTextView = false;
 
   constructor() {
     this.iframeManager = new IframeManager(this);
@@ -293,6 +294,11 @@ export class ContentScriptManager {
   async shouldAutoShowInlineMenuOnFocus(): Promise<boolean> {
     const settings = await SettingsStore.getSettings();
 
+    if (!this.showLargeTextView) {
+      settings.uuidForLargeTextView = String();
+      SettingsStore.setSettings(settings);
+    }
+
     if (!Utils.isMacintosh()) {
       return false;
     }
@@ -432,8 +438,8 @@ export class ContentScriptManager {
     await this.autoFillWithCredential(credential, false, inlineFieldInitiator, inlineFieldInitiatorIsPassword);
   }
 
-  async onFillSingleField(text: string, inlineFieldInitiator: HTMLInputElement) {
-    await this.autoFillSingleField(text, inlineFieldInitiator);
+  async onFillSingleField(text: string, inlineFieldInitiator: HTMLInputElement, appendValue = false) {
+    await this.autoFillSingleField(text, inlineFieldInitiator, appendValue);
   }
 
   async autoFillWithCredential(
@@ -477,7 +483,7 @@ export class ContentScriptManager {
     return filled;
   }
 
-  async autoFillSingleField(text: string, inlineFieldInitiator: HTMLInputElement): Promise<void> {
+  async autoFillSingleField(text: string, inlineFieldInitiator: HTMLInputElement, appendValue = false): Promise<void> {
 
     
 
@@ -485,12 +491,14 @@ export class ContentScriptManager {
 
     const autoFiller = new AutoFiller();
 
-    await autoFiller.doItSingleField(text, inlineFieldInitiator);
+    await autoFiller.doItSingleField(text, inlineFieldInitiator, appendValue);
 
     setTimeout(() => {
       this.addFocusListener();
     }, 500);
 
-    this.iframeManager.remove();
+    if (!appendValue) {
+      this.iframeManager.remove();
+    }
   }
 }

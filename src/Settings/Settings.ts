@@ -32,6 +32,9 @@ export class Settings {
   hideCredentialDetailsOnPopup = false;
   hideCredentialDetailsOnInlineMenu = false;
 
+  
+  uuidForLargeTextView: string = String();
+
   static prepUrlForDoNotRunList(url: string) {
     const a = document.createElement('a');
     a.href = url;

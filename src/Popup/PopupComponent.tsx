@@ -11,7 +11,7 @@ import '@fontsource/roboto/700.css';
 
 import CurrentTabCredentialsComponent from './CurrentTabCredentials';
 
-import { Snackbar, Alert, Paper, BottomNavigation, BottomNavigationAction, Tooltip } from '@mui/material';
+import { Snackbar, Alert, Paper, BottomNavigation, BottomNavigationAction, Tooltip, Typography } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { NativeAppApi } from '../Messaging/NativeAppApi';
 import NotRunningPopupComponent from './NotRunningPopupComponent';

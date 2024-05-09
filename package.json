@@ -1,6 +1,6 @@
 {
   "name": "strongbox-af-ext",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Strongbox Browser AutoFill Extension",
   "main": "index.js",
   "scripts": {

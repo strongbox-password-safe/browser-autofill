@@ -13,7 +13,9 @@
     "autofill": "Автозаполнение",
     "launch-url": "Открыть URL",
     "show-hide": "Показать / Скрыть",
-    "dismiss": "Отменить"
+    "dismiss": "Отменить",
+    "back": "Назад",
+    "version": "Версия"
   },
   "inline-mini-field-menu": {
     "no-matching-entries-found": "Записей не найдено",
@@ -30,7 +32,8 @@
   "inline-menu-credential-item": {
     "view-details": "Подробности",
     "copy-username": "Копировать логин",
-    "copy-password": "Копировать пароль"
+    "copy-password": "Копировать пароль",
+    "large-text-view": "Крупный текст"
   },
   "create-new-entry-dialog": {
     "title": "Добавить запись",
@@ -133,5 +136,10 @@
     "style-medium": "Средний",
     "style-large": "Большой",
     "style-xl": "XL"
+  },
+  "shortcuts": {
+    "title": "Горячие клавиши",
+    "autofill-first": "Автозаполнение",
+    "open-inline-menu": "Показать встроенные меню"
   }
 }

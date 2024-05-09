@@ -13,7 +13,9 @@
     "autofill": "Automatikus kitöltés",
     "launch-url": "URL megnyitása",
     "show-hide": "Megjelenítés/Elrejtés",
-    "dismiss": "Elvetés"
+    "dismiss": "Elvetés",
+    "back": "Vissza",
+    "version": "Verzió"
   },
   "inline-mini-field-menu": {
     "no-matching-entries-found": "Nincsenek megfelelő bejegyzések",
@@ -30,7 +32,8 @@
   "inline-menu-credential-item": {
     "view-details": "Részletek megtekintése",
     "copy-username": "Felhasználónév másolása",
-    "copy-password": "Jelszó másolása"
+    "copy-password": "Jelszó másolása",
+    "large-text-view": "Nagyméretű szöveges nézet"
   },
   "create-new-entry-dialog": {
     "title": "Új bejegyzés létrehozása",
@@ -133,5 +136,10 @@
     "style-medium": "Közepes",
     "style-large": "Nagy",
     "style-xl": "Extra-nagy"
+  },
+  "shortcuts": {
+    "title": "Gyorsbillentyűk",
+    "autofill-first": "Automatikus kitöltés",
+    "open-inline-menu": "Soron belüli menü megjelenítése"
   }
 }

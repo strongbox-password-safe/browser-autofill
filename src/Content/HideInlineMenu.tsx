@@ -5,7 +5,7 @@ import { Settings } from '../Settings/Settings';
 import { SettingsStore } from '../Settings/SettingsStore';
 import { useTranslation } from 'react-i18next';
 
-export interface CreateNewEntryDialogProps {
+export interface HideInlineMenuProps {
   url: string;
   anchorEl: HTMLInputElement | null;
   open: boolean;
@@ -21,7 +21,7 @@ enum HideMenuOptions {
   OnDomain,
 }
 
-export default function HideInlineMenu(props: CreateNewEntryDialogProps) {
+export default function HideInlineMenu(props: HideInlineMenuProps) {
   const [settings, setSettings] = React.useState<Settings>(new Settings());
   const [t] = useTranslation('global');
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useCustomStyle } from '../Contexts/CustomStyleContext';
+import { useCustomStyle } from '../../Contexts/CustomStyleContext';
 import { Box } from '@mui/material';
 import Markdown from 'react-markdown';
 import gfm from 'remark-gfm';
@@ -7,9 +7,9 @@ import gfm from 'remark-gfm';
 
 import SyntaxHighlighter from 'react-syntax-highlighter';
 
-import stackoverflowLight from './markdown-styles/stackoverflow-light';
+import stackoverflowLight from '../Styles/markdown-styles/stackoverflow-light';
 
-import stackoverflowDark from './markdown-styles/stackoverflow-dark';
+import stackoverflowDark from '../Styles/markdown-styles/stackoverflow-dark';
 
 interface Props {
   text: string;

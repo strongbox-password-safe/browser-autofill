@@ -109,8 +109,8 @@ async function buildInlineMiniFieldMenu(mainPageInformation: MainPageInformation
     onFillWithCredential: async credential => {
       parent.postMessage({ type: IframeMessageTypes.onFillWithCredential, data: credential }, '*');
     },
-    onFillSingleField: async text => {
-      parent.postMessage({ type: IframeMessageTypes.onFillSingleField, data: text }, '*');
+    onFillSingleField: async (text, appendValue) => {
+      parent.postMessage({ type: IframeMessageTypes.onFillSingleField, data: { text, appendValue } }, '*');
     },
     onCopyUsername: credential => {
       contentScriptManager.onCopyUsername(credential);
@@ -149,6 +149,9 @@ async function buildInlineMiniFieldMenu(mainPageInformation: MainPageInformation
     },
     hideInlineMenusForAWhile: () => {
       parent.postMessage({ type: IframeMessageTypes.hideInlineMenusForAWhile }, '*');
+    },
+    showLargeTextView: () => {
+      parent.postMessage({ type: IframeMessageTypes.showLargeTextView }, '*');
     },
     notifyAction: message => {
       parent.postMessage({ type: IframeMessageTypes.showNotificationToast, data: message }, '*');
@@ -250,6 +253,29 @@ function onIFrameKeyup(event: KeyboardEvent) {
       },
       '*'
     );
+  } else if (event.key === 'ArrowLeft') {
+    const focusableElements = document.querySelectorAll('a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])');
+
+    const activeElement = document.activeElement;
+    if (activeElement) {
+      const index = Array.from(focusableElements).indexOf(activeElement);
+
+      if (index !== -1 && index > 0) {
+        const el = focusableElements[index - 1] as HTMLElement;
+        el.focus();
+      }
+    }
+  } else if (event.key === 'ArrowRight') {
+    const focusableElements = document.querySelectorAll('a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])');
+
+    const activeElement = document.activeElement;
+    if (activeElement) {
+      const index = Array.from(focusableElements).indexOf(activeElement);
+      if (index !== -1 && index < focusableElements.length - 1) {
+        const el = focusableElements[index + 1] as HTMLElement;
+        el.focus();
+      }
+    }
   }
 }
 

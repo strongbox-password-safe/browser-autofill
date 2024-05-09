@@ -1,5 +1,5 @@
 {
-  "autodetected-language": "{{language}} (Auto)",
+  "autodetected-language": "{{language}}（自动）",
   "general": {
     "app-name": "Strongbox 自动填充",
     "company-name": "Phoebe Code Limited",
@@ -13,7 +13,9 @@
     "autofill": "自动填充",
     "launch-url": "打开 URL",
     "show-hide": "显示/隐藏",
-    "dismiss": "Dismiss"
+    "dismiss": "忽略",
+    "back": "返回",
+    "version": "版本"
   },
   "inline-mini-field-menu": {
     "no-matching-entries-found": "未找到匹配条目",
@@ -30,7 +32,8 @@
   "inline-menu-credential-item": {
     "view-details": "查看详细信息",
     "copy-username": "复制用户名",
-    "copy-password": "复制密码"
+    "copy-password": "复制密码",
+    "large-text-view": "大文本视图"
   },
   "create-new-entry-dialog": {
     "title": "创建新条目",
@@ -64,9 +67,9 @@
     "url-copied": "URL 已复制",
     "modified-date-copied": "修改时间已复制",
     "custom-field-copied": "自定义字段已复制",
-    "hide-for-a-while": "Inline Menus Hidden For a While",
-    "hide-on-this-page": "Inline Menus Hidden On This Page",
-    "hide-on-this-domain": "Inline Menus Hidden On This Domain"
+    "hide-for-a-while": "一段时间内隐藏内联菜单",
+    "hide-on-this-page": "此页面上隐藏内联菜单",
+    "hide-on-this-domain": "该域名隐藏内联菜单"
   },
   "current-tab-credentials": {
     "title": "匹配",
@@ -108,16 +111,16 @@
   },
   "settings-popup-component": {
     "title": "设置",
-    "title-tab1": "General",
-    "title-tab2": "Fill",
-    "title-tab3": "Inline Menu",
-    "title-tab4": "Style",
+    "title-tab1": "常规",
+    "title-tab2": "填充",
+    "title-tab3": "内联菜单",
+    "title-tab4": "样式",
     "show-inline-menus": "显示内联菜单",
     "show-match-count-badge-on-popup-icon": "显示匹配计数标记",
     "fill-on-load-if-only-single-match-found": "如果只找到一个匹配项，则立即填充",
     "always-fill-on-load-with-first-match": "始终使用首个匹配项进行填充",
     "do-not-fill-on-load-on-this-domain": "此域名不使用立即填充",
-    "do-not-show-inline-menus-on-this-domain": "Hide Inline Menus on this Domain",
+    "do-not-show-inline-menus-on-this-domain": "为该域名隐藏内联菜单",
     "do-not-show-inline-menus-on-this-page": "Hide Inline Menus on this Page",
     "do-not-show-credential-details-on-popup": "在弹出窗口隐藏详细信息",
     "do-not-show-credential-details-on-inline-menu": "在内联菜单隐藏详细信息",
@@ -133,5 +136,10 @@
     "style-medium": "中等",
     "style-large": "较大",
     "style-xl": "特大"
+  },
+  "shortcuts": {
+    "title": "Keyboard Shortcuts",
+    "autofill-first": "AutoFill",
+    "open-inline-menu": "Show Inline Menu"
   }
 }

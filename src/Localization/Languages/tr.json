@@ -13,7 +13,9 @@
     "autofill": "AutoFill",
     "launch-url": "Launch URL",
     "show-hide": "Show/Hide",
-    "dismiss": "Dismiss"
+    "dismiss": "Dismiss",
+    "back": "Back",
+    "version": "Version"
   },
   "inline-mini-field-menu": {
     "no-matching-entries-found": "Eşleşen Girdi Bulunmadı",
@@ -30,7 +32,8 @@
   "inline-menu-credential-item": {
     "view-details": "View Details",
     "copy-username": "Kullanıcı Adını Kopyala",
-    "copy-password": "Şifreyi Kopyala"
+    "copy-password": "Şifreyi Kopyala",
+    "large-text-view": "Large Text View"
   },
   "create-new-entry-dialog": {
     "title": "Yeni Girdi Oluştur",
@@ -48,7 +51,7 @@
     "could-not-load-databases": "Veritabanları yüklenemedi!",
     "could-not-load-defaults": "Varsayılanlar yüklenemedi!",
     "could-not-refresh-groups": "Gruplar yenilenemedi!",
-    "could-not-generate-password": "Parola Oluşturulamadı",
+    "could-not-generate-password": "Could not Generate Password",
     "could-not-unlock-database": "Veritabanı Kilidi Açılamadı",
     "could-not-refresh-status": "Durum yenilenemedi",
     "could-not-connect-to-strongbox": "Strongbox'a Bağlanılamadı",
@@ -133,5 +136,10 @@
     "style-medium": "Orta",
     "style-large": "Büyük",
     "style-xl": "XL"
+  },
+  "shortcuts": {
+    "title": "Keyboard Shortcuts",
+    "autofill-first": "AutoFill",
+    "open-inline-menu": "Show Inline Menu"
   }
 }

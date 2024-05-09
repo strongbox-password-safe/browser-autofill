@@ -1,0 +1,22 @@
+.grid-container {
+  display: grid;
+  gap: 4px; /* Adjust gap as needed */
+  padding: 10px;
+}
+
+.grid-row {
+  display: flex;
+}
+
+.grid-item,
+.grid-item-hover {
+  cursor: pointer;
+  flex: 1;
+  font-family: 'Menlo', monospace;
+  text-align: center;
+  padding: 8px;
+}
+
+.grid-item-hover:hover {
+  background-color: #303941;
+}

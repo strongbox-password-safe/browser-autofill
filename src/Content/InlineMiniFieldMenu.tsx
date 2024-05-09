@@ -3,9 +3,10 @@ import MenuItem from '@mui/material/MenuItem';
 import { AutoFillCredential } from '../Messaging/Protocol/AutoFillCredential';
 import { Alert, Box, Button, ButtonGroup, CircularProgress, Divider, MenuList, Paper, Snackbar, Typography } from '@mui/material';
 
-import { LastKnownDatabasesItem } from '../Settings/Settings';
+import { LastKnownDatabasesItem, Settings } from '../Settings/Settings';
 import { ExploreOffOutlined, SearchOff } from '@mui/icons-material';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import { InlineMenuCredentialItem } from './InlineMenuCredentialItem';
 import { UnlockResponse } from '../Messaging/Protocol/UnlockResponse';
@@ -16,12 +17,15 @@ import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 
 import { useCustomStyle } from '../Contexts/CustomStyleContext';
 import { useTranslation } from 'react-i18next';
-import SearchBar, { SearchMode } from '../Popup/SearchBar';
+import SearchBar, { SearchMode } from '../Shared/Components/SearchBar';
 import { SearchResponse } from '../Messaging/Protocol/SearchResponse';
 import { Virtuoso } from 'react-virtuoso';
 import { GetIconResponse } from '../Messaging/Protocol/GetIconResponse';
 import { GetStatusResponse } from '../Messaging/Protocol/GetStatusResponse';
 import { NativeAppApi } from '../Messaging/NativeAppApi';
+import LargeTextView from '../Shared/Components/LargeTextView';
+import { SettingsStore } from '../Settings/SettingsStore';
+import { BackgroundManager } from '../Background/BackgroundManager';
 
 export interface InlineMiniFieldMenuProps {
   status: GetStatusResponse | null;
@@ -34,7 +38,7 @@ export interface InlineMiniFieldMenuProps {
   onCreateNewEntry: () => void;
   onUnlockDatabase: (databaseUuid: string) => Promise<UnlockResponse | null>;
   onFillWithCredential: (credential: AutoFillCredential) => Promise<void>;
-  onFillSingleField: (text: string) => Promise<void>;
+  onFillSingleField: (text: string, appendValue?: boolean) => Promise<void>;
   unlockableDatabases: LastKnownDatabasesItem[];
   onCopyUsername: (credential: AutoFillCredential) => void;
   onCopyPassword: (credential: AutoFillCredential) => void;
@@ -43,6 +47,7 @@ export interface InlineMiniFieldMenuProps {
   onRedirectUrl: (url: string) => void;
   refreshInlineMenu: () => void;
   hideInlineMenusForAWhile: () => void;
+  showLargeTextView: () => void;
   beforeOpenSubMenu: (showDetails: boolean, restoreIframeSize?: boolean) => void;
   notifyAction: (message: string) => void;
   searchCredentials: (query: string, skip: number, take: number) => Promise<SearchResponse | null>;
@@ -74,6 +79,9 @@ export default function InlineMiniFieldMenu(props: InlineMiniFieldMenuProps) {
   const [popupVisible, setPopupVisible] = React.useState(false);
   const [toastMessage, setToastMessage] = React.useState('');
 
+  const [showLargeTextView, setShowLargeTextView] = React.useState('');
+  const [largeTextViewString, setLargeTextViewString] = React.useState('');
+
   React.useEffect(() => {
     bindSearchOrUrlResults();
   }, []);
@@ -83,8 +91,32 @@ export default function InlineMiniFieldMenu(props: InlineMiniFieldMenuProps) {
   }, [props]);
 
   React.useEffect(() => {
-    props.resize();
-  }, [credentials, loading, searching, showSearchBar]);
+    const asyncFunc = async () => {
+      const settings = await SettingsStore.getSettings();
+
+      const cred = credentials.find(x => x.uuid == settings.uuidForLargeTextView);
+
+      if (cred) {
+        setShowLargeTextView(settings.uuidForLargeTextView);
+        setLargeTextViewString(cred.password);
+      } else {
+        setShowLargeTextView(String());
+        setLargeTextViewString(String());
+      }
+
+      requestAnimationFrame(() => {
+        props.resize();
+      });
+    };
+
+    asyncFunc();
+  }, [credentials, loading, searching, showSearchBar, showLargeTextView]);
+
+  const getUrl = async () => {
+    const tab = await BackgroundManager.getCurrentTab();
+    let url = tab ? tab.url : undefined;
+    return Settings.prepUrlPageForDoNotRunList(url ?? '');
+  };
 
   const handleOpenHideMenu = (event: any) => {
     props.beforeOpenSubMenu(true);
@@ -93,6 +125,22 @@ export default function InlineMiniFieldMenu(props: InlineMiniFieldMenuProps) {
     setTimeout(() => {
       setOpenHideMenu(true);
     }, 50);
+  };
+
+  const handleBackLargetextView = async () => {
+    const settings = await SettingsStore.getSettings();
+    settings.uuidForLargeTextView = String();
+    SettingsStore.setSettings(settings);
+    setShowLargeTextView(String());
+  };
+
+  const handleOpenLargeTextView = async (uuid: string) => {
+    const settings = await SettingsStore.getSettings();
+    settings.uuidForLargeTextView = uuid;
+
+    SettingsStore.setSettings(settings);
+    props.showLargeTextView();
+    setShowLargeTextView(uuid);
   };
 
   const handleDismissButton = () => {
@@ -280,105 +328,115 @@ export default function InlineMiniFieldMenu(props: InlineMiniFieldMenuProps) {
 
   return (
     <Paper sx={{ display: 'inline-block', zIndex: '2147483640', borderRadius: '15px' }}>
-      <MenuList autoFocusItem={false} disabledItemsFocusable={true} sx={{ pb: 0, pt: 0 }}>
-        {!loading ? (
-          <Box>
-            {credentials.length === 0 && props.unlockedDatabaseAvailable && (
-              <Box sx={{ width: sizeHandler.getInlineMenuWidth() }}>
-                <MenuItem disabled dense>
-                  <Box sx={{ display: 'flex', gap: '12px', alignItems: 'center', pb: 1, pt: 1 }}>
-                    <SearchOff />
-                    {t('inline-mini-field-menu.no-matching-entries-found')}
-                  </Box>
-                </MenuItem>
-              </Box>
-            )}
+      {!showLargeTextView && (
+        <MenuList autoFocusItem={false} disabledItemsFocusable={true} sx={{ pb: 0, pt: 0 }}>
+          {!loading ? (
+            <Box>
+              {credentials.length === 0 && props.unlockedDatabaseAvailable && (
+                <Box sx={{ width: sizeHandler.getInlineMenuWidth() }}>
+                  <MenuItem disabled dense>
+                    <Box sx={{ display: 'flex', gap: '12px', alignItems: 'center', pb: 1, pt: 1 }}>
+                      <SearchOff />
+                      {t('inline-mini-field-menu.no-matching-entries-found')}
+                    </Box>
+                  </MenuItem>
+                </Box>
+              )}
 
-            {(credentials.length <= 3 && !searching) || (credentials.length <= 2 && searching) ? (
-              credentials.map(credential => (
-                <Box key={credential.uuid} sx={{ maxHeight: sizeHandler.getInlineMenuHeight(props.inlineMenuTruncatedHeight), width: sizeHandler.getInlineMenuWidth(), pt: 2 }}>
-                  <InlineMenuCredentialItem
-                    status={props.status}
-                    credential={credential}
-                    onFillSingleField={props.onFillSingleField}
-                    handleCredentialClick={handleCredentialClick}
-                    handleCopyUsername={handleCopyUsername}
-                    handleCopyPassword={handleCopyPassword}
-                    handleCopyTotp={handleCopyTotp}
-                    onCopy={props.onCopy}
-                    onRedirectUrl={props.onRedirectUrl}
-                    notifyAction={showToast}
-                    credentialsAreFromMultipleDatabases={credentialsAreFromMultipleDatabases}
-                    getIcon={props.getIcon}
-                    beforeOpenSubMenu={props.beforeOpenSubMenu}
-                    inlineMenuHasScrollbar={inlineMenuHasScrollbar}
+              {(credentials.length <= 3 && !searching) || (credentials.length <= 2 && searching) ? (
+                credentials.map(credential => (
+                  <Box key={credential.uuid} sx={{ maxHeight: sizeHandler.getInlineMenuHeight(props.inlineMenuTruncatedHeight), width: sizeHandler.getInlineMenuWidth(), pt: 2 }}>
+                    <InlineMenuCredentialItem
+                      status={props.status}
+                      credential={credential}
+                      onFillSingleField={props.onFillSingleField}
+                      handleCredentialClick={handleCredentialClick}
+                      handleCopyUsername={handleCopyUsername}
+                      handleCopyPassword={handleCopyPassword}
+                      handleCopyTotp={handleCopyTotp}
+                      onCopy={props.onCopy}
+                      onRedirectUrl={props.onRedirectUrl}
+                      notifyAction={showToast}
+                      credentialsAreFromMultipleDatabases={credentialsAreFromMultipleDatabases}
+                      getIcon={props.getIcon}
+                      beforeOpenSubMenu={props.beforeOpenSubMenu}
+                      inlineMenuHasScrollbar={inlineMenuHasScrollbar}
+                      handleOpenLargeTextView={handleOpenLargeTextView}
+                    />
+                  </Box>
+                ))
+              ) : (
+                <Box sx={{ maxHeight: sizeHandler.getInlineMenuHeight(props.inlineMenuTruncatedHeight), width: sizeHandler.getInlineMenuWidth(), pt: 2 }}>
+                  <Virtuoso
+                    style={{
+                      minHeight: `${credentials.length === 0 ? '0px' : sizeHandler.getInlineMenuHeight(props.inlineMenuTruncatedHeight)}`,
+                      cursor: 'pointer',
+                    }}
+                    data={credentials}
+                    overscan={48}
+                    endReached={() => {
+                      if (!credentialResultsCompleted) {
+                        getNext();
+                      }
+                    }}
+                    itemContent={(index, credential: AutoFillCredential) => {
+                      return (
+                        <InlineMenuCredentialItem
+                          status={props.status}
+                          key={credential.uuid}
+                          credential={credential}
+                          onFillSingleField={props.onFillSingleField}
+                          handleCredentialClick={handleCredentialClick}
+                          handleCopyUsername={handleCopyUsername}
+                          handleCopyPassword={handleCopyPassword}
+                          handleCopyTotp={handleCopyTotp}
+                          onCopy={props.onCopy}
+                          onRedirectUrl={props.onRedirectUrl}
+                          credentialsAreFromMultipleDatabases={credentialsAreFromMultipleDatabases}
+                          getIcon={props.getIcon}
+                          beforeOpenSubMenu={props.beforeOpenSubMenu}
+                          notifyAction={showToast}
+                          inlineMenuHasScrollbar={inlineMenuHasScrollbar}
+                          handleOpenLargeTextView={handleOpenLargeTextView}
+                        />
+                      );
+                    }}
+                    components={{ Footer }}
                   />
                 </Box>
-              ))
-            ) : (
-              <Box sx={{ maxHeight: sizeHandler.getInlineMenuHeight(props.inlineMenuTruncatedHeight), width: sizeHandler.getInlineMenuWidth(), pt: 2 }}>
-                <Virtuoso
-                  style={{
-                    minHeight: `${credentials.length === 0 ? '0px' : sizeHandler.getInlineMenuHeight(props.inlineMenuTruncatedHeight)}`,
-                    cursor: 'pointer',
-                  }}
-                  data={credentials}
-                  overscan={48}
-                  endReached={() => {
-                    if (!credentialResultsCompleted) {
-                      getNext();
-                    }
-                  }}
-                  itemContent={(index, credential: AutoFillCredential) => {
-                    return (
-                      <InlineMenuCredentialItem
-                        status={props.status}
-                        key={credential.uuid}
-                        credential={credential}
-                        onFillSingleField={props.onFillSingleField}
-                        handleCredentialClick={handleCredentialClick}
-                        handleCopyUsername={handleCopyUsername}
-                        handleCopyPassword={handleCopyPassword}
-                        handleCopyTotp={handleCopyTotp}
-                        onCopy={props.onCopy}
-                        onRedirectUrl={props.onRedirectUrl}
-                        credentialsAreFromMultipleDatabases={credentialsAreFromMultipleDatabases}
-                        getIcon={props.getIcon}
-                        beforeOpenSubMenu={props.beforeOpenSubMenu}
-                        notifyAction={showToast}
-                        inlineMenuHasScrollbar={inlineMenuHasScrollbar}
-                      />
-                    );
-                  }}
-                  components={{ Footer }}
-                />
+              )}
+            </Box>
+          ) : (
+            <div style={{ textAlign: 'center', width: sizeHandler.getInlineMenuWidth(), paddingTop: '10px', paddingBottom: '10px' }}>
+              <CircularProgress size="1rem" />
+              <Box>
+                <Typography color="text.secondary" variant="body1" sx={{ textAlign: 'center' }}>
+                  {searching ? t('general.searching') : t('general.loading')}
+                </Typography>
               </Box>
-            )}
-          </Box>
-        ) : (
-          <div style={{ textAlign: 'center', width: sizeHandler.getInlineMenuWidth(), paddingTop: '10px', paddingBottom: '10px' }}>
-            <CircularProgress size="1rem" />
-            <Box>
-              <Typography color="text.secondary" variant="body1" sx={{ textAlign: 'center' }}>
-                {searching ? t('general.searching') : t('general.loading')}
-              </Typography>
-            </Box>
-          </div>
-        )}
+            </div>
+          )}
 
-        {!props.showCreateNew && props.unlockableDatabases.length == 0 && credentials.length === 0 ? (
-          <MenuItem disabled dense>
-            <Box sx={{ display: 'flex', gap: '12px', alignItems: 'center', pt: '5px' }}>
-              <ExploreOffOutlined />
-              {t('inline-mini-field-menu.no-autofill-enabled-databases')}
-            </Box>
-          </MenuItem>
-        ) : (
-          ''
-        )}
-      </MenuList>
+          {!props.showCreateNew && props.unlockableDatabases.length == 0 && credentials.length === 0 ? (
+            <MenuItem disabled dense>
+              <Box sx={{ display: 'flex', gap: '12px', alignItems: 'center', pt: '5px' }}>
+                <ExploreOffOutlined />
+                {t('inline-mini-field-menu.no-autofill-enabled-databases')}
+              </Box>
+            </MenuItem>
+          ) : (
+            ''
+          )}
+        </MenuList>
+      )}
 
-      {showSearchBar && (
+      {showLargeTextView && (
+        <Box sx={{ overflowY: 'auto', maxHeight: sizeHandler.getInlineMenuHeight(props.inlineMenuTruncatedHeight), width: sizeHandler.getInlineMenuWidth(), mt: 1, mb: 1 }}>
+          <LargeTextView onFillSingleField={props.onFillSingleField} status={props.status} text={largeTextViewString} />
+        </Box>
+      )}
+
+      {showSearchBar && !showLargeTextView && (
         <Box sx={{ width: sizeHandler.getInlineMenuWidth() }}>
           <SearchBar
             searchMode={SearchMode.InlineMenu}
@@ -393,21 +451,182 @@ export default function InlineMiniFieldMenu(props: InlineMiniFieldMenuProps) {
         </Box>
       )}
 
-      {!showSearchBar && (
+      {(!showSearchBar || (showSearchBar && showLargeTextView)) && (
         <Box>
           <Divider />
 
-          <ButtonGroup
-            style={{ alignItems: 'center' }}
-            variant="outlined"
-            aria-label="outlined button group"
-            sx={{
-              width: props.unlockedDatabaseAvailable ? sizeHandler.getInlineMenuWidth() : '100%',
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}
-          >
-            {props.unlockedDatabaseAvailable && (
+          {!showLargeTextView && (
+            <ButtonGroup
+              style={{ alignItems: 'center' }}
+              variant="outlined"
+              aria-label="outlined button group"
+              sx={{
+                width: props.unlockedDatabaseAvailable ? sizeHandler.getInlineMenuWidth() : '100%',
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}
+            >
+              {props.unlockedDatabaseAvailable && (
+                <Button
+                  sx={{
+                    flexGrow: 1,
+                    fontSize: sizeHandler.getInlineMenuFontSize(),
+                    overflow: 'hidden',
+                    height: '40px',
+                    borderBottomLeftRadius: 15,
+                    borderBottom: 'none',
+                    borderLeft: 'none',
+                    borderTop: 'none',
+                    boxShadow: 'none',
+                    '&:hover': {
+                      boxShadow: 'none',
+                      borderLeft: 'none',
+                      borderBottom: 'none',
+                      borderTop: 'none',
+                    },
+                  }}
+                  onClick={handleCreateNewEntry}
+                  variant="outlined"
+                >
+                  <Box
+                    sx={{
+                      alignContent: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      display: 'flex',
+                    }}
+                  >
+                    <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', p: 0.5 }}>
+                      <AddCircleOutlineOutlinedIcon sx={{ fontSize: sizeHandler.getBottomToolbarIconSize() }} />
+                    </Box>
+
+                    <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>{t('general.create')}</Box>
+                  </Box>
+                </Button>
+              )}
+
+              {props.unlockedDatabaseAvailable && (
+                <Button
+                  onClick={() => setShowSearchBar(true)}
+                  variant="outlined"
+                  sx={{
+                    flexGrow: 1,
+                    fontSize: sizeHandler.getInlineMenuFontSize(),
+                    overflow: 'hidden',
+                    height: '40px',
+                    borderBottomRightRadius: 15,
+                    borderBottom: 'none',
+                    borderTop: 'none',
+                    '&:hover': {
+                      borderBottom: 'none',
+                      borderTop: 'none',
+                    },
+                  }}
+                >
+                  <Box
+                    sx={{
+                      alignContent: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      display: 'flex',
+                    }}
+                  >
+                    <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', p: 0.5 }}>
+                      <SearchIcon sx={{ fontSize: sizeHandler.getBottomToolbarIconSize() }} />
+                    </Box>
+
+                    <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>{t('general.search')}</Box>
+                  </Box>
+                </Button>
+              )}
+
+              {props.unlockableDatabases.length !== 0 && (
+                <Button
+                  onClick={handleOpenUnlockDatabasesMenu}
+                  variant="outlined"
+                  sx={{
+                    flexGrow: 1,
+                    fontSize: sizeHandler.getInlineMenuFontSize(),
+                    overflow: 'hidden',
+                    height: '40px',
+                    borderBottom: 'none',
+                    borderTop: 'none',
+                    borderLeft: !props.unlockedDatabaseAvailable ? 'none' : '',
+                    '&:hover': {
+                      borderLeft: !props.unlockedDatabaseAvailable ? 'none' : '',
+                      borderBottom: 'none',
+                      borderTop: 'none',
+                    },
+                  }}
+                >
+                  <Box
+                    sx={{
+                      alignContent: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      display: 'flex',
+                    }}
+                  >
+                    <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', p: 0.5 }}>
+                      {pendingUnlockDatabases.size !== 0 ? (
+                        <CircularProgress style={{ color: 'gray' }} size={20} />
+                      ) : (
+                        <LockOpenIcon sx={{ fontSize: sizeHandler.getBottomToolbarIconSize() }}></LockOpenIcon>
+                      )}
+                    </Box>
+
+                    <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>{!props.unlockedDatabaseAvailable && t('database-list-item.unlock')}</Box>
+                  </Box>
+                </Button>
+              )}
+
+              <Button
+                onClick={handleOpenHideMenu}
+                variant="outlined"
+                sx={{
+                  flexGrow: 1,
+                  fontSize: sizeHandler.getInlineMenuFontSize(),
+                  overflow: 'hidden',
+                  height: '40px',
+                  borderBottom: 'none',
+                  borderRight: 'none',
+                  borderTop: 'none',
+                  borderBottomRightRadius: 15,
+                  '&:hover': {
+                    borderRight: 'none',
+                    borderBottom: 'none',
+                    borderTop: 'none',
+                  },
+                }}
+              >
+                <Box
+                  sx={{
+                    alignContent: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    display: 'flex',
+                  }}
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', p: 0.5 }}>
+                    <CancelOutlinedIcon sx={{ fontSize: sizeHandler.getBottomToolbarIconSize() }} />
+                  </Box>
+                  <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>{!props.unlockedDatabaseAvailable && t('general.dismiss')}</Box>
+                </Box>
+              </Button>
+            </ButtonGroup>
+          )}
+
+          {showLargeTextView && (
+            <ButtonGroup
+              style={{ alignItems: 'center' }}
+              variant="outlined"
+              aria-label="outlined button group"
+              sx={{
+                width: props.unlockedDatabaseAvailable ? sizeHandler.getInlineMenuWidth() : '100%',
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}
+            >
               <Button
                 sx={{
                   flexGrow: 1,
@@ -415,18 +634,15 @@ export default function InlineMiniFieldMenu(props: InlineMiniFieldMenuProps) {
                   overflow: 'hidden',
                   height: '40px',
                   borderBottomLeftRadius: 15,
-                  borderBottom: 'none',
-                  borderLeft: 'none',
-                  borderTop: 'none',
+                  borderBottomRightRadius: 15,
+                  border: 'none',
                   boxShadow: 'none',
                   '&:hover': {
                     boxShadow: 'none',
-                    borderLeft: 'none',
-                    borderBottom: 'none',
-                    borderTop: 'none',
+                    border: 'none',
                   },
                 }}
-                onClick={handleCreateNewEntry}
+                onClick={handleBackLargetextView}
                 variant="outlined"
               >
                 <Box
@@ -438,123 +654,14 @@ export default function InlineMiniFieldMenu(props: InlineMiniFieldMenuProps) {
                   }}
                 >
                   <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', p: 0.5 }}>
-                    <AddCircleOutlineOutlinedIcon sx={{ fontSize: sizeHandler.getBottomToolbarIconSize() }} />
+                    <ArrowCircleLeftOutlinedIcon sx={{ fontSize: sizeHandler.getBottomToolbarIconSize() }} />
                   </Box>
 
-                  <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>{t('general.create')}</Box>
+                  <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>{t('general.back')}</Box>
                 </Box>
               </Button>
-            )}
-
-            {props.unlockedDatabaseAvailable && (
-              <Button
-                onClick={() => setShowSearchBar(true)}
-                variant="outlined"
-                sx={{
-                  flexGrow: 1,
-                  fontSize: sizeHandler.getInlineMenuFontSize(),
-                  overflow: 'hidden',
-                  height: '40px',
-                  borderBottomRightRadius: 15,
-                  borderBottom: 'none',
-                  borderTop: 'none',
-                  '&:hover': {
-                    borderBottom: 'none',
-                    borderTop: 'none',
-                  },
-                }}
-              >
-                <Box
-                  sx={{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    display: 'flex',
-                  }}
-                >
-                  <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', p: 0.5 }}>
-                    <SearchIcon sx={{ fontSize: sizeHandler.getBottomToolbarIconSize() }} />
-                  </Box>
-
-                  <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>{t('general.search')}</Box>
-                </Box>
-              </Button>
-            )}
-
-            {props.unlockableDatabases.length !== 0 && (
-              <Button
-                onClick={handleOpenUnlockDatabasesMenu}
-                variant="outlined"
-                sx={{
-                  flexGrow: 1,
-                  fontSize: sizeHandler.getInlineMenuFontSize(),
-                  overflow: 'hidden',
-                  height: '40px',
-                  borderBottom: 'none',
-                  borderTop: 'none',
-                  borderLeft: !props.unlockedDatabaseAvailable ? 'none' : '',
-                  '&:hover': {
-                    borderLeft: !props.unlockedDatabaseAvailable ? 'none' : '',
-                    borderBottom: 'none',
-                    borderTop: 'none',
-                  },
-                }}
-              >
-                <Box
-                  sx={{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    display: 'flex',
-                  }}
-                >
-                  <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', p: 0.5 }}>
-                    {pendingUnlockDatabases.size !== 0 ? (
-                      <CircularProgress style={{ color: 'gray' }} size={20} />
-                    ) : (
-                      <LockOpenIcon sx={{ fontSize: sizeHandler.getBottomToolbarIconSize() }}></LockOpenIcon>
-                    )}
-                  </Box>
-
-                  <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>{!props.unlockedDatabaseAvailable && t('database-list-item.unlock')}</Box>
-                </Box>
-              </Button>
-            )}
-
-            <Button
-              onClick={handleOpenHideMenu}
-              variant="outlined"
-              sx={{
-                flexGrow: 1,
-                fontSize: sizeHandler.getInlineMenuFontSize(),
-                overflow: 'hidden',
-                height: '40px',
-                borderBottom: 'none',
-                borderRight: 'none',
-                borderTop: 'none',
-                borderBottomRightRadius: 15,
-                '&:hover': {
-                  borderRight: 'none',
-                  borderBottom: 'none',
-                  borderTop: 'none',
-                },
-              }}
-            >
-              <Box
-                sx={{
-                  alignContent: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  display: 'flex',
-                }}
-              >
-                <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', p: 0.5 }}>
-                  <CancelOutlinedIcon sx={{ fontSize: sizeHandler.getBottomToolbarIconSize() }} />
-                </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>{!props.unlockedDatabaseAvailable && t('general.dismiss')}</Box>
-              </Box>
-            </Button>
-          </ButtonGroup>
+            </ButtonGroup>
+          )}
 
           <HideInlineMenu
             url={props.url}

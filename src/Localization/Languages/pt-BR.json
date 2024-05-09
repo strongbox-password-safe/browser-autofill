@@ -13,7 +13,9 @@
     "autofill": "Preenchimento automático",
     "launch-url": "Abrir URL",
     "show-hide": "Exibir/Ocultar",
-    "dismiss": "Fechar"
+    "dismiss": "Fechar",
+    "back": "Voltar",
+    "version": "Versão"
   },
   "inline-mini-field-menu": {
     "no-matching-entries-found": "Nenhum registro correspondente foi encontrado",
@@ -30,7 +32,8 @@
   "inline-menu-credential-item": {
     "view-details": "Visualizar Detalhes",
     "copy-username": "Copiar nome de usuário",
-    "copy-password": "Copiar senha"
+    "copy-password": "Copiar senha",
+    "large-text-view": "Exibir em texto grande"
   },
   "create-new-entry-dialog": {
     "title": "Novo registro",
@@ -133,5 +136,10 @@
     "style-medium": "Médio",
     "style-large": "Grande",
     "style-xl": "Enorme"
+  },
+  "shortcuts": {
+    "title": "Atalhos de teclado",
+    "autofill-first": "Preenchimento automático",
+    "open-inline-menu": "Mostrar linha no menu"
   }
 }

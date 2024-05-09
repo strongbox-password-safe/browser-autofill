@@ -13,7 +13,9 @@
     "autofill": "Automatisches Ausfüllen",
     "launch-url": "URL aufrufen",
     "show-hide": "Anzeigen/Ausblenden",
-    "dismiss": "Ablehnen"
+    "dismiss": "Ablehnen",
+    "back": "Zurück",
+    "version": "Version"
   },
   "inline-mini-field-menu": {
     "no-matching-entries-found": "Keine passenden Einträge gefunden",
@@ -30,7 +32,8 @@
   "inline-menu-credential-item": {
     "view-details": "Details anzeigen",
     "copy-username": "Benutzername kopieren",
-    "copy-password": "Passwort kopieren"
+    "copy-password": "Passwort kopieren",
+    "large-text-view": "Große Textansicht"
   },
   "create-new-entry-dialog": {
     "title": "Neuen Eintrag erstellen",
@@ -133,5 +136,10 @@
     "style-medium": "Mittel",
     "style-large": "Groß",
     "style-xl": "Extra groß"
+  },
+  "shortcuts": {
+    "title": "Tastaturkürzel",
+    "autofill-first": "Automatisches Ausfüllen",
+    "open-inline-menu": "Inline-Menü anzeigen"
   }
 }

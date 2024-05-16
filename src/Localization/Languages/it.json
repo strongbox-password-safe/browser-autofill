@@ -14,8 +14,8 @@
     "launch-url": "Avviare URL",
     "show-hide": "Mostrare/Nascondere",
     "dismiss": "Chiudere",
-    "back": "Back",
-    "version": "Version"
+    "back": "Indietro",
+    "version": "Versione"
   },
   "inline-mini-field-menu": {
     "no-matching-entries-found": "Nessuna Voce Corrispondente Trovata",
@@ -33,7 +33,7 @@
     "view-details": "Visualizzare Dettagli",
     "copy-username": "Copiare Nome Utente",
     "copy-password": "Copiare Password",
-    "large-text-view": "Large Text View"
+    "large-text-view": "Vista Testo Grande"
   },
   "create-new-entry-dialog": {
     "title": "Creare Nuovo Elemento",
@@ -51,7 +51,7 @@
     "could-not-load-databases": "Impossibile caricare i database!",
     "could-not-load-defaults": "Impossibile caricare le impostazioni predefinite!",
     "could-not-refresh-groups": "Impossibile aggiornare i gruppi!",
-    "could-not-generate-password": "Could not Generate Password",
+    "could-not-generate-password": "Impossibile Generare Password",
     "could-not-unlock-database": "Impossibile Sbloccare il Database",
     "could-not-refresh-status": "Impossibile aggiornare lo stato",
     "could-not-connect-to-strongbox": "Impossibile connettersi a Strongbox",
@@ -138,8 +138,8 @@
     "style-xl": "XL"
   },
   "shortcuts": {
-    "title": "Keyboard Shortcuts",
-    "autofill-first": "AutoFill",
-    "open-inline-menu": "Show Inline Menu"
+    "title": "Scorciatoie Tastiera",
+    "autofill-first": "Riempimento Automatico",
+    "open-inline-menu": "Mostrare Menu in Linea"
   }
 }

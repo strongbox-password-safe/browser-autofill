@@ -14,6 +14,7 @@ import { SettingsStore } from '../Settings/SettingsStore';
 import StarIcon from '@mui/icons-material/Star';
 import ContentPasteGoIcon from '@mui/icons-material/ContentPasteGo';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import browser from 'webextension-polyfill';
 
 interface CredentialListItemProps {
   credential: AutoFillCredential;
@@ -89,8 +90,7 @@ export default function CredentialsListItem({ credential, selected, onClick }: C
   };
 
   const onRedirectUrl = async (url: string) => {
-    await BackgroundManager.getInstance().redirectUrl(url);
-    window.close();
+    await browser.tabs.create({ url: url });
   };
 
   return (
@@ -197,22 +197,24 @@ export default function CredentialsListItem({ credential, selected, onClick }: C
 
         {isHovered && !settings.hideCredentialDetailsOnPopup && (
           <Box sx={{ p: 0, pl: 1, position: 'absolute', right: 0, pr: 1, display: 'flex', alignItems: 'row' }}>
-            <Tooltip title={t('general.launch-url')} placement="top" arrow>
-              <Box sx={{ pt: 3, pb: 3 }}>
-                <InputAdornment position="end">
-                  <IconButton
-                    size="small"
-                    aria-label={t('general.launch-url')}
-                    edge="end"
-                    onClick={() => {
-                      onRedirectUrl(credential.url);
-                    }}
-                  >
-                    <OpenInNewIcon />
-                  </IconButton>
-                </InputAdornment>
-              </Box>
-            </Tooltip>
+            {credential.url.length > 0 && (
+              <Tooltip title={t('general.launch-url')} placement="top" arrow>
+                <Box sx={{ pt: 3, pb: 3 }}>
+                  <InputAdornment position="end">
+                    <IconButton
+                      size="small"
+                      aria-label={t('general.launch-url')}
+                      edge="end"
+                      onClick={() => {
+                        onRedirectUrl(credential.url);
+                      }}
+                    >
+                      <OpenInNewIcon />
+                    </IconButton>
+                  </InputAdornment>
+                </Box>
+              </Tooltip>
+            )}
             <Tooltip title={t('general.autofill')} placement="top" arrow>
               <Box sx={{ pt: 3, pb: 3 }}>
                 <InputAdornment position="end">

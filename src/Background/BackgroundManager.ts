@@ -164,19 +164,6 @@ export class BackgroundManager {
     await browser.tabs.sendMessage(tabId, { openCreateNewDialog: true });
   }
 
-  public async redirectUrl(newUrl: string) {
-
-    const tab = await BackgroundManager.getCurrentTab();
-    const url = tab ? tab.url : undefined;
-    const tabId = tab?.id;
-
-    if (!url || !tabId) {
-      return;
-    }
-
-    await browser.tabs.sendMessage(tabId, { redirectUrl: newUrl });
-  }
-
   private async updateBadgeAndIconBasedOnCredentialsResponse(response: CredentialsForUrlResponse, endTime: number, startTime: number, skip: number) {
     const unlockedDatabaseCount = response.unlockedDatabaseCount;
 
@@ -371,6 +358,10 @@ export class BackgroundManager {
       const response = await this.getStatus();
 
 
+      return response;
+    } else if (message.type === 'content-script-requests-url-launch') {
+      const url = message.details;
+      const response = await browser.tabs.create({ url: url });
       return response;
     } else if (message.type === 'launch-strongbox') {
       const response = await this.launchStrongbox();

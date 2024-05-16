@@ -16,6 +16,9 @@ import { WellKnownField } from '../Messaging/Protocol/WellKnownField';
 import { SettingsStore } from '../Settings/SettingsStore';
 import { Settings } from '../Settings/Settings';
 
+import browser from 'webextension-polyfill';
+import { Utils } from '../Utils';
+
 interface CurrentTabCredentialsComponentProps {
   showToast: (message: string) => void;
   initScrollbars: () => void;
@@ -223,8 +226,7 @@ function CurrentTabCredentialsComponent({ showToast, initScrollbars }: CurrentTa
   };
 
   const onRedirectUrl = async (newUrl: string): Promise<void> => {
-    await BackgroundManager.getInstance().redirectUrl(newUrl);
-    window.close();
+    await browser.tabs.create({ url: newUrl });
   };
 
   const getStatus = async () => {

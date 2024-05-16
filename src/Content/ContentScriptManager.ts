@@ -131,8 +131,8 @@ export class ContentScriptManager {
     await browser.runtime.sendMessage({ type: 'copy-string', details: value });
   }
 
-  redirectUrl(url: string) {
-    window.open(url, '_blank');
+  async onLaunchUrl(url: string) {
+    await browser.runtime.sendMessage({ type: 'content-script-requests-url-launch', details: url });
   }
 
   async unlockDatabase(uuid: string): Promise<UnlockResponse | null> {

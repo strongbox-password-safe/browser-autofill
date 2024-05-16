@@ -148,8 +148,7 @@ export class IframeManager {
           }
           case IframeMessageTypes.onRedirectUrl: {
             const url = event.data.data;
-            this.contentScriptManager.redirectUrl(url);
-
+            await this.contentScriptManager.onLaunchUrl(url);
             break;
           }
           case IframeMessageTypes.onCopy: {

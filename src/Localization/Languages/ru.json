@@ -103,7 +103,7 @@
       "message3": "3. Убедитесь, что указанная ниже настройка включена:",
       "settings-path": "Настройки > Дополнительно > Расширение автозаполнения для Chrome и Firefox"
     },
-    "message": "К сожалению, Strongbox еще не доступен на этой платформе."
+    "message": "К сожалению, Strongbox еще недоступен на этой платформе."
   },
   "search-bar": {
     "title": "Поиск ...",
@@ -129,7 +129,7 @@
     "appearance": "Оформление",
     "font-size": "Размер шрифта",
     "spacing": "Интервал",
-    "appearance-dark": "Темный",
+    "appearance-dark": "Тёмная",
     "appearance-light": "Светлый",
     "appearance-system": "Система",
     "style-small": "Маленький",

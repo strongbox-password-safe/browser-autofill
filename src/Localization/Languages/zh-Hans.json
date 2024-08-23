@@ -121,15 +121,15 @@
     "always-fill-on-load-with-first-match": "始终使用首个匹配项进行填充",
     "do-not-fill-on-load-on-this-domain": "此域名不使用立即填充",
     "do-not-show-inline-menus-on-this-domain": "为该域名隐藏内联菜单",
-    "do-not-show-inline-menus-on-this-page": "Hide Inline Menus on this Page",
+    "do-not-show-inline-menus-on-this-page": "在此页面上隐藏内联菜单",
     "do-not-show-credential-details-on-popup": "在弹出窗口隐藏详细信息",
     "do-not-show-credential-details-on-inline-menu": "在内联菜单隐藏详细信息",
-    "show-scrollbars": "Show Scrollbars",
+    "show-scrollbars": "显示滚动条",
     "language": "语言",
     "appearance": "外观",
     "font-size": "字体大小",
     "spacing": "间距",
-    "appearance-dark": "深色",
+    "appearance-dark": "暗黑",
     "appearance-light": "浅色",
     "appearance-system": "跟随系统",
     "style-small": "较小",
@@ -138,8 +138,8 @@
     "style-xl": "特大"
   },
   "shortcuts": {
-    "title": "Keyboard Shortcuts",
-    "autofill-first": "AutoFill",
-    "open-inline-menu": "Show Inline Menu"
+    "title": "键盘快捷键",
+    "autofill-first": "自动填充",
+    "open-inline-menu": "显示内联菜单"
   }
 }

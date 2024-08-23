@@ -94,6 +94,16 @@ function SettingsPopupGeneralTabPanel(props: Props) {
     setSettings(stored2);
   };
 
+  const sortedLocalizedLanguages = (): Map<string, string> => {
+    const map = languages.reduce((map, lng) => {
+      const namesResolution = new Intl.DisplayNames([lng], { style: 'short', type: 'language', fallback: 'code' });
+      const resolved = namesResolution.of(lng) ?? lng;
+      return map.set(resolved, lng);
+    }, new Map<string, string>());
+
+    return new Map([...map].sort((a, b) => String(a[0]).localeCompare(b[0])));
+  };
+
   return (
     <TabPanel value={value} index={index}>
       <Box style={{ overflowY: 'auto', height: '350px', overflowWrap: 'anywhere' }}>
@@ -105,13 +115,14 @@ function SettingsPopupGeneralTabPanel(props: Props) {
                   <FormLabel sx={{ pb: 1, pr: 2 }}>{t('settings-popup-component.language')}</FormLabel>
                   <SplitButton
                     onOptionChange={handleChangeLanguage}
-                    options={languages.map((lng, index) => {
-                      const namesResolution = new Intl.DisplayNames([lng], { type: 'language' });
+                    options={Array.from(sortedLocalizedLanguages()).map(lngPair => {
+                      const languageName = lngPair[0];
+                      const languageCode = lngPair[1];
+                      const index = languages.indexOf(languageCode);
 
-                      const languageName = namesResolution.of(lng) ?? String();
                       let selectedLanguageName = languageName;
 
-                      if ((isLanguageAutoDetected && lng === i18n.language) || isAutoDetected(lng)) {
+                      if ((isLanguageAutoDetected && languageCode === i18n.language) || isAutoDetected(languageCode)) {
                         selectedLanguageName = t('autodetected-language', { language: languageName });
                       }
 

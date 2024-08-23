@@ -1,0 +1,145 @@
+{
+  "autodetected-language": "{{language}} (Auto)",
+  "general": {
+    "app-name": "Automatyczne Wypełnianie Strongbox",
+    "company-name": "Phoebe Code Limited",
+    "loading": "Ładowanie...",
+    "searching": "Wyszukiwanie...",
+    "cancel": "Anuluj",
+    "create": "Utwórz",
+    "add": "Dodaj",
+    "search": "Szukaj",
+    "copy": "Kopiuj",
+    "autofill": "Automatyczne Wypełnianie",
+    "launch-url": "Przejdź do adresu URL",
+    "show-hide": "Pokaż/Ukryj",
+    "dismiss": "Odrzuć",
+    "back": "Wstecz",
+    "version": "Wersja"
+  },
+  "inline-mini-field-menu": {
+    "no-matching-entries-found": "Nie znaleziono pasujących wpisów",
+    "lock": "Blokada",
+    "unlock": "Odblokuj {{database}}",
+    "create-new": "Zapisz w Strongbox",
+    "no-autofill-enabled-databases": "Brak baz danych z włączoną funkcją Automatycznego Wypełniania"
+  },
+  "hide-inline-menu": {
+    "hide-for-a-while": "Ukryj się na chwilę",
+    "hide-on-page": "Ukryj na stronie",
+    "hide-on-domain": "Ukryj w domenie"
+  },
+  "inline-menu-credential-item": {
+    "view-details": "Wyświetl szczegóły",
+    "copy-username": "Kopiuj nazwę użytkownika",
+    "copy-password": "Kopiuj hasło",
+    "large-text-view": "Pokaż większymi literami"
+  },
+  "create-new-entry-dialog": {
+    "title": "Utwórz nowy wpis",
+    "credential-title": "Tytuł",
+    "username": "Nazwa użytkownika",
+    "password": "Hasło",
+    "url": "Adres URL",
+    "totp": "TOTP",
+    "modified-date": "Zmodyfikowany",
+    "database": "Baza danych",
+    "group": "Grupa",
+    "save-in": "Zapisz w",
+    "no-autoFill-databases-available": "Brak dostępnych baz danych Automatycznego Wypełniania",
+    "please-unlock-your-database": "Odblokuj swoją bazę danych...",
+    "could-not-load-databases": "Nie można załadować baz danych!",
+    "could-not-load-defaults": "Nie można załadować ustawień domyślnych!",
+    "could-not-refresh-groups": "Nie można odświeżyć grup!",
+    "could-not-generate-password": "Nie można wygenerować hasła",
+    "could-not-unlock-database": "Nie można odblokować bazy danych",
+    "could-not-refresh-status": "Nie można odświeżyć stanu",
+    "could-not-connect-to-strongbox": "Nie można połączyć się ze Strongbox",
+    "error-getting-defaults": "Błąd pobierania wartości domyślnych",
+    "there-is-not-a-valid-new-entry": "Nie ma poprawnego nowego wpisu.",
+    "could-not-create-new-entry": "Nie można utworzyć nowego wpisu. Błąd=({{error}})"
+  },
+  "notification-toast": {
+    "successfully-created-new-entry": "Pomyślnie utworzono nowy wpis",
+    "username-copied": "Skopiowano nazwę użytkownika",
+    "password-copied": "Skopiowano hasło",
+    "totp-copied": "Skopiowano TOTP",
+    "url-copied": "Adres URL skopiowany",
+    "modified-date-copied": "Data modyfikacji skopiowana",
+    "custom-field-copied": "Pole niestandardowe skopiowane",
+    "hide-for-a-while": "Menu wbudowane ukryte na jakiś czas",
+    "hide-on-this-page": "Menu wbudowane ukryte na tej stronie",
+    "hide-on-this-domain": "Menu wbudowane ukryte na tej stronie"
+  },
+  "current-tab-credentials": {
+    "title": "Dopasowania",
+    "autofill": "Automatyczne Wypełnianie",
+    "tags": "Tagi",
+    "notes": "Notatki"
+  },
+  "database-list-item": {
+    "lock": "Blokada",
+    "locked": "Zablokowany",
+    "unlock": "Odblokowanie",
+    "unlocked": "Odblokowany",
+    "autofill-not-enabled": "Automatyczne Wypełnianie nie jest włączone"
+  },
+  "databases-list-popup-component": {
+    "title": "Bazy danych",
+    "no-databases": "Brak baz danych",
+    "no-databases-message": "Nie masz jeszcze żadnej bazy danych, dlaczego nie dodać jej do Strongbox?"
+  },
+  "no-results-found-popup-component": {
+    "title": "Brak dopasowań",
+    "message": "Strongbox nie znalazł żadnych pasujących wpisów dla tej strony"
+  },
+  "not-running-popup-component": {
+    "title": "Strongbox niedostępny",
+    "launch-strongbox": "Uruchom Strongbox",
+    "troubleshooting": {
+      "title": "Rozwiązywanie problemów",
+      "message1": "1. Upewnij się, że Strongbox jest zainstalowany i uruchomiony.",
+      "message2": "2. Upewnij się, że jesteś użytkownikiem wersji Pro, Automatyczne Wypełnianie jest funkcją dostępną w płatnej wersji Pro.",
+      "message3": "3. Sprawdź, czy poniższe ustawienie jest włączone:",
+      "settings-path": "Ustawienia > Zaawansowane > Rozszerzenie Automatycznego Wypełniania Chrome i Firefox"
+    },
+    "message": "Niestety Strongbox nie jest jeszcze dostępny na tej platformie."
+  },
+  "search-bar": {
+    "title": "Szukaj...",
+    "place-holder": "Przeszukaj Strongbox"
+  },
+  "settings-popup-component": {
+    "title": "Ustawienia",
+    "title-tab1": "Ogólne",
+    "title-tab2": "Wypełnij",
+    "title-tab3": "Menu wbudowane",
+    "title-tab4": "Styl",
+    "show-inline-menus": "Pokaż menu podręczne",
+    "show-match-count-badge-on-popup-icon": "Pokaż liczbę dopasowań",
+    "fill-on-load-if-only-single-match-found": "Wypełnij przy wczytywaniu tylko, gdy znaleziono jedno dopasowanie",
+    "always-fill-on-load-with-first-match": "Zawsze wypełnij podczas wczytywania pierwszym pasującym wpisem",
+    "do-not-fill-on-load-on-this-domain": "Nie wypełniaj podczas wczytywania w tej domenie",
+    "do-not-show-inline-menus-on-this-domain": "Nie pokazuj menu podręcznego w tej domenie",
+    "do-not-show-inline-menus-on-this-page": "Nie pokazuj menu podręcznego na tej stronie",
+    "do-not-show-credential-details-on-popup": "Ukryj szczegóły na wyskakującym okienku",
+    "do-not-show-credential-details-on-inline-menu": "Ukryj szczegóły w menu podręcznym",
+    "show-scrollbars": "Pokaż paski przewijania",
+    "language": "Język",
+    "appearance": "Wygląd",
+    "font-size": "Rozmiar czcionki",
+    "spacing": "Odstępy",
+    "appearance-dark": "Ciemny",
+    "appearance-light": "Jasny",
+    "appearance-system": "Systemowy",
+    "style-small": "Mały",
+    "style-medium": "Średni",
+    "style-large": "Duży",
+    "style-xl": "Bardzo Duży"
+  },
+  "shortcuts": {
+    "title": "Skróty Klawiaturowe",
+    "autofill-first": "Automatyczne Wypełnianie",
+    "open-inline-menu": "Pokaż menu podręczne"
+  }
+}

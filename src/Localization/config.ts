@@ -13,6 +13,8 @@ import global_it from './Languages/it.json';
 import global_ru from './Languages/ru.json';
 import global_ptbr from './Languages/pt-BR.json';
 import global_engb from './Languages/en-GB.json';
+import global_nl from './Languages/nl.json';
+import global_pl from './Languages/pl.json';
 
 const resources = {
   en: { global: global_en },
@@ -28,9 +30,11 @@ const resources = {
   'zh-Hans': { global: global_zhHans },
   ru: { global: global_ru },
   uk: { global: global_uk },
+  nl: { global: global_nl },
+  pl: { global: global_pl },
 };
 
-export const languages = Object.keys(resources ?? []);
+export const languages = Object.keys(resources ?? []) as [string];
 
 export const getSelectedlanguage = async () => {
   const stored = await SettingsStore.getSettings();
